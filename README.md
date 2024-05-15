@@ -1,5 +1,5 @@
 # dotfiles
 ## Neovim
 ```sh:
-ln -s ./dotfiles/nvim ~/.config/nvim
+ln -s $HOME/dotfiles/nvim $HOME/.config/nvim
 ```
