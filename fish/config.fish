@@ -14,6 +14,7 @@ if status is-interactive
     alias gpomn="git push origin main"
     alias gclnt="git clone ultimatile:ultimatile/LaTeXNoteTemplate.git"
     alias nv="nvim"
+    alias brup="brew upgrade"
 end
 
 source /opt/homebrew/opt/modules/init/fish
