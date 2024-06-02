@@ -15,6 +15,7 @@ if status is-interactive
     alias gclnt="git clone ultimatile:ultimatile/LaTeXNoteTemplate.git"
     alias nv="nvim"
     alias brup="brew upgrade"
+    alias pbpc="pbpaste | sed -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g'|pbcopy"
 end
 
 source /opt/homebrew/opt/modules/init/fish
