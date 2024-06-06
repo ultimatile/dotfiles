@@ -1,0 +1,22 @@
+#%Module
+
+conflict llvm
+
+prepend-path PATH /opt/homebrew/opt/llvm/bin
+# set CPPFLAGS
+if { [info exists ::env(CPPFLAGS)] } {
+    setenv CPPFLAGS "-I/opt/homebrew/opt/llvm/include $::env(CPPFLAGS)"
+} else {
+    setenv CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
+}
+
+# set LDFLAGS
+if { [info exists ::env(LDFLAGS)] } {
+    #setenv LDFLAGS "-L/opt/homebrew/opt/llvm/lib $::env(LDFLAGS)"
+    # To use the bundled libc++
+    setenv LDFLAGS "-L/opt/homebrew/opt/llvm/lib -L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++ $::env(LDFLAGS)"
+} else {
+    #setenv LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
+    # To use the bundled libc++
+    setenv LDFLAGS "-L/opt/homebrew/opt/llvm/lib -L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
+}

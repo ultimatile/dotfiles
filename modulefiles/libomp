@@ -1,0 +1,15 @@
+#%Module
+conflict libomp
+
+if { [info exists ::env(CPPFLAGS)] } {
+    setenv CPPFLAGS "-I/opt/homebrew/opt/libomp/include $::env(CPPFLAGS)"
+} else {
+    setenv CPPFLAGS "-I/opt/homebrew/opt/libomp/include"
+}
+
+if { [info exists ::env(LDFLAGS)] } {
+    setenv LDFLAGS "-L/opt/homebrew/opt/libomp/lib $::env(LDFLAGS)"
+} else {
+    setenv LDFLAGS "-L/opt/homebrew/opt/libomp/lib"
+}
+

@@ -1,0 +1,17 @@
+#%Module
+
+conflict openblas
+
+set root /opt/homebrew/opt/openblas
+
+if { [info exists ::env(CPPFLAGS)] } {
+    setenv CPPFLAGS "-I$root/include $::env(CPPFLAGS)"
+} else {
+    setenv CPPFLAGS "-I$root/include"
+}
+
+if { [info exists ::env(LDFLAGS)] } {
+    setenv LDFLAGS "-L$root/lib $::env(LDFLAGS)"
+} else {
+    setenv LDFLAGS "-L$root/lib"
+}
