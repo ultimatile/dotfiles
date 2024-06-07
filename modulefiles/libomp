@@ -1,15 +1,30 @@
 #%Module
-conflict libomp
+##
+## OpenMP (libomp) modulefile
+##
 
+proc ModulesHelp { } {
+    puts stderr "This module loads OpenMP (libomp)"
+}
+
+module-whatis "Loads OpenMP (libomp)"
+
+# Set the installation directory
+set root /opt/homebrew/opt/libomp
+
+# Check if CPPFLAGS is already defined
 if { [info exists ::env(CPPFLAGS)] } {
-    setenv CPPFLAGS "-I/opt/homebrew/opt/libomp/include $::env(CPPFLAGS)"
+    setenv CPPFLAGS "-I$root/include $::env(CPPFLAGS)"
 } else {
-    setenv CPPFLAGS "-I/opt/homebrew/opt/libomp/include"
+    setenv CPPFLAGS "-I$root/include"
 }
 
+# Check if LDFLAGS is already defined
 if { [info exists ::env(LDFLAGS)] } {
-    setenv LDFLAGS "-L/opt/homebrew/opt/libomp/lib $::env(LDFLAGS)"
+    setenv LDFLAGS "-L$root/lib $::env(LDFLAGS)"
 } else {
-    setenv LDFLAGS "-L/opt/homebrew/opt/libomp/lib"
+    setenv LDFLAGS "-L$root/lib"
 }
 
+# used with Apple Clang
+setenv OpenMP_ROOT "$root"

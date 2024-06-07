@@ -2,21 +2,27 @@
 
 conflict llvm
 
-prepend-path PATH /opt/homebrew/opt/llvm/bin
+set root /opt/homebrew/opt/llvm
+# set PATH
+prepend-path PATH "$root/bin"
+
 # set CPPFLAGS
 if { [info exists ::env(CPPFLAGS)] } {
-    setenv CPPFLAGS "-I/opt/homebrew/opt/llvm/include $::env(CPPFLAGS)"
+    setenv CPPFLAGS "-I$root/include $::env(CPPFLAGS)"
 } else {
-    setenv CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
+    setenv CPPFLAGS "-I$root/include"
 }
 
 # set LDFLAGS
 if { [info exists ::env(LDFLAGS)] } {
-    #setenv LDFLAGS "-L/opt/homebrew/opt/llvm/lib $::env(LDFLAGS)"
+    #setenv LDFLAGS "-L$root/lib $::env(LDFLAGS)"
     # To use the bundled libc++
-    setenv LDFLAGS "-L/opt/homebrew/opt/llvm/lib -L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++ $::env(LDFLAGS)"
+    setenv LDFLAGS "-L$root/lib -L$root/lib/c++ -Wl,-rpath,$root/lib/c++ $::env(LDFLAGS)"
 } else {
-    #setenv LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
+    #setenv LDFLAGS "-L$root/lib"
     # To use the bundled libc++
-    setenv LDFLAGS "-L/opt/homebrew/opt/llvm/lib -L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
+    setenv LDFLAGS "-L$root/lib -L$root/lib/c++ -Wl,-rpath,$root/lib/c++"
 }
+
+setenv CC "$root/bin/clang"
+setenv CXX "$root/bin/clang++"
