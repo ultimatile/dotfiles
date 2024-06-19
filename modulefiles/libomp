@@ -10,7 +10,7 @@ proc ModulesHelp { } {
 module-whatis "Loads OpenMP (libomp)"
 
 # Set the installation directory
-set root /opt/homebrew/opt/libomp
+set root ::env/libomp
 
 # Check if CPPFLAGS is already defined
 if { [info exists ::env(CPPFLAGS)] } {
