@@ -1,0 +1,5 @@
+#%Module
+
+conflict sphinx
+set root /opt/homebrew/opt/sphinx-doc
+prepend-path PATH "$root/bin"

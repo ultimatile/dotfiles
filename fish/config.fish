@@ -3,10 +3,10 @@ if status is-interactive
 
     # Homebrew
     eval "$(/opt/homebrew/bin/brew shellenv)"
-    
+
     # Rye
     set -Ua fish_user_paths "$HOME/.rye/shims"
-    
+
     # Python
     source ~/RyePython/.venv/bin/activate.fish
 
@@ -14,6 +14,7 @@ if status is-interactive
     alias gpomn="git push origin main"
     alias gclnt="git clone ultimatile:ultimatile/LaTeXNoteTemplate.git"
     alias gcltt="git clone ultimatile:ultimatile/LaTeXTikZTemplate.git"
+    alias gp="gnuplot"
     alias nv="nvim"
     alias brup="brew upgrade"
     alias pbpc="pbpaste | sed -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g'|pbcopy"
