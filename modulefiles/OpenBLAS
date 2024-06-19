@@ -3,13 +3,13 @@
 ## OpenBLAS from brew
 ##
 
-conflict openblas
-
 # Provide information about the module
 module-whatis "OpenBLAS from brew"
 
+conflict openblas
+
 # Set the installation directory
-set root /opt/homebrew/opt/openblas
+set root "$::env(HOMEBREW_PREFIX)/opt/openblas"
 
 # Check if CPPFLAGS is already defined
 if { [info exists ::env(CPPFLAGS)] } {

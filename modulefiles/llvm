@@ -1,8 +1,12 @@
 #%Module
 
+# Provide information about the module
+module-whatis "LLVM Clang from brew"
+
 conflict llvm
 
-set root /opt/homebrew/opt/llvm
+set root "$::env(HOMEBREW_PREFIX)/opt/llvm"
+
 # set PATH
 prepend-path PATH "$root/bin"
 
