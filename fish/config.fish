@@ -19,6 +19,7 @@ if status is-interactive
     alias brup="brew upgrade"
     alias pbpc="pbpaste | sed -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g'|pbcopy"
     alias sed="gsed"
+    alias ccat="pygmentize -g"
     # make
     alias maek="make"
     alias meak="make"
