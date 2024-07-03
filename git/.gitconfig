@@ -1,0 +1,13 @@
+[alias]
+  aliases = config --get-regexp alias
+  st = status
+  sts = status -s
+  clr = clone --recursive
+  cl = clone
+  sw = switch
+  cam = commit -am
+[help]
+	# Automatically correct and execute mistyped commands.
+	autocorrect = 1
+[core]
+	editor = nvim
