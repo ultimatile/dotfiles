@@ -11,6 +11,7 @@ if status is-interactive
     source ~/RyePython/.venv/bin/activate.fish
 
     # alias
+    alias g="git"
     alias gpomn="git push origin main"
     alias gclnt="git clone ultimatile:ultimatile/LaTeXNoteTemplate.git"
     alias gcltt="git clone ultimatile:ultimatile/LaTeXTikZTemplate.git"

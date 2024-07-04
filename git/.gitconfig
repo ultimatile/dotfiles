@@ -1,5 +1,7 @@
 [alias]
   aliases = config --get-regexp alias
+  pl = pull
+  ps = push
   st = status
   sts = status -s
   clr = clone --recursive
