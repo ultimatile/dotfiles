@@ -6,3 +6,6 @@ vim.opt.relativenumber = false
 
 -- Disable conceal
 vim.opt.conceallevel = 0
+
+-- enable line wrapping
+-- vim.o.wrap = true
