@@ -16,10 +16,10 @@ remap_keys("l", "gj") -- go down
 remap_keys(";", "l") -- go right
 remap_keys("h", ";")
 
---
+-- stopping yank when erasing
 remap_keys("x", '"_x') -- character erasure without yank
-remap_keys("d", '"_d') -- opping yank when end-of-line erasure
-remap_keys("D", '"_D') -- topping yank when lines erasure
+remap_keys("d", '"_d') -- stopping yank when end-of-line erasure
+remap_keys("D", '"_D') -- stopping yank when lines erasure
 
 -- escaping by jj
 vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true })
