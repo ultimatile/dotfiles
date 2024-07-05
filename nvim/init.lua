@@ -9,3 +9,6 @@ vim.opt.conceallevel = 0
 
 -- enable line wrapping
 vim.o.wrap = true
+
+-- enable yank to clipboard
+vim.opt.clipboard = "unnamedplus"
