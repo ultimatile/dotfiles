@@ -8,4 +8,4 @@ vim.opt.relativenumber = false
 vim.opt.conceallevel = 0
 
 -- enable line wrapping
--- vim.o.wrap = true
+vim.o.wrap = true
