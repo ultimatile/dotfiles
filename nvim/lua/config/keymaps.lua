@@ -21,6 +21,8 @@ remap_keys("x", '"_x') -- character erasure without yank
 remap_keys("d", '"_d') -- stopping yank when end-of-line erasure
 remap_keys("D", '"_D') -- stopping yank when lines erasure
 
+remap_keys("<C-x>", "dd")
+
 -- escaping by jj
 vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true })
 --  vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true, silent = true })
