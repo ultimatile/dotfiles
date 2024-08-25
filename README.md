@@ -1,9 +1,19 @@
 # dotfiles
+```sh:
+## Git
 
-## Neovim
+Add the following to your `.gitconfig` file:
+
+```ini:
+[include]
+  path =  /path/to/dotfiles/git/.gitconfig
+```
+
+
+## Gnuplot
 
 ```sh:
-ln -s $HOME/{dotfiles,.config}/nvim
+ln -s $HOME/{dotfiles/,}.gnuplot
 ```
 
 ## Modulefiles
@@ -12,11 +22,8 @@ ln -s $HOME/{dotfiles,.config}/nvim
 ln -s $HOME/{dotfiles/,}modulefiles
 ```
 
-## Git
+## Neovim
 
-Add the following to your `.gitconfig` file:
-
-```ini:
-[include]
-  path =  /path/to/dotfiles/git/.gitconfig
+```sh:
+ln -s $HOME/{dotfiles,.config}/nvim
 ```
