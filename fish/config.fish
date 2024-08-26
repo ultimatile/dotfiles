@@ -25,6 +25,7 @@ if status is-interactive
     alias ll="eza"
 
     alias treee="eza -T"
+    alias ff="fastfetch"
 
     # Rosetta terminal
     alias zarm="env /usr/bin/arch -arm64 /bin/zsh --login"
