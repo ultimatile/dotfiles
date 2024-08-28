@@ -43,6 +43,7 @@ module use /Users/$USER/modulefiles
 set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
 set AQC "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/AQC"
 source "$HOME/.cargo/env.fish"
-
+mcfly init fish | source
 #HOGE=fugaとしていました。これがset HOGE fugaに変わります。
 #export HOGEはset -x HOGE $ HOGEとなります．
+fzf --fish | source

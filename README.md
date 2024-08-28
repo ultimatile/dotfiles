@@ -1,5 +1,5 @@
 # dotfiles
-```sh:
+
 ## Git
 
 Add the following to your `.gitconfig` file:
@@ -8,7 +8,6 @@ Add the following to your `.gitconfig` file:
 [include]
   path =  /path/to/dotfiles/git/.gitconfig
 ```
-
 
 ## Gnuplot
 
@@ -27,3 +26,4 @@ ln -s $HOME/{dotfiles/,}modulefiles
 ```sh:
 ln -s $HOME/{dotfiles,.config}/nvim
 ```
+
