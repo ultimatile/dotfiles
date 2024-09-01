@@ -37,13 +37,15 @@ set -Ua fish_user_paths "$HOME/.rye/shims"
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 # Python
-source ~/RyePython/.venv/bin/activate.fish
+source $HOME/defaultpy/.venv/bin/activate.fish
 source /opt/homebrew/opt/modules/init/fish
 module use /Users/$USER/modulefiles
 set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
 set AQC "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/AQC"
 source "$HOME/.cargo/env.fish"
-mcfly init fish | source
+# mcfly init fish | source
+atuin init fish | source
+zoxide init fish | source
+fzf --fish | source
 #HOGE=fugaとしていました。これがset HOGE fugaに変わります。
 #export HOGEはset -x HOGE $ HOGEとなります．
-fzf --fish | source
