@@ -32,3 +32,9 @@ ln -s $HOME/{dotfiles,.config}/nvim
 ```sh:
 ln -s $HOME/{dotfiles,.config}/atuin/config.toml
 ```
+
+## Python
+
+```sh:
+ln -s $HOME/{dotfiles,defaultpy}/pyproject.toml
+```
