@@ -30,5 +30,5 @@ ln -s $HOME/{dotfiles,.config}/nvim
 ## Atuin
 
 ```sh:
-ln -f $HOME/{dotfiles,.config}/atuin/config.toml
+ln -s $HOME/{dotfiles,.config}/atuin/config.toml
 ```
