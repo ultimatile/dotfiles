@@ -27,3 +27,8 @@ ln -s $HOME/{dotfiles/,}modulefiles
 ln -s $HOME/{dotfiles,.config}/nvim
 ```
 
+## Atuin
+
+```sh:
+ln -f $HOME/{dotfiles,.config}/atuin/config.toml
+```
