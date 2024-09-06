@@ -44,7 +44,8 @@ set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
 set AQC "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/AQC"
 source "$HOME/.cargo/env.fish"
 # mcfly init fish | source
-atuin init fish | source
+atuin init --disable-up-arrow fish | source
+# atuin init fish | source
 zoxide init fish | source
 fzf --fish | source
 #HOGE=fugaとしていました。これがset HOGE fugaに変わります。
