@@ -1,23 +1,30 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
     # alias
+    alias sfc="source $HOME/.config/fish/config.fish"
+
+    # git
     alias g="git"
     alias gpomn="git push origin main"
     alias gclnt="git clone ultimatile:ultimatile/LaTeXNoteTemplate.git"
     alias gcltt="git clone ultimatile:ultimatile/LaTeXTikZTemplate.git"
-    alias gp="gnuplot"
+
+    # nvim
     alias nv="nvim"
     alias view="nvim -R"
+    alias nvfc="nv $HOME/dotfiles/fish/config.fish"
+
+    # brew
     alias brup="brew upgrade"
-    alias pbpc="pbpaste | sed -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g'|pbcopy"
-    alias sed="gsed"
-    alias ccat="pygmentize -g"
+    alias brst="brew list"
+
     # make
     alias maek="make"
     alias meak="make"
     alias meka="make"
     alias mkae="make"
     alias mkea="make"
+
     # ls
     alias sl="ls"
     alias ks="ls"
@@ -25,7 +32,12 @@ if status is-interactive
     alias ll="eza"
 
     alias treee="eza -T"
+    alias sed="gsed"
+    alias pbpc="pbpaste | sed -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g'|pbcopy"
+    alias ccat="pygmentize -g"
     alias ff="fastfetch"
+    alias ffgd="ff |grep Disk"
+    alias gp="gnuplot"
 
     # Rosetta terminal
     alias zarm="env /usr/bin/arch -arm64 /bin/zsh --login"
