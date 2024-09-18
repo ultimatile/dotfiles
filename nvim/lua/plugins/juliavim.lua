@@ -1,6 +1,7 @@
 return {
-    {
-        "JuliaEditorSupport/julia-vim",
-        -- ft = "julia",
-    }
+  {
+    -- "JuliaEditorSupport/julia-vim",
+    -- ft = "julia",
+  },
 }
+
