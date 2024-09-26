@@ -53,6 +53,7 @@ source $HOME/defaultpy/.venv/bin/activate.fish
 source /opt/homebrew/opt/modules/init/fish
 module use /Users/$USER/modulefiles
 set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
+set LOGSEQ_PAGES_ROOT "/Users/$USER/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/main/pages"
 set AQC "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/AQC"
 source "$HOME/.cargo/env.fish"
 # mcfly init fish | source
