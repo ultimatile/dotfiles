@@ -19,6 +19,7 @@ remap_keys("h", ";")
 -- stopping yank when erasing
 remap_keys("x", '"_x') -- character erasure without yank
 remap_keys("d", '"_d') -- stopping yank when end-of-line erasure
+remap_keys("c", '"_c') -- stopping yank when changing
 remap_keys("D", '"_D') -- stopping yank when lines erasure
 
 remap_keys("<leader>d", "dd")
