@@ -60,6 +60,8 @@ source "$HOME/.cargo/env.fish"
 atuin init --disable-up-arrow fish | source
 # atuin init fish | source
 zoxide init fish | source
+# for glow
+set -gx EDITOR nvim
 #fzf --fish | source
 #HOGE=fugaとしていました。これがset HOGE fugaに変わります。
 #export HOGEはset -x HOGE $ HOGEとなります．
