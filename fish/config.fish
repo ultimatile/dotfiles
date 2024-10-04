@@ -45,7 +45,7 @@ if status is-interactive
 end
 
 # Rye
-set -Ua fish_user_paths "$HOME/.rye/shims"
+# set -ga fish_user_paths "$HOME/.rye/shims"
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 # Python
