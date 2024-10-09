@@ -15,6 +15,7 @@ if status is-interactive
     alias nvfc="nv $HOME/dotfiles/fish/config.fish"
 
     # brew
+    alias br="brew"
     alias brup="brew upgrade"
     alias brst="brew list"
 
@@ -33,6 +34,7 @@ if status is-interactive
 
     alias treee="eza -T"
     alias sed="gsed"
+    alias head="ghead"
     alias pbpc="pbpaste | sed -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g'|pbcopy"
     alias ccat="pygmentize -g"
     alias ff="fastfetch"
