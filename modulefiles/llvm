@@ -17,15 +17,20 @@ if { [info exists ::env(CPPFLAGS)] } {
     setenv CPPFLAGS "-I$root/include"
 }
 
+set ldflags "-L$root/lib -L$root/lib/c++ -Wl,-rpath,$root/lib/c++"
+#set ldflags "-L/opt/homebrew/opt/llvm/lib -L/opt/homebrew/opt/llvm/lib/c++ -L/opt/homebrew/opt/llvm/lib/unwind -lunwind"
+
 # set LDFLAGS
 if { [info exists ::env(LDFLAGS)] } {
     #setenv LDFLAGS "-L$root/lib $::env(LDFLAGS)"
     # To use the bundled libc++
-    setenv LDFLAGS "-L$root/lib -L$root/lib/c++ -Wl,-rpath,$root/lib/c++ $::env(LDFLAGS)"
+    #setenv LDFLAGS "-L$root/lib -L$root/lib/c++ -Wl,-rpath,$root/lib/c++ $::env(LDFLAGS)"
+    setenv LDFLAGS "$ldflags $::env(LDFLAGS)"
 } else {
     #setenv LDFLAGS "-L$root/lib"
     # To use the bundled libc++
-    setenv LDFLAGS "-L$root/lib -L$root/lib/c++ -Wl,-rpath,$root/lib/c++"
+    setenv LDFLAGS "$ldflags"
+    #setenv LDFLAGS "-L$root/lib -L$root/lib/c++ -Wl,-rpath,$root/lib/c++"
 }
 
 setenv CC "$root/bin/clang"
