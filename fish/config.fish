@@ -54,7 +54,7 @@ end
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 # Python
-source $HOME/defaultpy/.venv/bin/activate.fish
+#source $HOME/defaultpy/.venv/bin/activate.fish
 source /opt/homebrew/opt/modules/init/fish
 module use /Users/$USER/modulefiles
 set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
