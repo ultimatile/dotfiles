@@ -3,7 +3,7 @@
 -- Add any additional keymaps here
 
 local function remap_keys(lhs, rhs)
-  vim.api.nvim_set_keymap("n", lhs, rhs, { noremap = true, silent = true })
+  vim.keymap.set("n", lhs, rhs, { noremap = true, silent = true })
 end
 
 -- escaping by double return
@@ -22,33 +22,52 @@ remap_keys("d", '"_d') -- stopping yank when end-of-line erasure
 remap_keys("c", '"_c') -- stopping yank when changing
 remap_keys("D", '"_D') -- stopping yank when lines erasure
 
+-- original dd
 remap_keys("<leader>d", "dd")
 
 -- escaping by jj
 vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true })
---  vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true, silent = true })
 
 -- show all the hidden diagnostics
 vim.keymap.set("n", "<leader>m", vim.diagnostic.open_float, { noremap = true, silent = true })
 
+-- line swapping
 -- Normal mode mappings
 -- move the line up
-vim.api.nvim_set_keymap(
-  "n",
-  "<C-S-Up>",
-  '":move -1-" .. v:count1 .. "<CR>==l"',
-  { noremap = true, expr = true, silent = true }
-)
+vim.keymap.set("n", "<C-S-Up>", '":move -1-" .. v:count1 .. "<CR>==l"', { noremap = true, expr = true, silent = true })
 -- move the line down
-vim.api.nvim_set_keymap(
-  "n",
-  "<C-S-Down>",
-  '":move +1<CR>==" .. v:count1 .. "l"',
-  { noremap = true, expr = true, silent = true }
-)
-
+vim.keymap.set("n", "<C-S-Down>", '":move +1<CR>==" .. v:count1 .. "l"', { noremap = true, expr = true, silent = true })
 -- Visual mode mappings
 -- move the line up
-vim.api.nvim_set_keymap("x", "<C-S-Up>", ":move '<-2<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("x", "<C-S-Up>", ":move '<-2<CR>gv=gv", { noremap = true, silent = true })
 -- move the line down
-vim.api.nvim_set_keymap("x", "<C-S-Down>", ":move '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("x", "<C-S-Down>", ":move '>+1<CR>gv=gv", { noremap = true, silent = true })
+
+-- Q-prefix keymaps that behave like Z-prefix commands in normal mode
+local function nmapQ()
+  -- Wait for a character input
+  local char = vim.fn.getchar()
+
+  -- Convert the input to a readable character if needed
+  if type(char) == "number" then
+    char = vim.fn.nr2char(char)
+  end
+
+  -- Mapping of keys to commands for Q-prefix keymaps
+  local keymap_actions = {
+    Q = "conf qa", -- QQ
+    W = "xa", -- QW
+    Z = "qa!", -- QZ
+  }
+
+  -- Execute the corresponding command if the keymap exists
+  local command = keymap_actions[char]
+  if command then
+    vim.cmd(command)
+  else
+    print("No keymap for Q" .. char)
+  end
+end
+
+-- Map Q in normal mode to nmapQ function
+vim.keymap.set("n", "Q", "", { noremap = true, silent = true, callback = nmapQ })

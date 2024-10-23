@@ -14,3 +14,4 @@ vim.o.wrap = true
 -- enable yank to clipboard
 -- vim.opt.clipboard = "unnamedplus"
 
+-- vim.o.timeout = false
