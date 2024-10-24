@@ -23,7 +23,8 @@ remap_keys("c", '"_c') -- stopping yank when changing
 remap_keys("D", '"_D') -- stopping yank when lines erasure
 
 -- original dd
-remap_keys("<leader>d", "dd")
+remap_keys("<leader>d", "d")
+remap_keys("<leader>D", "dd")
 
 -- escaping by jj
 vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true })
@@ -56,6 +57,7 @@ local function nmapQ()
   -- Mapping of keys to commands for Q-prefix keymaps
   local keymap_actions_Q = {
     Q = "conf qa", -- QQ
+    S = "wa", -- QS
     W = "xa", -- QW
     Z = "qa!", -- QZ
   }
