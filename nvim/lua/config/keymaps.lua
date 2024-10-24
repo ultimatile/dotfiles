@@ -54,16 +54,16 @@ local function nmapQ()
   end
 
   -- Mapping of keys to commands for Q-prefix keymaps
-  local keymap_actions = {
+  local keymap_actions_Q = {
     Q = "conf qa", -- QQ
     W = "xa", -- QW
     Z = "qa!", -- QZ
   }
 
   -- Execute the corresponding command if the keymap exists
-  local command = keymap_actions[char]
-  if command then
-    vim.cmd(command)
+  local cmdQ = keymap_actions_Q[char]
+  if cmdQ then
+    vim.cmd(cmdQ)
   else
     print("No keymap for Q" .. char)
   end
