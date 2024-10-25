@@ -8,9 +8,15 @@ if status is-interactive
 
     # git
     alias g="git"
-    alias gpomn="git push origin main"
+    alias gpom="git push origin main"
+    alias gpod="git push origin develop"
     alias gclnt="git clone ultimatile:ultimatile/LaTeXNoteTemplate.git"
     alias gcltt="git clone ultimatile:ultimatile/LaTeXTikZTemplate.git"
+    alias gpl="git pull"
+    alias gst="git status"
+    alias gsw="git switch"
+    alias gcam="git commit -am"
+    alias gamm="git commit --amend -m"
 
     # nvim
     alias nv="nvim"
@@ -69,5 +75,3 @@ zoxide init fish | source
 # for glow
 set -gx EDITOR nvim
 #fzf --fish | source
-#HOGE=fugaとしていました。これがset HOGE fugaに変わります。
-#export HOGEはset -x HOGE $ HOGEとなります．

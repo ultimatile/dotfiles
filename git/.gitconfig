@@ -8,8 +8,9 @@
   clr = clone --recursive
   cl = clone
   sw = switch
-  com = commit
+  c = commit
   cam = commit -am
+  amm  = commit --amend -m
 [help]
 	# Automatically correct and execute mistyped commands.
 	autocorrect = 1
