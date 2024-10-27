@@ -23,6 +23,7 @@ if status is-interactive
     alias view="nvim -R"
     alias nvfc="nv $HOME/dotfiles/fish/config.fish"
     alias nvkey="nv $HOME/dotfiles/nvim/lua/config/keymaps.lua"
+    alias nvc="nv ."
 
     # brew
     alias br="brew"
