@@ -15,3 +15,8 @@ vim.o.wrap = true
 -- vim.opt.clipboard = "unnamedplus"
 
 -- vim.o.timeout = false
+
+-- disable mini.pairs
+-- need to disable this because LazyVim loads mini.pairs automatically
+-- https://github.com/LazyVim/LazyVim/discussions/2248
+vim.g.minipairs_disable = true
