@@ -1,4 +1,3 @@
--- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
 
 -- create commands to open help in a vertical split
@@ -11,3 +10,11 @@ end
 -- Create both commands using the same function
 vim.api.nvim_create_user_command("Vhelp", vertical_help_command, { nargs = 1 })
 vim.api.nvim_create_user_command("Vh", vertical_help_command, { nargs = 1 })
+
+-- setting for peventing continuing commment lines
+-- local cmp = require("cmp")
+-- cmp.setup({
+--   mapping = {
+--     ["<CR>"] = cmp.mapping.confirm({ select = true }),
+--   },
+-- })
