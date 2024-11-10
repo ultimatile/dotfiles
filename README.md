@@ -1,5 +1,11 @@
 # dotfiles
 
+## Atuin
+
+```sh:
+ln -s $HOME/{dotfiles,.config}/atuin/config.toml
+```
+
 ## Git
 
 Add the following to your `.gitconfig` file:
@@ -27,14 +33,14 @@ ln -s $HOME/{dotfiles/,}modulefiles
 ln -s $HOME/{dotfiles,.config}/nvim
 ```
 
-## Atuin
-
-```sh:
-ln -s $HOME/{dotfiles,.config}/atuin/config.toml
-```
-
 ## Python
 
 ```sh:
 ln -s $HOME/{dotfiles,defaultpy}/pyproject.toml
+```
+
+## Starship
+  
+```sh:
+ln -s $HOME/{dotfiles,.config}/starship.toml
 ```
