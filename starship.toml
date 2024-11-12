@@ -1,6 +1,8 @@
-add_newline = false 
+add_newline = false
 format = '$character$directory'
 right_format = '$git_branch$git_commit$git_state$git_metrics$git_status'
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
 # [cmd_duration]
 # show_notifications = true
 # min_time_to_notify = 2
