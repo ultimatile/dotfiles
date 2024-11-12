@@ -15,6 +15,12 @@ Add the following to your `.gitconfig` file:
   path =  /path/to/dotfiles/git/.gitconfig
 ```
 
+## Glow
+  
+```sh:
+ln -s $HOME/{dotfiles/,Library/Preferences/glow/}glow.yml
+```
+
 ## Gnuplot
 
 ```sh:
