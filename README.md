@@ -39,6 +39,14 @@ ln -s $HOME/{dotfiles/,}modulefiles
 ln -s $HOME/{dotfiles,.config}/nvim
 ```
 
+## Neovim nightly build
+
+```sh:
+cd ./nvim-nightly
+nix build
+nix profile install
+```
+
 ## Python
 
 ```sh:
