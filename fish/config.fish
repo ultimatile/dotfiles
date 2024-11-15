@@ -76,4 +76,6 @@ zoxide init fish | source
 starship init fish | source
 # for glow
 set -gx EDITOR nvim
+# for nix --help
+set -gx NIX_PAGER "less --mouse"
 #fzf --fish | source
