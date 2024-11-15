@@ -8,6 +8,7 @@ if status is-interactive
 
     # git
     alias g="git"
+    alias ga="git add"
     alias gpom="git push origin main"
     alias gpod="git push origin develop"
     alias gclnt="git clone ultimatile:ultimatile/LaTeXNoteTemplate.git"
@@ -15,6 +16,7 @@ if status is-interactive
     alias gpl="git pull"
     alias gst="git status"
     alias gsw="git switch"
+    alias gcm="git commit -m"
     alias gcam="git commit -am"
     alias gamm="git commit --amend -m"
 
@@ -57,25 +59,32 @@ if status is-interactive
     alias zintel="env /usr/bin/arch -x86_64 /bin/zsh --login"
 end
 
-# Rye
-# set -ga fish_user_paths "$HOME/.rye/shims"
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
-# Python
-#source $HOME/defaultpy/.venv/bin/activate.fish
+
+# fish
 source /opt/homebrew/opt/modules/init/fish
+
+# modulefiles
 module use /Users/$USER/modulefiles
-set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
-set LOGSEQ_PAGES_ROOT "/Users/$USER/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/main/pages"
-set AQC "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/AQC"
+
+# Rust
 source "$HOME/.cargo/env.fish"
-# mcfly init fish | source
+
 atuin init --disable-up-arrow fish | source
 # atuin init fish | source
 zoxide init fish | source
 starship init fish | source
+# mcfly init fish | source
+#fzf --fish | source
+
 # for glow
 set -gx EDITOR nvim
+
 # for nix --help
 set -gx NIX_PAGER "less --mouse"
-#fzf --fish | source
+
+# paths
+set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
+set LOGSEQ_PAGES_ROOT "/Users/$USER/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/main/pages"
+set AQC "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/AQC"
