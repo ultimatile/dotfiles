@@ -70,6 +70,8 @@ module use /Users/$USER/modulefiles
 
 # Rust
 source "$HOME/.cargo/env.fish"
+## Local Rust binaries
+fish_add_path "$HOME/.cargo-local/bin"
 
 atuin init --disable-up-arrow fish | source
 # atuin init fish | source
