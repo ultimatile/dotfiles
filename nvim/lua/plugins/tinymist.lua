@@ -26,24 +26,15 @@ return {
             return vim.fn.getcwd()
           end,
           --- See [Tinymist Server Configuration](https://github.com/Myriad-Dreamin/tinymist/blob/main/Configuration.md) for references.
-          settings = {},
-        },
-      },
-    },
-  },
-  -- add tinymist to lspconfig
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        tinymist = {
           settings = {
+            -- exportPdf = "onSave",
+            -- exportPdf = "Never",
             exportPdf = "onType",
-            outputPath = "$root/target/$dir/$name",
+            -- outputPath = "$root/target/$dir/$name",
+            outputPath = "$root/$dir/$name",
           },
         },
       },
     },
   },
 }
-
