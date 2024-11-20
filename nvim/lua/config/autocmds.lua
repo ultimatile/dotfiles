@@ -34,3 +34,11 @@ vim.api.nvim_create_autocmd({
     vim.api.nvim_set_option_value("filetype", "typst", { buf = buf })
   end,
 })
+
+-- workarond for avoiding conflicts with <CR>-prefix keymaps in command-line window
+vim.api.nvim_create_autocmd("CmdwinEnter", {
+  callback = function()
+    vim.api.nvim_buf_set_keymap(0, "n", "<CR>", "<CR>", { noremap = true, nowait = true })
+    vim.api.nvim_buf_set_keymap(0, "n", "Q", ":q<CR>", { noremap = true, nowait = true })
+  end,
+})
