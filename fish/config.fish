@@ -42,7 +42,7 @@ if status is-interactive
     # ls
     alias sl="ls"
     alias ks="ls"
-    alias l="ls"
+    alias l="eza"
     alias ll="eza"
 
     alias treee="eza -T"
