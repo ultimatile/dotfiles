@@ -10,3 +10,8 @@ end
 -- Create both commands using the same function
 vim.api.nvim_create_user_command("Vhelp", vertical_help_command, { nargs = 1 })
 vim.api.nvim_create_user_command("Vh", vertical_help_command, { nargs = 1 })
+
+-- Create a stupid alias for neo-tree
+vim.api.nvim_create_user_command("NeoTree", function()
+  vim.cmd("Neotree")
+end, {})
