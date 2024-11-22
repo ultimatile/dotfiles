@@ -51,13 +51,14 @@ if status is-interactive
     abbr -a ll eza
 
     abbr -a treee eza -T
-    abbr -a sed gsed
-    abbr -a head ghead
+    alias sed=gsed
+    alias head=ghead
     abbr -a pbpc pbpaste | sed -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g' | pbcopy
     abbr -a ccat pygmentize -g
     abbr -a ff fastfetch
     abbr -a ffgd ff | grep Disk
     abbr -a gp gnuplot
+    alias cd=z
 
     # Rosetta terminal
     abbr -a zarm env /usr/bin/arch -arm64 /bin/zsh --login
