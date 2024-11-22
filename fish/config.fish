@@ -1,3 +1,35 @@
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# fish
+source /opt/homebrew/opt/modules/init/fish
+
+# modulefiles
+module use /Users/$USER/modulefiles
+
+# Rust
+source $HOME/.cargo/env.fish
+## Local Rust binaries
+fish_add_path $HOME/.cargo-local/bin
+
+atuin init --disable-up-arrow fish | source
+# atuin init fish | source
+zoxide init fish | source
+starship init fish | source
+# mcfly init fish | source
+#fzf --fish | source
+
+# for glow
+set -gx EDITOR nvim
+
+# for nix --help
+set -gx NIX_PAGER "less --mouse"
+
+# paths
+set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
+set LOGSEQ_PAGES_ROOT "/Users/$USER/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/main/pages"
+set AQC "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/AQC"
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
 
@@ -51,48 +83,16 @@ if status is-interactive
     abbr -a ll eza
 
     abbr -a treee eza -T
-    alias sed=gsed
-    alias head=ghead
+    alias sed="gsed"
+    alias head="ghead"
     abbr -a pbpc pbpaste | sed -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g' | pbcopy
     abbr -a ccat pygmentize -g
     abbr -a ff fastfetch
     abbr -a ffgd ff | grep Disk
     abbr -a gp gnuplot
-    alias cd=z
+    alias cd="z"
 
     # Rosetta terminal
     abbr -a zarm env /usr/bin/arch -arm64 /bin/zsh --login
     abbr -a zintel env /usr/bin/arch -x86_64 /bin/zsh --login
 end
-
-# Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# fish
-source /opt/homebrew/opt/modules/init/fish
-
-# modulefiles
-module use /Users/$USER/modulefiles
-
-# Rust
-source $HOME/.cargo/env.fish
-## Local Rust binaries
-fish_add_path $HOME/.cargo-local/bin
-
-atuin init --disable-up-arrow fish | source
-# atuin init fish | source
-zoxide init fish | source
-starship init fish | source
-# mcfly init fish | source
-#fzf --fish | source
-
-# for glow
-set -gx EDITOR nvim
-
-# for nix --help
-set -gx NIX_PAGER "less --mouse"
-
-# paths
-set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
-set LOGSEQ_PAGES_ROOT "/Users/$USER/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/main/pages"
-set AQC "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/AQC"
