@@ -10,7 +10,8 @@ if status is-interactive
     #abbr -a g "git"
     abbr -a g git
     abbr -a ga git add
-    abbr -a gpom git puh origin main
+    abbr -a gac git add .
+    abbr -a gpom git push origin main
     abbr -a gpod git push origin develop
     abbr -a gclnt git clone ultimatile:ultimatile/LaTeXNoteTemplate.git
     abbr -a gcltt git clone ultimatile:ultimatile/LaTeXTikZTemplate.git
