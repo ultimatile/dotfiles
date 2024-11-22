@@ -3,60 +3,64 @@ if status is-interactive
 
     # quiet greeting  
     set -g fish_greeting
-    # alias
-    alias sfc="source $HOME/.config/fish/config.fish"
+    # aliases
+    abbr -a sfc source $HOME/.config/fish/config.fish
 
     # git
-    alias g="git"
-    alias ga="git add"
-    alias gpom="git push origin main"
-    alias gpod="git push origin develop"
-    alias gclnt="git clone ultimatile:ultimatile/LaTeXNoteTemplate.git"
-    alias gcltt="git clone ultimatile:ultimatile/LaTeXTikZTemplate.git"
-    alias gpl="git pull"
-    alias gst="git status"
-    alias gsw="git switch"
-    alias gcm="git commit -m"
-    alias gcam="git commit -am"
-    alias gamm="git commit --amend -m"
+    #abbr -a g "git"
+    abbr -a g git
+    abbr -a ga git add
+    abbr -a gpom git puh origin main
+    abbr -a gpod git push origin develop
+    abbr -a gclnt git clone ultimatile:ultimatile/LaTeXNoteTemplate.git
+    abbr -a gcltt git clone ultimatile:ultimatile/LaTeXTikZTemplate.git
+    abbr -a gpl git pull
+    abbr -a gst git status
+    abbr -a gsw git switch
+    abbr -a gswc git switch -c
+    abbr -a gcm git commit -m
+    abbr -a gcam git commit -am
+    abbr -a gamm git commit --amend -m
 
     # nvim
-    alias nv="nvim"
-    alias view="nvim -R"
-    alias nvfc="nv $HOME/dotfiles/fish/config.fish"
-    alias nvkey="nv $HOME/dotfiles/nvim/lua/config/keymaps.lua"
-    alias nvc="nv ."
+    abbr -a nv nvim
+    abbr -a view nvim -R
+    abbr -a nvfc nvim $HOME/dotfiles/fish/config.fish
+    abbr -a nvkey nvim $HOME/dotfiles/nvim/lua/config/keymaps.lua
+    abbr -a nvauto nvim $HOME/dotfiles/nvim/lua/config/autocmds.lua
+    abbr -a nvopt nvim $HOME/dotfiles/nvim/lua/config/options.lua
+    abbr -a nvc nvim .
 
     # brew
-    alias br="brew"
-    alias brup="brew upgrade"
-    alias brst="brew list"
+    abbr -a br brew
+    abbr -a brup brew upgrade
+    abbr -a brst brew list
 
     # make
-    alias maek="make"
-    alias meak="make"
-    alias meka="make"
-    alias mkae="make"
-    alias mkea="make"
+    abbr -a maek make
+    abbr -a meak make
+    abbr -a meka make
+    abbr -a mkae make
+    abbr -a mkea make
 
     # ls
-    alias sl="ls"
-    alias ks="ls"
-    alias l="eza"
-    alias ll="eza"
+    abbr -a sl ls
+    abbr -a ks ls
+    abbr -a l eza
+    abbr -a ll eza
 
-    alias treee="eza -T"
-    alias sed="gsed"
-    alias head="ghead"
-    alias pbpc="pbpaste | sed -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g'|pbcopy"
-    alias ccat="pygmentize -g"
-    alias ff="fastfetch"
-    alias ffgd="ff |grep Disk"
-    alias gp="gnuplot"
+    abbr -a treee eza -T
+    abbr -a sed gsed
+    abbr -a head ghead
+    abbr -a pbpc pbpaste | sed -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g' | pbcopy
+    abbr -a ccat pygmentize -g
+    abbr -a ff fastfetch
+    abbr -a ffgd ff | grep Disk
+    abbr -a gp gnuplot
 
     # Rosetta terminal
-    alias zarm="env /usr/bin/arch -arm64 /bin/zsh --login"
-    alias zintel="env /usr/bin/arch -x86_64 /bin/zsh --login"
+    abbr -a zarm env /usr/bin/arch -arm64 /bin/zsh --login
+    abbr -a zintel env /usr/bin/arch -x86_64 /bin/zsh --login
 end
 
 # Homebrew
@@ -69,9 +73,9 @@ source /opt/homebrew/opt/modules/init/fish
 module use /Users/$USER/modulefiles
 
 # Rust
-source "$HOME/.cargo/env.fish"
+source $HOME/.cargo/env.fish
 ## Local Rust binaries
-fish_add_path "$HOME/.cargo-local/bin"
+fish_add_path $HOME/.cargo-local/bin
 
 atuin init --disable-up-arrow fish | source
 # atuin init fish | source
