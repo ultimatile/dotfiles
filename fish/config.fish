@@ -1,17 +1,16 @@
-# Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
 # fish
 source /opt/homebrew/opt/modules/init/fish
-
+# should be before Homebrew initialization
+# this overrides aarch64 brew with x86_64 brew because fish_add_path prepends fish_user_paths to PATH
+fish_add_path $HOME/.cargo-local/bin
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
 # modulefiles
 module use /Users/$USER/modulefiles
 
 # Rust
 source $HOME/.cargo/env.fish
 ## Local Rust binaries
-fish_add_path $HOME/.cargo-local/bin
-
 atuin init --disable-up-arrow fish | source
 # atuin init fish | source
 zoxide init fish | source
@@ -29,7 +28,6 @@ set -gx NIX_PAGER "less --mouse"
 set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
 set LOGSEQ_PAGES_ROOT "/Users/$USER/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/main/pages"
 set AQC "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/AQC"
-
 if status is-interactive
     # Commands to run in interactive sessions can go here
 
@@ -93,6 +91,6 @@ if status is-interactive
     alias cd="z"
 
     # Rosetta terminal
-    abbr -a zarm env /usr/bin/arch -arm64 /bin/zsh --login
     abbr -a zintel env /usr/bin/arch -x86_64 /bin/zsh --login
+    abbr -a zarm env /usr/bin/arch -arm64 /bin/zsh --login
 end
