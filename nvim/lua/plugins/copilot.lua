@@ -9,7 +9,7 @@ return {
         keymap = {
           accept = "<C-v>",
           accept_word = "<C-S-v>",
-          -- If you want to use <CR> to accept, you have to configure nvim-cmp's supertab setting
+          -- If you want to use <Tab> to accept, you have to configure nvim-cmp's supertab setting
           -- https://www.lazyvim.org/configuration/recipes#supertab
           --accept = "<Tab>",
         },
