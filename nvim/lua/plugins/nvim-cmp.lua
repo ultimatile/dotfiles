@@ -28,7 +28,9 @@ return {
         end
       end, { "i", "s" }),
       ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
+        if copilot.is_visible() then
+          copilot.accept_word()
+        elseif cmp.visible() then
           -- TODO: consider some assignment
           -- cmp.select_prev_item()
         elseif vim.snippet.active({ direction = -1 }) then
