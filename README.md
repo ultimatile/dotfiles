@@ -58,3 +58,9 @@ ln -s $HOME/{dotfiles,defaultpy}/pyproject.toml
 ```sh:
 ln -s $HOME/{dotfiles,.config}/starship.toml
 ```
+
+## WezTerm
+
+```sh:
+ln -s  $HOME/{dotfiles,.config}/wezterm
+```
