@@ -30,8 +30,8 @@ remap_keys("<leader>D", "dd")
 -- escaping by jj
 vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true })
 
--- show all the hidden diagnostics
-vim.keymap.set("n", "<leader>m", vim.diagnostic.open_float, { noremap = true, silent = true })
+-- -- show all the hidden diagnostics
+remap_keys("<leader>m", vim.diagnostic.open_float)
 
 -- move to the end of the line
 vim.keymap.set("i", "<C-E>", "<C-o>$", { noremap = true, silent = true })
