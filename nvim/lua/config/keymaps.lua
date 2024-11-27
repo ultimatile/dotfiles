@@ -33,6 +33,9 @@ vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true
 -- show all the hidden diagnostics
 vim.keymap.set("n", "<leader>m", vim.diagnostic.open_float, { noremap = true, silent = true })
 
+-- move to the end of the line
+vim.keymap.set("i", "<C-E>", "<C-o>$", { noremap = true, silent = true })
+
 -- line swapping
 -- Normal mode mappings
 -- move the line up
