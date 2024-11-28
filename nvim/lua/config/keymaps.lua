@@ -34,7 +34,9 @@ vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true
 remap_keys("<leader>m", vim.diagnostic.open_float)
 
 -- move to the end of the line
+vim.keymap.set("i", "<C-B>", "<C-o>0", { noremap = true, silent = true })
 vim.keymap.set("i", "<C-E>", "<C-o>$", { noremap = true, silent = true })
+vim.keymap.set("i", "<C-o>", "<C-o>o", { noremap = true, silent = true })
 
 -- line swapping
 -- Normal mode mappings
