@@ -16,9 +16,17 @@ config.disable_default_key_bindings = true
 local act = wezterm.action
 config.keys = {
 	{ key = "c", mods = "CMD", action = act.CopyTo("Clipboard") },
-	{ key = "p", mods = "CMD", action = act.PasteFrom("Clipboard") },
+	{ key = "v", mods = "CMD", action = act.PasteFrom("Clipboard") },
 	{ key = "d", mods = "CMD", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{ key = "d", mods = "SHIFT|CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{
+		key = "t",
+		mods = "CMD",
+		action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir, domain = "CurrentPaneDomain" }),
+	},
+	{ key = "t", mods = "SHIFT|CMD", action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "n", mods = "SHIFT|CMD", action = wezterm.action.SpawnWindow },
+	{ key = "n", mods = "CMD", action = wezterm.action.SpawnCommandInNewWindow({ cwd = wezterm.home_dir }) },
 	{ key = "w", mods = "CMD", action = act.CloseCurrentPane({ confirm = false }) },
 }
 
