@@ -20,3 +20,6 @@ vim.o.wrap = true
 -- need to disable this because LazyVim loads mini.pairs automatically
 -- https://github.com/LazyVim/LazyVim/discussions/2248
 vim.g.minipairs_disable = true
+
+-- use copilit with tab accept
+vim.g.ai_cmp = false
