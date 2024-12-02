@@ -3,7 +3,7 @@
 -- Add any additional autocmds here
 
 -- leave Japanese input method for specific events
-vim.api.nvim_create_autocmd({ "InsertLeave", "FocusGained", "VimEnter" }, {
+vim.api.nvim_create_autocmd({ "InsertLeave", "FocusGained", "VimEnter", "BufEnter" }, {
   callback = function()
     vim.fn.system("im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Roman")
   end,
