@@ -17,8 +17,8 @@ local act = wezterm.action
 config.keys = {
 	{ key = "c", mods = "CMD", action = act.CopyTo("Clipboard") },
 	{ key = "v", mods = "CMD", action = act.PasteFrom("Clipboard") },
-	{ key = "d", mods = "CMD", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	{ key = "d", mods = "SHIFT|CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "d", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "d", mods = "SHIFT|CMD", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{
 		key = "t",
 		mods = "CMD",
