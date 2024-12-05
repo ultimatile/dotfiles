@@ -25,8 +25,8 @@ config.keys = {
 		action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir, domain = "CurrentPaneDomain" }),
 	},
 	{ key = "t", mods = "SHIFT|CMD", action = act.SpawnTab("CurrentPaneDomain") },
-	{ key = "n", mods = "SHIFT|CMD", action = wezterm.action.SpawnWindow },
-	{ key = "n", mods = "CMD", action = wezterm.action.SpawnCommandInNewWindow({ cwd = wezterm.home_dir }) },
+	{ key = "n", mods = "SHIFT|CMD", action = act.SpawnWindow },
+	{ key = "n", mods = "CMD", action = act.SpawnCommandInNewWindow({ cwd = wezterm.home_dir }) },
 	{ key = "w", mods = "CMD", action = act.CloseCurrentPane({ confirm = false }) },
 }
 
