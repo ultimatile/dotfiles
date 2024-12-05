@@ -17,17 +17,13 @@ local act = wezterm.action
 config.keys = {
 	{ key = "c", mods = "CMD", action = act.CopyTo("Clipboard") },
 	{ key = "v", mods = "CMD", action = act.PasteFrom("Clipboard") },
-	{ key = "d", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "d", mods = "SHIFT|CMD", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	{
-		key = "t",
-		mods = "CMD",
-		action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir, domain = "CurrentPaneDomain" }),
-	},
+	{ key = "d", mods = "CMD", action = act.SplitHorizontal({}) },
+	{ key = "d", mods = "SHIFT|CMD", action = act.SplitVertical({}) },
+	{ key = "t", mods = "CMD", action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir }) },
 	{ key = "t", mods = "SHIFT|CMD", action = act.SpawnTab("CurrentPaneDomain") },
-	{ key = "n", mods = "SHIFT|CMD", action = act.SpawnWindow },
-	{ key = "n", mods = "CMD", action = act.SpawnCommandInNewWindow({ cwd = wezterm.home_dir }) },
 	{ key = "w", mods = "CMD", action = act.CloseCurrentPane({ confirm = false }) },
+	{ key = "n", mods = "CMD", action = act.SpawnCommandInNewWindow({ cwd = wezterm.home_dir }) },
+	{ key = "n", mods = "SHIFT|CMD", action = act.SpawnWindow },
 }
 
 -- enable option key
