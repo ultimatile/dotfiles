@@ -42,3 +42,20 @@ vim.api.nvim_create_autocmd("CmdwinEnter", {
     vim.api.nvim_buf_set_keymap(0, "n", "Q", ":q<CR>", { noremap = true, nowait = true })
   end,
 })
+
+-- set colorscheme based on the current mode
+local themes = {
+  insert = "tokyonight-night",
+  -- TODO: should refer to the predefined colorscheme
+  normal = "tokyonight-storm",
+}
+local set_colorscheme_and_refresh = function(scheme)
+  vim.cmd.colorscheme(scheme)
+  require("lualine").setup({})
+end
+vim.api.nvim_create_autocmd({ "InsertEnter", "InsertLeave" }, {
+  callback = function(event)
+    local scheme = event.event == "InsertEnter" and themes.insert or themes.normal
+    set_colorscheme_and_refresh(scheme)
+  end,
+})
