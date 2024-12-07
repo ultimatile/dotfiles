@@ -10,7 +10,6 @@ return {
 
         local cursor = vim.api.nvim_win_get_cursor(0)
         local _, character = cursor[1], cursor[2]
-        print(cursor[1], cursor[2])
         local _, char_idx = string.find(text, "[^%s]+", character + 1)
         if char_idx then
           suggestion.text = string.sub(text, 1, char_idx)
