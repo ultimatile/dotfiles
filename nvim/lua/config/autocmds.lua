@@ -1,30 +1,34 @@
 -- Autocmds are automatically loaded on the VeryLazy event
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
+local augroup = vim.api.nvim_create_augroup
+local autocmds = vim.api.nvim_create_autocmd
 
 -- leave Japanese input method for specific events
-vim.api.nvim_create_autocmd({ "InsertLeave", "FocusGained", "VimEnter", "BufEnter" }, {
+augroup("IMESwitcher", { clear = true })
+autocmds({ "InsertLeave", "FocusGained", "VimEnter", "BufEnter" }, {
   callback = function()
-    vim.fn.system("im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Roman")
+    vim.system({ "im-select", "com.apple.inputmethod.Kotoeri.RomajiTyping.Roman" })
+    -- vim.system({ "im-select", "com.apple.inputmethod.Kotoeri.RomajiTyping.Roman" }):wait()
   end,
+  group = "IMESwitcher",
 })
 
 -- stop comment continuation
 -- https://github.com/LazyVim/LazyVim/discussions/598
-local augroup = vim.api.nvim_create_augroup
-local autocmds = vim.api.nvim_create_autocmd
-augroup("discontinue_comments", { clear = true })
+augroup("DiscontinueComment", { clear = true })
 autocmds({ "FileType" }, {
   pattern = { "*" },
   callback = function()
     vim.opt.formatoptions:remove({ "c", "o", "r" })
   end,
-  group = "discontinue_comments",
+  group = "DiscontinueComment",
   desc = "no comment continuation",
 })
 
 -- for typst
-vim.api.nvim_create_autocmd({
+augroup("Tinymist", { clear = true })
+autocmds({
   "BufNewFile",
   "BufRead",
 }, {
@@ -33,14 +37,17 @@ vim.api.nvim_create_autocmd({
     local buf = vim.api.nvim_get_current_buf()
     vim.api.nvim_set_option_value("filetype", "typst", { buf = buf })
   end,
+  group = "Tinymist",
 })
 
 -- workarond for avoiding conflicts with <CR>-prefix keymaps in command-line window
-vim.api.nvim_create_autocmd("CmdwinEnter", {
+augroup("CmdWinSetting", { clear = true })
+autocmds("CmdwinEnter", {
   callback = function()
     vim.api.nvim_buf_set_keymap(0, "n", "<CR>", "<CR>", { noremap = true, nowait = true })
     vim.api.nvim_buf_set_keymap(0, "n", "Q", ":q<CR>", { noremap = true, nowait = true })
   end,
+  group = "CmdWinSetting",
 })
 
 -- set colorscheme based on the current mode
@@ -53,9 +60,11 @@ local set_colorscheme_and_refresh = function(scheme)
   vim.cmd.colorscheme(scheme)
   require("lualine").setup({})
 end
-vim.api.nvim_create_autocmd({ "InsertEnter", "InsertLeave" }, {
+augroup("ColorSchemeSwitcher", { clear = true })
+autocmds({ "InsertEnter", "InsertLeave" }, {
   callback = function(event)
     local scheme = event.event == "InsertEnter" and themes.insert or themes.normal
     set_colorscheme_and_refresh(scheme)
   end,
+  group = "ColorSchemeSwitcher",
 })
