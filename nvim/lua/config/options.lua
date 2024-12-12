@@ -26,3 +26,6 @@ vim.g.ai_cmp = false
 
 -- set spelllang
 vim.opt.spelllang = { "en", "cjk" }
+
+-- set what is "word"
+vim.opt.iskeyword:remove({ "-", "_" })
