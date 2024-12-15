@@ -21,7 +21,7 @@ vim.o.wrap = true
 -- https://github.com/LazyVim/LazyVim/discussions/2248
 vim.g.minipairs_disable = true
 
--- use copilit with tab accept
+-- use copilot with tab accept
 vim.g.ai_cmp = false
 
 -- set spelllang
