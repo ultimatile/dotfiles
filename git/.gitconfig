@@ -16,3 +16,4 @@
 	autocorrect = 1
 [core]
 	editor = nvim
+  pager = less --mouse
