@@ -29,3 +29,5 @@ vim.opt.spelllang = { "en", "cjk" }
 
 -- set what is "word"
 vim.opt.iskeyword:remove({ "_" })
+
+require("usercmds")
