@@ -46,20 +46,28 @@ autocmds("CmdwinEnter", {
   group = augroup("CmdWinSetting"),
 })
 
--- set colorscheme based on the current mode
+-- Colorscheme table that maps events to themes
+-- TODO: should refer to the predefined colorscheme for normal mode
 local themes = {
-  insert = "tokyonight-night",
-  -- TODO: should refer to the predefined colorscheme
-  normal = "tokyonight-storm",
+  InsertEnter = "tokyonight-night",
+  InsertLeave = "tokyonight-storm",
+  RecordingEnter = "terafox",
+  RecordingLeave = "tokyonight-storm",
 }
-local set_colorscheme_and_refresh = function(scheme)
-  vim.cmd.colorscheme(scheme)
-  require("lualine").setup({})
+
+-- Function to determine and set the colorscheme
+local handle_event_and_update = function(event)
+  local scheme = themes[event]
+  if scheme then
+    vim.cmd.colorscheme(scheme)
+    require("lualine").setup({})
+  end
 end
-autocmds({ "InsertEnter", "InsertLeave" }, {
+
+-- Autocommands for handling mode transitions
+vim.api.nvim_create_autocmd({ "InsertEnter", "InsertLeave", "RecordingEnter", "RecordingLeave" }, {
   callback = function(event)
-    local scheme = event.event == "InsertEnter" and themes.insert or themes.normal
-    set_colorscheme_and_refresh(scheme)
+    handle_event_and_update(event.event)
   end,
   group = augroup("ColorSchemeSwitcher"),
 })
