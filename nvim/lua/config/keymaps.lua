@@ -10,6 +10,9 @@ remap_keys("<CR><CR>", "<C-w><C-w>")
 -- Workaround when <CR> is not available
 remap_keys("<S-CR><S-CR>", "<C-w><C-w>")
 
+-- suppress the default behavior of q
+remap_keys("q", "<Nop>")
+
 -- moving
 remap_keys("j", "h") -- go left
 remap_keys("k", "gk") -- go up
@@ -50,7 +53,6 @@ vim.keymap.set("x", "<C-S-Up>", ":move '<-2<CR>gv=gv", { noremap = true, silent 
 -- move the line down
 vim.keymap.set("x", "<C-S-Down>", ":move '>+1<CR>gv=gv", { noremap = true, silent = true })
 
--- Q-prefix keymaps that behave like Z-prefix commands in normal mode
 local function nmapQ()
   -- Wait for a character input
   local char = vim.fn.getchar()
@@ -60,18 +62,32 @@ local function nmapQ()
     char = vim.fn.nr2char(char)
   end
 
-  -- Mapping of keys to commands for Q-prefix keymaps
+  -- Mapping of keys to actions for Q-prefix keymaps
   local keymap_actions_Q = {
-    Q = "conf qa", -- QQ
-    S = "wa", -- QS
-    W = "xa", -- QW
-    Z = "qa!", -- QZ
+    C = function()
+      vim.fn.feedkeys("q:")
+    end, -- Open command-line window (QC)
+    Q = function()
+      vim.cmd("confirm qa")
+    end, -- Confirm quit all (QQ)
+    R = function()
+      vim.fn.feedkeys("q")
+    end, -- Start/Stop macro recording (QR)
+    S = function()
+      vim.cmd("wa")
+    end, -- Write all buffers (QS)
+    W = function()
+      vim.cmd("xa")
+    end, -- Write and quit all buffers (QW)
+    Z = function()
+      vim.cmd("qa!")
+    end, -- Force quit all buffers (QZ)
   }
 
-  -- Execute the corresponding command if the keymap exists
-  local cmdQ = keymap_actions_Q[char]
-  if cmdQ then
-    vim.cmd(cmdQ)
+  -- Execute the corresponding function if the keymap exists
+  local action = keymap_actions_Q[char]
+  if action then
+    action()
   else
     print("No keymap for Q" .. char)
   end
