@@ -6,9 +6,10 @@ local function remap_keys(lhs, rhs)
   vim.keymap.set("n", lhs, rhs, { noremap = true, silent = true })
 end
 
-remap_keys("<CR><CR>", "<C-w><C-w>")
+remap_keys("<Tab>", "<C-w><C-w>")
+-- remap_keys("<CR><CR>", "<C-w><C-w>")
 -- Workaround when <CR> is not available
-remap_keys("<S-CR><S-CR>", "<C-w><C-w>")
+-- remap_keys("<S-CR><S-CR>", "<C-w><C-w>")
 
 -- suppress the default behavior of q
 remap_keys("q", "<Nop>")
