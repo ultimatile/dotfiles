@@ -6,6 +6,18 @@ local function remap_keys(lhs, rhs)
   vim.keymap.set("n", lhs, rhs, { noremap = true, silent = true })
 end
 
+local function feedkeys(mode, keys, opts)
+  opts = opts or {}
+
+  local from_part = opts.from_part == nil and true or opts.from_part
+  local do_lt = opts.do_lt == nil and false or opts.do_lt
+  local special = opts.special == nil and true or opts.special
+  local escape_ks = opts.escape_ks == nil and true or opts.escape_ks
+
+  local termcodes = vim.api.nvim_replace_termcodes(keys, from_part, do_lt, special)
+  vim.api.nvim_feedkeys(termcodes, mode, escape_ks)
+end
+
 remap_keys("<Tab>", "<C-w><C-w>")
 -- remap_keys("<CR><CR>", "<C-w><C-w>")
 -- Workaround when <CR> is not available
@@ -66,13 +78,13 @@ local function nmapQ()
   -- Mapping of keys to actions for Q-prefix keymaps
   local keymap_actions_Q = {
     C = function()
-      vim.fn.feedkeys("q:")
+      feedkeys("n", "q:")
     end, -- Open command-line window (QC)
     Q = function()
       vim.cmd("confirm qa")
     end, -- Confirm quit all (QQ)
     R = function()
-      vim.fn.feedkeys("q")
+      feedkeys("n", "q")
     end, -- Start/Stop macro recording (QR)
     S = function()
       vim.cmd("wa")
