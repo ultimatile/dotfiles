@@ -2,10 +2,6 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-local function remap_keys(lhs, rhs)
-  vim.keymap.set("n", lhs, rhs, { noremap = true, silent = true })
-end
-
 local function feedkeys(mode, keys, opts)
   opts = opts or {}
 
@@ -19,36 +15,39 @@ local function feedkeys(mode, keys, opts)
   vim.api.nvim_feedkeys(termcodes, mode, escape_ks)
 end
 
-remap_keys("<Tab>", "<C-w><C-w>")
--- remap_keys("<CR><CR>", "<C-w><C-w>")
+local function nmapkey(lhs, rhs)
+  vim.keymap.set("n", lhs, rhs, { noremap = true, silent = true })
+end
+nmapkey("<Tab>", "<C-w><C-w>")
+-- nmapkey("<CR><CR>", "<C-w><C-w>")
 -- Workaround when <CR> is not available
--- remap_keys("<S-CR><S-CR>", "<C-w><C-w>")
+-- nmapkey("<S-CR><S-CR>", "<C-w><C-w>")
 
 -- suppress the default behavior of q
-remap_keys("q", "<Nop>")
+nmapkey("q", "<Nop>")
 
 -- moving
-remap_keys("j", "h") -- go left
-remap_keys("k", "gk") -- go up
-remap_keys("l", "gj") -- go down
-remap_keys(";", "l") -- go right
-remap_keys("h", ";")
+nmapkey("j", "h") -- go left
+nmapkey("k", "gk") -- go up
+nmapkey("l", "gj") -- go down
+nmapkey(";", "l") -- go right
+nmapkey("h", ";")
 
 -- stopping yank when erasing
-remap_keys("x", '"_x') -- character erasure without yank
-remap_keys("d", '"_d') -- stopping yank when end-of-line erasure
-remap_keys("c", '"_c') -- stopping yank when changing
-remap_keys("D", '"_D') -- stopping yank when lines erasure
+nmapkey("x", '"_x') -- character erasure without yank
+nmapkey("d", '"_d') -- stopping yank when end-of-line erasure
+nmapkey("c", '"_c') -- stopping yank when changing
+nmapkey("D", '"_D') -- stopping yank when lines erasure
 
 -- original dd
-remap_keys("<leader>d", "d")
-remap_keys("<leader>D", "dd")
+nmapkey("<leader>d", "d")
+nmapkey("<leader>D", "dd")
 
 -- escaping by jj
 vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true })
 
 -- -- show all the hidden diagnostics
-remap_keys("<leader>m", vim.diagnostic.open_float)
+nmapkey("<leader>m", vim.diagnostic.open_float)
 
 -- move to the end of the line
 vim.keymap.set("i", "<C-B>", "<C-o>0", { noremap = true, silent = true })
