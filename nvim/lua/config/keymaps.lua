@@ -18,6 +18,18 @@ end
 local function nmapkey(lhs, rhs)
   vim.keymap.set("n", lhs, rhs, { noremap = true, silent = true })
 end
+
+local function imapkey_noautocmd(lhs, rhs)
+  vim.keymap.set("i", lhs, function()
+    local ei = vim.opt.eventignore
+    vim.opt.eventignore = "all"
+    feedkeys("n", rhs)
+    vim.defer_fn(function()
+      vim.opt.eventignore = ei
+    end, 0)
+  end, { noremap = true, silent = true })
+end
+
 nmapkey("<Tab>", "<C-w><C-w>")
 -- nmapkey("<CR><CR>", "<C-w><C-w>")
 -- Workaround when <CR> is not available
@@ -49,10 +61,9 @@ vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true
 -- -- show all the hidden diagnostics
 nmapkey("<leader>m", vim.diagnostic.open_float)
 
--- move to the end of the line
-vim.keymap.set("i", "<C-B>", "<C-o>0", { noremap = true, silent = true })
-vim.keymap.set("i", "<C-E>", "<C-o>$", { noremap = true, silent = true })
-vim.keymap.set("i", "<C-o>", "<C-o>o", { noremap = true, silent = true })
+imapkey_noautocmd("<C-B>", "<Esc>I")
+imapkey_noautocmd("<C-E>", "<Esc>g_a")
+imapkey_noautocmd("<C-O>", "<Esc>o")
 
 -- line swapping
 -- Normal mode mappings
