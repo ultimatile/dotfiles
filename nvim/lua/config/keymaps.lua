@@ -107,4 +107,4 @@ local function nmapQ()
 end
 
 -- Map Q in normal mode to nmapQ function
-vim.keymap.set("n", "Q", "", { noremap = true, silent = true, callback = nmapQ })
+vim.keymap.set("n", "Q", nmapQ, { noremap = true, silent = true })
