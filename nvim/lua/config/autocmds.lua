@@ -10,7 +10,7 @@ local autocmds = vim.api.nvim_create_autocmd
 -- leave Japanese input method for specific events
 autocmds({ "InsertLeave", "FocusGained", "VimEnter", "BufEnter" }, {
   callback = function()
-    vim.system({ "im-select", "com.apple.inputmethod.Kotoeri.RomajiTyping.Roman" })
+    vim.system({ "macism", "com.apple.keylayout.ABC" })
     -- vim.system({ "im-select", "com.apple.inputmethod.Kotoeri.RomajiTyping.Roman" }):wait()
   end,
   group = augroup("IMESwitcher"),
