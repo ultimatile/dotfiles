@@ -10,11 +10,12 @@ local function feedkeys(mode, keys, opts)
   opts = opts or {}
 
   local from_part = opts.from_part == nil and true or opts.from_part
-  local do_lt = opts.do_lt == nil and false or opts.do_lt
+  local do_lt = opts.do_lt == nil and true or opts.do_lt
   local special = opts.special == nil and true or opts.special
-  local escape_ks = opts.escape_ks == nil and true or opts.escape_ks
+  local escape_ks = opts.escape_ks == nil and false or opts.escape_ks
 
   local termcodes = vim.api.nvim_replace_termcodes(keys, from_part, do_lt, special)
+  -- mode is not an usual vim mode
   vim.api.nvim_feedkeys(termcodes, mode, escape_ks)
 end
 
