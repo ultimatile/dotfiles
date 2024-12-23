@@ -53,4 +53,5 @@ return {
   -- { "vimtex", enabled = false },
   -- { "which-key.nvim", enabled = false },
   -- { "yanky.nvim", enabled = false },
+  -- {"blink.cmp", enabled = false}
 }
