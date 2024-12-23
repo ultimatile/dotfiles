@@ -56,6 +56,7 @@ if status is-interactive
     # nvim
     abbr -a nv nvim
     abbr -a view nvim -R
+    abbr -a nvcl nvim --clean
     abbr -a nvfc nvim $HOME/dotfiles/fish/config.fish
     abbr -a nvkey nvim $HOME/dotfiles/nvim/lua/config/keymaps.lua
     abbr -a nvauto nvim $HOME/dotfiles/nvim/lua/config/autocmds.lua
