@@ -15,8 +15,11 @@ local function feedkeys(mode, keys, opts)
   vim.api.nvim_feedkeys(termcodes, mode, escape_ks)
 end
 
-local function nmapkey(lhs, rhs)
-  vim.keymap.set("n", lhs, rhs, { noremap = true, silent = true })
+local function nmapkey(lhs, rhs, opts)
+  opts = opts or {}
+  opts.noremap = opts.noremap == nil and true or opts.noremap
+  opts.silent = opts.silent == nil and true or opts.silent
+  vim.keymap.set("n", lhs, rhs, opts)
 end
 
 local function imapkey_noautocmd(lhs, rhs)
@@ -58,8 +61,8 @@ nmapkey("<leader>D", "dd")
 -- escaping by jj
 vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true })
 
--- -- show all the hidden diagnostics
-nmapkey("<leader>m", vim.diagnostic.open_float)
+-- show all the hidden diagnostics
+nmapkey("<leader>m", vim.diagnostic.open_float, { desc = "show all the hidden diagnostics" })
 
 imapkey_noautocmd("<C-B>", "<Esc>I")
 imapkey_noautocmd("<C-E>", "<Esc>g_a")
@@ -118,4 +121,4 @@ local function nmapQ()
 end
 
 -- Map Q in normal mode to nmapQ function
-vim.keymap.set("n", "Q", nmapQ, { noremap = true, silent = true })
+nmapkey("Q", nmapQ, { desc = "Q-prefix" })
