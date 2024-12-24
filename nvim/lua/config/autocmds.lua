@@ -59,8 +59,10 @@ local themes = {
 local handle_event_and_update = function(event)
   local scheme = themes[event]
   if scheme then
-    vim.cmd.colorscheme(scheme)
-    require("lualine").setup({})
+    -- schedule is necessary to emit ColorScheme event
+    vim.schedule(function()
+      vim.cmd.colorscheme(scheme)
+    end)
   end
 end
 
