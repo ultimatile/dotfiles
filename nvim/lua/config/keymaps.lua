@@ -38,8 +38,9 @@ nmapkey("<Tab>", "<C-w><C-w>")
 -- Workaround when <CR> is not available
 -- nmapkey("<S-CR><S-CR>", "<C-w><C-w>")
 
--- suppress the default behavior of q
+-- suppress the default behaviors
 nmapkey("q", "<Nop>")
+nmapkey("<C-Z>", "<Nop>")
 
 -- moving
 nmapkey("j", "h") -- go left
@@ -55,8 +56,8 @@ nmapkey("c", '"_c') -- stopping yank when changing
 nmapkey("D", '"_D') -- stopping yank when lines erasure
 
 -- original dd
-nmapkey("<leader>d", "d")
-nmapkey("<leader>D", "dd")
+nmapkey("<leader>D", "d")
+nmapkey("<leader>DD", "dd")
 
 -- escaping by jj
 vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true })
