@@ -27,12 +27,11 @@ local function imapkey_noautocmd(lhs, rhs)
     local ei = vim.opt.eventignore
     vim.opt.eventignore = "all"
     feedkeys("n", rhs)
-    vim.defer_fn(function()
+    vim.schedule(function()
       vim.opt.eventignore = ei
-    end, 0)
+    end)
   end, { noremap = true, silent = true })
 end
-
 nmapkey("<Tab>", "<C-w><C-w>")
 -- nmapkey("<CR><CR>", "<C-w><C-w>")
 -- Workaround when <CR> is not available
