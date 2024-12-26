@@ -3,6 +3,7 @@ source /opt/homebrew/opt/modules/init/fish
 # should be before Homebrew initialization
 # this overrides aarch64 brew with x86_64 brew because fish_add_path prepends fish_user_paths to PATH
 fish_add_path $HOME/.cargo-local/bin
+fish_add_path $HOME/.local/bin
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 # modulefiles

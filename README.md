@@ -59,6 +59,14 @@ ln -s $HOME/{dotfiles,defaultpy}/pyproject.toml
 ln -s $HOME/{dotfiles,.config}/starship.toml
 ```
 
+## swpunc (punctuation switcher)
+
+```sh:
+chmod +x $HOME/dotfiles/swpunc
+ln -s $HOME/{dotfiles,.local/bin}/swpunc
+```
+
+```sh:
 ## WezTerm
 
 ```sh:

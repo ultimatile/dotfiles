@@ -1,0 +1,26 @@
+#!/bin/bash
+# Read the current punctuation type
+#0: 、。
+#1: ，。
+#2: 、．
+#3: ，．
+current_punc_mode=$(defaults read com.apple.inputmethod.Kotoeri JIMPrefPunctuationTypeKey 2>/dev/null)
+
+if [[ "$current_punc_mode" -eq 0 ]]; then
+  new_punc_mode=3
+  new_punc="，．"
+elif [[ "$current_punc_mode" -eq 3 ]]; then
+  new_punc_mode=0
+  new_punc="、。"
+else
+  echo "Unknown punctuation type: $current_punc_mode"
+  exit 1
+fi
+
+# Update the punctuation type
+defaults write com.apple.inputmethod.Kotoeri JIMPrefPunctuationTypeKey -int "$new_punc_mode"
+
+# Reload the input method to apply the changes
+killall -HUP JapaneseIM-RomajiTyping 2>/dev/null || echo "Failed to send HUP signal to JapaneseIM-RomajiTyping."
+
+echo "Punctuation updated to $new_punc"
