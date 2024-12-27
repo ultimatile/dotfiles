@@ -6,6 +6,12 @@
 ln -s $HOME/{dotfiles,.config}/atuin/config.toml
 ```
 
+## Ghostty
+
+```sh:
+ln -s  $HOME/{dotfiles/,Library/Application\ Support/com.mitchellh.}ghostty/config
+```
+
 ## Git
 
 Add the following to your `.gitconfig` file:
@@ -16,7 +22,7 @@ Add the following to your `.gitconfig` file:
 ```
 
 ## Glow
-  
+
 ```sh:
 ln -s $HOME/{dotfiles/,Library/Preferences/glow/}glow.yml
 ```
@@ -54,7 +60,7 @@ ln -s $HOME/{dotfiles,defaultpy}/pyproject.toml
 ```
 
 ## Starship
-  
+
 ```sh:
 ln -s $HOME/{dotfiles,.config}/starship.toml
 ```
@@ -66,9 +72,9 @@ chmod +x $HOME/dotfiles/swpunc
 ln -s $HOME/{dotfiles,.local/bin}/swpunc
 ```
 
-```sh:
+````sh:
 ## WezTerm
 
 ```sh:
 ln -s  $HOME/{dotfiles,.config}/wezterm
-```
+````
