@@ -9,7 +9,7 @@ ln -s $HOME/{dotfiles,.config}/atuin/config.toml
 ## Ghostty
 
 ```sh:
-ln -s  $HOME/{dotfiles/,Library/Application\ Support/com.mitchellh.}ghostty/config
+ln -s  $HOME/{dotfiles,.config}/ghostty/config
 ```
 
 ## Git
