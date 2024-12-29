@@ -22,6 +22,13 @@ local function nmapkey(lhs, rhs, opts)
   vim.keymap.set("n", lhs, rhs, opts)
 end
 
+local function xmapkey(lhs, rhs, opts)
+  opts = opts or {}
+  opts.noremap = opts.noremap == nil and true or opts.noremap
+  opts.silent = opts.silent == nil and true or opts.silent
+  vim.keymap.set("x", lhs, rhs, opts)
+end
+
 local function imapkey_noautocmd(lhs, rhs)
   vim.keymap.set("i", lhs, function()
     local ei = vim.opt.eventignore
@@ -32,10 +39,15 @@ local function imapkey_noautocmd(lhs, rhs)
     end)
   end, { noremap = true, silent = true })
 end
+
+-- duplicate the current line(s)
+nmapkey("<C-P>", ":copy.<CR>")
+nmapkey("<C-S-P>", ":copy-1<CR>")
+xmapkey("<C-P>", ":copy '<-1<CR>gv")
+xmapkey("<C-S-P>", ":copy '>+0<CR>gv")
+
+-- map <Tab> to switch between windows
 nmapkey("<Tab>", "<C-w><C-w>")
--- nmapkey("<CR><CR>", "<C-w><C-w>")
--- Workaround when <CR> is not available
--- nmapkey("<S-CR><S-CR>", "<C-w><C-w>")
 
 -- suppress the default behaviors
 nmapkey("q", "<Nop>")
@@ -58,9 +70,6 @@ nmapkey("D", '"_D') -- stopping yank when lines erasure
 nmapkey("<leader>D", "d")
 nmapkey("<leader>DD", "dd")
 
--- escaping by jj
-vim.keymap.set({ "i", "v", "s" }, "jj", "<Esc>", { noremap = true, silent = true })
-
 -- show all the hidden diagnostics
 nmapkey("<leader>m", vim.diagnostic.open_float, { desc = "show all the hidden diagnostics" })
 
@@ -71,14 +80,14 @@ imapkey_noautocmd("<C-O>", "<Esc>o")
 -- line swapping
 -- Normal mode mappings
 -- move the line up
-vim.keymap.set("n", "<C-S-Up>", '":move -1-" .. v:count1 .. "<CR>==l"', { noremap = true, expr = true, silent = true })
+nmapkey("<C-S-Up>", '":move -1-" .. v:count1 .. "<CR>==l"', { expr = true })
 -- move the line down
-vim.keymap.set("n", "<C-S-Down>", '":move +1<CR>==" .. v:count1 .. "l"', { noremap = true, expr = true, silent = true })
+nmapkey("<C-S-Down>", '":move +1<CR>==" .. v:count1 .. "l"', { expr = true })
 -- Visual mode mappings
 -- move the line up
-vim.keymap.set("x", "<C-S-Up>", ":move '<-2<CR>gv=gv", { noremap = true, silent = true })
+xmapkey("<C-S-Up>", ":move '<-2<CR>gv=gv")
 -- move the line down
-vim.keymap.set("x", "<C-S-Down>", ":move '>+1<CR>gv=gv", { noremap = true, silent = true })
+xmapkey("<C-S-Down>", ":move '>+1<CR>gv=gv")
 
 local function nmapQ()
   -- Wait for a character input
