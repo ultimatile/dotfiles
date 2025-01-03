@@ -82,8 +82,6 @@ ln -s $HOME/{dotfiles,.local/bin}/swpunc
 
 ## WezTerm
 
-````sh:
-
 ```sh:
 ln -s  $HOME/{dotfiles,.config}/wezterm
-````
+```
