@@ -70,6 +70,7 @@ if status is-interactive
     abbr -a brst brew list
 
     # make
+    abbr -a mk make
     abbr -a maek make
     abbr -a meak make
     abbr -a meka make
