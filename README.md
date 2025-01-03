@@ -72,8 +72,9 @@ chmod +x $HOME/dotfiles/swpunc
 ln -s $HOME/{dotfiles,.local/bin}/swpunc
 ```
 
-````sh:
 ## WezTerm
+
+````sh:
 
 ```sh:
 ln -s  $HOME/{dotfiles,.config}/wezterm
