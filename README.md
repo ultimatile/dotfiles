@@ -33,6 +33,14 @@ ln -s $HOME/{dotfiles/,Library/Preferences/glow/}glow.yml
 ln -s $HOME/{dotfiles/,}.gnuplot
 ```
 
+## Hammerspoon
+
+requirement: swpunc
+
+```sh:
+ln -s $HOME/{dotfiles/,.}hammerspoon/init.lua
+```
+
 ## Modulefiles
 
 ```sh:
