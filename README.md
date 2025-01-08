@@ -6,6 +6,12 @@
 ln -s $HOME/{dotfiles,.config}/atuin/config.toml
 ```
 
+## Direnv
+
+```sh:
+ln -s $HOME/{dotfiles,.config}/direnv/direnvrc
+```
+
 ## Ghostty
 
 ```sh:
