@@ -71,6 +71,7 @@ nix profile install
 
 ```sh:
 ln -s $HOME/{dotfiles,Library/Application\ Support}/nushell/config.nu
+ln -s $HOME/{dotfiles,Library/Application\ Support}/nushell/env.nu
 ```
 
 ## Python

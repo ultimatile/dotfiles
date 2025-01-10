@@ -33,3 +33,4 @@ $env.PROMPT_COMMAND_RIGHT = { || create_right_prompt }
 $env.PROMPT_INDICATOR_VI_INSERT = "❯"
 $env.PROMPT_INDICATOR_VI_NORMAL = "❮"
 
+source ~/.zoxide.nu
