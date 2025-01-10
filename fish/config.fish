@@ -17,7 +17,6 @@ source $HOME/.cargo/env.fish
 
 atuin init --disable-up-arrow fish | source
 # atuin init fish | source
-zoxide init fish | source
 starship init fish | source
 # mcfly init fish | source
 #fzf --fish | source
@@ -99,4 +98,5 @@ if status is-interactive
     abbr -a zintel env /usr/bin/arch -x86_64 /bin/zsh --login
     abbr -a zarm env /usr/bin/arch -arm64 /bin/zsh --login
 end
+zoxide init fish | source
 direnv hook fish | source
