@@ -80,14 +80,14 @@ imapkey_noautocmd("<C-O>", "<Esc>o")
 -- line swapping
 -- Normal mode mappings
 -- move the line up
-nmapkey("<C-S-Up>", '":move -1-" .. v:count1 .. "<CR>==l"', { expr = true })
+nmapkey("<M-Up>", '":move -1-" .. v:count1 .. "<CR>==l"', { expr = true })
 -- move the line down
-nmapkey("<C-S-Down>", '":move +1<CR>==" .. v:count1 .. "l"', { expr = true })
+nmapkey("<M-Down>", '":move +1<CR>==" .. v:count1 .. "l"', { expr = true })
 -- Visual mode mappings
 -- move the line up
-xmapkey("<C-S-Up>", ":move '<-2<CR>gv=gv")
+xmapkey("<M-Up>", ":move '<-2<CR>gv=gv")
 -- move the line down
-xmapkey("<C-S-Down>", ":move '>+1<CR>gv=gv")
+xmapkey("<M-Down>", ":move '>+1<CR>gv=gv")
 
 local function nmapQ()
   -- Wait for a character input
