@@ -4,7 +4,6 @@
 
 local function feedkeys(mode, keys, opts)
   opts = opts or {}
-
   local from_part = opts.from_part == nil and true or opts.from_part
   local do_lt = opts.do_lt == nil and true or opts.do_lt
   local special = opts.special == nil and true or opts.special
@@ -15,21 +14,22 @@ local function feedkeys(mode, keys, opts)
   vim.api.nvim_feedkeys(termcodes, mode, escape_ks)
 end
 
-local function nmapkey(lhs, rhs, opts)
+local function defaultopts(opts)
   opts = opts or {}
   opts.noremap = opts.noremap == nil and true or opts.noremap
   opts.silent = opts.silent == nil and true or opts.silent
-  vim.keymap.set("n", lhs, rhs, opts)
+  return opts
+end
+
+local function nmapkey(lhs, rhs, opts)
+  vim.keymap.set("n", lhs, rhs, defaultopts(opts))
 end
 
 local function xmapkey(lhs, rhs, opts)
-  opts = opts or {}
-  opts.noremap = opts.noremap == nil and true or opts.noremap
-  opts.silent = opts.silent == nil and true or opts.silent
-  vim.keymap.set("x", lhs, rhs, opts)
+  vim.keymap.set("x", lhs, rhs, defaultopts(opts))
 end
 
-local function imapkey_noautocmd(lhs, rhs)
+local function imapkey_noautocmd(lhs, rhs, opts)
   vim.keymap.set("i", lhs, function()
     local ei = vim.opt.eventignore
     vim.opt.eventignore = "all"
@@ -37,7 +37,7 @@ local function imapkey_noautocmd(lhs, rhs)
     vim.schedule(function()
       vim.opt.eventignore = ei
     end)
-  end, { noremap = true, silent = true })
+  end, defaultopts(opts))
 end
 
 -- duplicate the current line(s)
@@ -47,12 +47,10 @@ xmapkey("<C-P>", ":copy '<-1<CR>gv")
 xmapkey("<C-S-P>", ":copy '>+0<CR>gv")
 
 -- map <Tab> to switch between windows
-nmapkey("<Tab>", "<C-w><C-w>")
-
+nmapkey("<Tab>", "<C-w><C-w>", { desc = "Next Window" })
 -- suppress the default behaviors
 nmapkey("q", "<Nop>")
 nmapkey("<C-Z>", "<Nop>")
-
 -- moving
 nmapkey("j", "h") -- go left
 nmapkey("k", "gk") -- go up
@@ -89,7 +87,8 @@ xmapkey("<M-Up>", ":move '<-2<CR>gv=gv")
 -- move the line down
 xmapkey("<M-Down>", ":move '>+1<CR>gv=gv")
 
-local function nmapQ()
+-- Map Q in normal mode without timeout
+nmapkey("Q", function()
   -- Wait for a character input
   local char = vim.fn.getchar()
 
@@ -118,16 +117,10 @@ local function nmapQ()
     Z = function()
       vim.cmd("qa!")
     end, -- Force quit all buffers (QZ)
-  }
+  };
 
   -- Execute the corresponding function if the keymap exists
-  local action = keymap_actions_Q[char]
-  if action then
-    action()
-  else
+  (keymap_actions_Q[char] or function()
     print("No keymap for Q" .. char)
-  end
-end
-
--- Map Q in normal mode to nmapQ function
-nmapkey("Q", nmapQ, { desc = "Q-prefix" })
+  end)()
+end, { desc = "Q-prefix" })
