@@ -1,0 +1,12 @@
+#!/bin/bash
+LAZYVIM="$HOME/dotfiles/nvim/lazyvim.json"
+
+if grep -q "coding.blink" "$LAZYVIM"; then
+	gsed -i -e "s/coding.blink/coding.nvim-cmp/" "$LAZYVIM"
+	echo "blink -> nvim-cmp"
+elif grep -q "coding.nvim-cmp" "$LAZYVIM"; then
+	gsed -i -e "s/coding.nvim-cmp/coding.blink/" "$LAZYVIM"
+	echo "nvim-cmp -> blink"
+else
+	echo "Neither blink nor nvim-cmp found"
+fi
