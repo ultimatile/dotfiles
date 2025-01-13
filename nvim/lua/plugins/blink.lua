@@ -10,6 +10,13 @@ return {
     },
     sources = {
       compat = { "latex_symbols" },
+      per_filetype = {
+        julia = { "lsp", "path", "snippets", "buffer", "latex_symbols" },
+      },
+      -- enclose by function to avoid automatic loading compat to default
+      default = function()
+        return { "lsp", "path", "snippets", "buffer" }
+      end,
     },
   },
 }

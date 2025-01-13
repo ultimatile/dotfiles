@@ -7,11 +7,5 @@ return {
         return LazyVim.cmp.map({ "snippet_backward", "ai_accept_WORD" }, fallback)()
       end,
     })
-    table.insert(opts.sources, {
-      name = "latex_symbols",
-      option = {
-        strategy = 0, -- mixed
-      },
-    })
   end,
 }

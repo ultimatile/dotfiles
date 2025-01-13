@@ -73,3 +73,18 @@ autocmd({ "InsertEnter", "InsertLeave", "RecordingEnter", "RecordingLeave" }, {
   end,
   group = augroup("ColorSchemeSwitcher"),
 })
+
+-- https://github.com/hrsh7th/nvim-cmp/wiki/Advanced-techniques#disable--enable-cmp-sources-only-on-certain-buffers
+-- https://github.com/LazyVim/LazyVim/discussions/5338
+if LazyVim.cmp_engine() == "nvim-cmp" then
+  local cmp = require("cmp")
+  autocmd("FileType", {
+    pattern = "julia",
+    callback = function()
+      local sources = vim.deepcopy(cmp.get_config().sources or {})
+      table.insert(sources, { name = "latex_symbols", option = { strategy = 0 } })
+      cmp.setup.buffer({ sources = sources })
+    end,
+    group = augroup("NvimCmp"),
+  })
+end
