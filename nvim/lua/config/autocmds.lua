@@ -5,10 +5,10 @@
 local function augroup(name)
   return vim.api.nvim_create_augroup(name, { clear = true })
 end
-local autocmds = vim.api.nvim_create_autocmd
+local autocmd = vim.api.nvim_create_autocmd
 
 -- leave Japanese input method for specific events
-autocmds({ "InsertLeave", "FocusGained", "VimEnter", "BufEnter" }, {
+autocmd({ "InsertLeave", "FocusGained", "VimEnter", "BufEnter" }, {
   callback = function()
     vim.system({ "macism", "com.apple.keylayout.ABC" })
     -- vim.system({ "im-select", "com.apple.inputmethod.Kotoeri.RomajiTyping.Roman" }):wait()
@@ -18,7 +18,7 @@ autocmds({ "InsertLeave", "FocusGained", "VimEnter", "BufEnter" }, {
 
 -- stop comment continuation
 -- https://github.com/LazyVim/LazyVim/discussions/598
-autocmds({ "FileType" }, {
+autocmd({ "FileType" }, {
   pattern = { "*" },
   callback = function()
     vim.opt.formatoptions:remove({ "c", "o", "r" })
@@ -28,7 +28,7 @@ autocmds({ "FileType" }, {
 })
 
 -- for typst
-autocmds({ "BufNewFile", "BufRead" }, {
+autocmd({ "BufNewFile", "BufRead" }, {
   pattern = "*.typ",
   callback = function()
     local buf = vim.api.nvim_get_current_buf()
@@ -38,7 +38,7 @@ autocmds({ "BufNewFile", "BufRead" }, {
 })
 
 -- workarond for avoiding conflicts with <CR>-prefix keymaps in command-line window
-autocmds("CmdwinEnter", {
+autocmd("CmdwinEnter", {
   callback = function()
     vim.api.nvim_buf_set_keymap(0, "n", "<CR>", "<CR>", { noremap = true, nowait = true })
     vim.api.nvim_buf_set_keymap(0, "n", "Q", ":q<CR>", { noremap = true, nowait = true })
@@ -67,7 +67,7 @@ local handle_event_and_update = function(event)
 end
 
 -- Autocommands for handling mode transitions
-vim.api.nvim_create_autocmd({ "InsertEnter", "InsertLeave", "RecordingEnter", "RecordingLeave" }, {
+autocmd({ "InsertEnter", "InsertLeave", "RecordingEnter", "RecordingLeave" }, {
   callback = function(event)
     handle_event_and_update(event.event)
   end,
