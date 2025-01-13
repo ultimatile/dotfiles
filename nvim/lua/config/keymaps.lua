@@ -48,6 +48,10 @@ xmapkey("<C-S-P>", ":copy '>+0<CR>gv")
 
 -- map <Tab> to switch between windows
 nmapkey("<Tab>", "<C-w><C-w>", { desc = "Next Window" })
+-- map <S-Tab> to switch between buffers (needs bufferline)
+nmapkey("<S-Tab>", function()
+  vim.cmd("BufferLineCycleNext")
+end, { desc = "Next Buffer" })
 -- suppress the default behaviors
 nmapkey("q", "<Nop>")
 nmapkey("<C-Z>", "<Nop>")
