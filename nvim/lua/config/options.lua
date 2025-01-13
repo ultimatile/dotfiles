@@ -30,4 +30,6 @@ vim.opt.spelllang = { "en", "cjk" }
 -- set what is "word"
 vim.opt.iskeyword:remove({ "_" })
 
+vim.g.mapleader = "q"
+
 require("config.usercmds")
