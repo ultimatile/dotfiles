@@ -83,7 +83,7 @@ if LazyVim.cmp_engine() == "nvim-cmp" then
     callback = function()
       local sources = vim.deepcopy(cmp.get_config().sources or {})
       table.insert(sources, { name = "latex_symbols", option = { strategy = 0 } })
-      cmp.setup.buffer({ sources = sources })
+      cmp.setup.buffer({ sources = sources }) ---@diagnostic disable-line: redundant-parameter
     end,
     group = augroup("NvimCmp"),
   })
