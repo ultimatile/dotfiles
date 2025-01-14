@@ -95,6 +95,8 @@ ln -s $HOME/{dotfiles,.local/bin}/swpunc
 
 ## sw-nvim-cmp-blink
 
+requirement: gsed
+
 ```sh:
 chmod +x $HOME/dotfiles/sw-nvim-cmp-blink
 ln -s $HOME/{dotfiles,.local/bin}/sw-nvim-cmp-blink
