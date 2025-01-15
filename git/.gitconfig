@@ -25,3 +25,9 @@
     dark = true      # or light = true, or omit for auto-detection
 [merge]
     conflictstyle = zdiff3
+    tool = diffview
+[mergetool]
+  prompt = false
+  keepBackup = false
+[mergetool "diffview"]
+  cmd = nvim -n -c "DiffviewOpen" "$MERGE"
