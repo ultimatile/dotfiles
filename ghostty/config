@@ -2,3 +2,5 @@ font-size = 18
 font-family = "UDEV Gothic NF"
 theme = "tokyonight-storm"
 font-thicken = true
+shell-integration-features = no-cursor
+cursor-style-blink = false
