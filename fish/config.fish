@@ -39,22 +39,30 @@ if status is-interactive
     abbr -a sfc source $HOME/.config/fish/config.fish
 
     # git
-    #abbr -a g "git"
     abbr -a g git
     abbr -a ga git add
     abbr -a gac git add .
-    abbr -a gpom git push origin main
-    abbr -a gpod git push origin develop
+    abbr -a gcl git clone
+    abbr -a gclr git clone --recursive
     abbr -a gclnt git clone ultimatile:ultimatile/LaTeXNoteTemplate.git
     abbr -a gcltt git clone ultimatile:ultimatile/LaTeXTikZTemplate.git
-    abbr -a gpl git pull
-    abbr -a gps git push
-    abbr -a gst git status
-    abbr -a gsw git switch
-    abbr -a gswc git switch -c
     abbr -a gcm git commit -m
     abbr -a gcam git commit -am
     abbr -a gamm git commit --amend -m
+    abbr -a gd git diff
+    abbr -a gdc git diff --cached
+    abbr -a gdp git diff HEAD^ HEAD
+    abbr -a gl git log --oneline --graph --all
+    abbr -a gpl git pull
+    abbr -a gps git push
+    abbr -a gpod git push origin develop
+    abbr -a gpom git push origin main
+    abbr -a grhh git reset --hard HEAD
+    abbr -a grsh git reset --soft HEAD
+    abbr -a gst git status
+    abbr -a gsts git status -s
+    abbr -a gsw git switch
+    abbr -a gswc git switch -c
 
     # nvim
     abbr -a nv nvim
