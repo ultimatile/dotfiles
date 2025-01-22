@@ -101,6 +101,8 @@ if status is-interactive
     abbr -a ffgd ff | grep Disk
     abbr -a gp gnuplot
     alias cd="z"
+    abbr -a zu cd ..
+    abbr -a mkr makers
 
     # Rosetta terminal
     abbr -a zintel env /usr/bin/arch -x86_64 /bin/zsh --login
