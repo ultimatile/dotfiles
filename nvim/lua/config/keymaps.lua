@@ -72,6 +72,10 @@ nmapkey("D", '"_D') -- stopping yank when lines erasure
 nmapkey("<leader>D", "d")
 nmapkey("<leader>DD", "dd")
 
+nmapkey("<leader>bd", function()
+  Snacks.bufdelete()
+end, { desc = "Delete buffer" })
+
 -- show all the hidden diagnostics
 nmapkey("<leader>m", vim.diagnostic.open_float, { desc = "show all the hidden diagnostics" })
 
