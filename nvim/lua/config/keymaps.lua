@@ -72,6 +72,19 @@ nmapkey("D", '"_D') -- stopping yank when lines erasure
 nmapkey("<leader>D", "d")
 nmapkey("<leader>DD", "dd")
 
+nmapkey("<leader>bd", function()
+  Snacks.bufdelete()
+end, { desc = "Delete buffer" })
+
+nmapkey("<leader>cp", function()
+  local col = vim.fn.col(".")
+  local line = vim.fn.getline(".")
+  local before = line:sub(1, col - 1)
+  local after = line:sub(col)
+  vim.fn.setline(".", before) ---@diagnostic disable-line: param-type-mismatch
+  vim.fn.append(".", after) ---@diagnostic disable-line: param-type-mismatch
+end, { desc = "Split current line at cursor" })
+
 -- show all the hidden diagnostics
 nmapkey("<leader>m", vim.diagnostic.open_float, { desc = "show all the hidden diagnostics" })
 
