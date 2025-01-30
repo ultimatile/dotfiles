@@ -52,7 +52,8 @@ if status is-interactive
     abbr -a gd git diff
     abbr -a gdc git diff --cached
     abbr -a gdp git diff HEAD^ HEAD
-    abbr -a gl git log --oneline --graph --all
+    abbr -a gl git log --oneline --graph --all -n 15
+    abbr -a gla git log --oneline --graph --all
     abbr -a gpl git pull
     abbr -a gps git push
     abbr -a gpod git push origin develop
