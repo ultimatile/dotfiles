@@ -64,6 +64,8 @@ if status is-interactive
     abbr -a gsw git switch
     abbr -a gswc git switch -c
 
+    abbr -a lg lazygit
+
     # nvim
     abbr -a nv nvim
     abbr -a view nvim -R
