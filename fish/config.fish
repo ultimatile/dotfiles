@@ -106,6 +106,8 @@ if status is-interactive
     alias cd="z"
     abbr -a zu cd ..
     abbr -a mkr makers
+    abbr -a dac direnv allow .
+    abbr -a dec direnv edit .
 
     # Rosetta terminal
     abbr -a zintel env /usr/bin/arch -x86_64 /bin/zsh --login
