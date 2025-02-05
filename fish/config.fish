@@ -42,6 +42,7 @@ if status is-interactive
     abbr -a g git
     abbr -a ga git add
     abbr -a gac git add .
+    abbr -a gb git branch
     abbr -a gcl git clone
     abbr -a gclr git clone --recursive
     abbr -a gclnt git clone ultimatile:ultimatile/LaTeXNoteTemplate.git
