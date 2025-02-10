@@ -6,6 +6,9 @@ return {
       ["<S-Tab>"] = function(fallback)
         return LazyVim.cmp.map({ "snippet_backward", "ai_accept_WORD" }, fallback)()
       end,
+      ["<C-/>"] = function(fallback)
+        return LazyVim.cmp.map({ "snippet_backward", "ai_accept_word" }, fallback)()
+      end,
     })
   end,
 }
