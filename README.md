@@ -1,5 +1,11 @@
 # dotfiles
 
+## Aerospace
+
+```sh:
+ln -s  $HOME/dotfiles,.config}/aerospace/aerospace.toml
+```
+
 ## Atuin
 
 ```sh:
