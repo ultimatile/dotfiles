@@ -76,8 +76,8 @@ autocmd({ "InsertEnter", "InsertLeave", "RecordingEnter", "RecordingLeave" }, {
 
 -- https://github.com/hrsh7th/nvim-cmp/wiki/Advanced-techniques#disable--enable-cmp-sources-only-on-certain-buffers
 -- https://github.com/LazyVim/LazyVim/discussions/5338
-if LazyVim.cmp_engine() == "nvim-cmp" then
-  local cmp = require("cmp")
+local has_cmp, cmp = pcall(require, "cmp")
+if has_cmp then
   autocmd("FileType", {
     pattern = "julia",
     callback = function()
