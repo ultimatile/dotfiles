@@ -33,7 +33,11 @@ local function imapkey_noautocmd(lhs, rhs, opts)
   vim.keymap.set("i", lhs, function()
     local ei = vim.opt.eventignore
     vim.opt.eventignore = "all"
-    feedkeys("n", rhs)
+    if type(rhs) == "function" then
+      rhs()
+    else
+      feedkeys("n", rhs)
+    end
     vim.schedule(function()
       vim.opt.eventignore = ei
     end)
