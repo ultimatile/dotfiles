@@ -97,6 +97,10 @@ end, { desc = "Split current line at cursor" })
 
 -- show all the hidden diagnostics
 nmapkey("<leader>m", vim.diagnostic.open_float, { desc = "show all the hidden diagnostics" })
+nmapkey("<leader>snH", function()
+  require("noice").cmd("history")
+  vim.cmd("wincmd T")
+end, { desc = "Noice History (tab)" })
 
 imapkey_noautocmd("<C-B>", "<Esc>I")
 imapkey_noautocmd("<C-E>", "<Esc>g_a")
