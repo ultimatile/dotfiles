@@ -88,3 +88,12 @@ if has_cmp then
     group = augroup("NvimCmp"),
   })
 end
+
+autocmd("InsertEnter", {
+  pattern = "*",
+  callback = function()
+    -- store the column number when entering insert mode
+    vim.b.insert_mode_start_col = vim.fn.col(".")
+  end,
+  group = augroup("InsertModeStartCol"),
+})
