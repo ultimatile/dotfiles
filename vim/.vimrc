@@ -36,4 +36,7 @@ set ttyfast
 " keymaps
 nnoremap <C-s> :w<CR>
 inoremap <C-s> <Esc>:w<CR>a
-
+nnoremap <C-P> :copy.<CR>
+nnoremap <C-S-P> :copy-1<CR>
+xnoremap <C-P> :copy '<-1<CR>gv
+xnoremap <C-S-P> :copy '>+0<CR>gv
