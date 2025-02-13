@@ -102,6 +102,12 @@ chmod +x $HOME/dotfiles/sw-nvim-cmp-blink
 ln -s $HOME/{dotfiles,.local/bin}/sw-nvim-cmp-blink
 ```
 
+## Vim
+  
+  ```sh:
+  ln -s $HOME/{dotfiles/,}.vimrc
+  ```
+
 ## WezTerm
 
 ```sh:
