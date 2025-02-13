@@ -34,9 +34,26 @@ set mouse=a
 set nofoldenable
 set ttyfast 
 " keymaps
+" https://zenn.dev/vim_jp/articles/43d021f461f3a4
 nnoremap <C-s> :w<CR>
 inoremap <C-s> <Esc>:w<CR>a
 nnoremap <C-P> :copy.<CR>
 nnoremap <C-S-P> :copy-1<CR>
 xnoremap <C-P> :copy '<-1<CR>gv
 xnoremap <C-S-P> :copy '>+0<CR>gv
+nnoremap Y y$
+nnoremap x "_d
+nnoremap X "_D
+xnoremap x "_x
+onoremap x d
+nnoremap U <c-r>
+xnoremap p P
+xnoremap < <gv
+xnoremap > >gv
+nnoremap <expr> <M-Up> $'<Cmd>move-1-{v:count1}<CR>=l'
+nnoremap <expr> <M-Down> $'<Cmd>move+{v:count1}<CR>=l'
+xnoremap <silent><M-Up> :move'<-2<CR>gv=gv
+xnoremap <silent><M-Down> :move'>+1<CR>gv=gv
+nnoremap p ]p`]
+nnoremap P ]P`]
+
