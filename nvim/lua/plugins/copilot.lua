@@ -25,5 +25,12 @@ return {
         return true
       end
     end
+    LazyVim.cmp.actions.ai_accept_word = function()
+      if copilot.is_visible() then
+        LazyVim.create_undo()
+        copilot.accept_word()
+        return true
+      end
+    end
   end,
 }

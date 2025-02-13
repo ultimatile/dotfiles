@@ -33,7 +33,11 @@ local function imapkey_noautocmd(lhs, rhs, opts)
   vim.keymap.set("i", lhs, function()
     local ei = vim.opt.eventignore
     vim.opt.eventignore = "all"
-    feedkeys("n", rhs)
+    if type(rhs) == "function" then
+      rhs()
+    else
+      feedkeys("n", rhs)
+    end
     vim.schedule(function()
       vim.opt.eventignore = ei
     end)
@@ -93,10 +97,23 @@ end, { desc = "Split current line at cursor" })
 
 -- show all the hidden diagnostics
 nmapkey("<leader>m", vim.diagnostic.open_float, { desc = "show all the hidden diagnostics" })
+nmapkey("<leader>snH", function()
+  require("noice").cmd("history")
+  vim.cmd("wincmd T")
+end, { desc = "Noice History (tab)" })
 
 imapkey_noautocmd("<C-B>", "<Esc>I")
 imapkey_noautocmd("<C-E>", "<Esc>g_a")
 imapkey_noautocmd("<C-O>", "<Esc>o")
+-- move to the next line and keep the cursor position
+imapkey_noautocmd("<C-J>", function()
+  local col = vim.b.insert_mode_start_col or vim.fn.col(".")
+  feedkeys("n", "<ESC>", { do_lt = false, escape_ks = true })
+  vim.schedule(function()
+    vim.cmd("normal! j" .. col .. "|")
+    vim.cmd.startinsert()
+  end)
+end)
 
 -- line swapping
 -- Normal mode mappings

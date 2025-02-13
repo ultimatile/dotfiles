@@ -7,6 +7,10 @@ return {
         LazyVim.cmp.map({ "snippet_backward", "ai_accept_WORD" }),
         "fallback",
       },
+      ["<C-/>"] = {
+        LazyVim.cmp.map({ "snippet_backward", "ai_accept_word" }),
+        "fallback",
+      },
     },
     sources = {
       compat = { "latex_symbols" },
