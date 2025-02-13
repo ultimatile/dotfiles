@@ -111,7 +111,7 @@ ln -s $HOME/{dotfiles,.local/bin}/sw-nvim-cmp-blink
 ## Vim
   
   ```sh:
-  ln -s $HOME/{dotfiles/,}.vimrc
+  ln -s $HOME/{dotfiles/vim/,}.vimrc
   ```
 
 ## WezTerm
