@@ -42,7 +42,7 @@ nnoremap <C-S-P> :copy-1<CR>
 xnoremap <C-P> :copy '<-1<CR>gv
 xnoremap <C-S-P> :copy '>+0<CR>gv
 nnoremap Y y$
-nnoremap x "_d
+nnoremap x "_x
 nnoremap X "_D
 xnoremap x "_x
 onoremap x d
