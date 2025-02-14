@@ -107,6 +107,7 @@ if status is-interactive
     alias cd="z"
     abbr -a zu cd ..
     abbr -a mkr makers
+    abbr -a mkrm "makers --makefile \$MKFILE"
     abbr -a dac direnv allow .
     abbr -a dec direnv edit .
 
