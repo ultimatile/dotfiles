@@ -53,6 +53,12 @@ requirement: swpunc
 ln -s $HOME/{dotfiles/,.}hammerspoon/init.lua
 ```
 
+## Matplotlib
+
+```sh:
+ln -s $HOME/{dotfiles/,.}matplotlib/matplotlibrc
+```
+
 ## Modulefiles
 
 ```sh:
@@ -109,10 +115,10 @@ ln -s $HOME/{dotfiles,.local/bin}/sw-nvim-cmp-blink
 ```
 
 ## Vim
-  
-  ```sh:
-  ln -s $HOME/{dotfiles/vim/,}.vimrc
-  ```
+
+```sh:
+ln -s $HOME/{dotfiles/vim/,}.vimrc
+```
 
 ## WezTerm
 
