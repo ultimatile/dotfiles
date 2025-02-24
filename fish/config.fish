@@ -100,7 +100,7 @@ if status is-interactive
     abbr -a treee eza -T
     alias sed="gsed"
     alias head="ghead"
-    abbr -a pbpc "pbpaste | sed -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g' | pbcopy"
+    abbr -a pbpc "pbpaste |sed -e 's/\n/ /g' -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g' | pbcopy"
     abbr -a ff fastfetch
     abbr -a ffgd "fastfetch | grep Disk"
     abbr -a gp gnuplot
