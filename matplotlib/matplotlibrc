@@ -102,7 +102,7 @@
 # The font.size property is the default font size for text, given in pts.
 # 12pt is the standard value.
 #
-#font.family         : sans-serif
+# font.family: sans-serif
 #font.style          : normal
 #font.variant        : normal
 #font.weight         : medium
@@ -189,7 +189,7 @@ font.size: 18.0
 #axes.hold           : True    # whether to clear the axes by default on
 #axes.facecolor      : white   # axes background color
 #axes.edgecolor      : black   # axes edge color
-#axes.linewidth      : 1.0     # edge linewidth
+# axes.linewidth      : 1.0     # edge linewidth
 axes.grid: True # display grid or not
 #axes.titlesize      : large   # fontsize of the axes title
 axes.labelsize: 22 # fontsize of the x any y labels
@@ -217,7 +217,7 @@ axes.labelsize: 22 # fontsize of the x any y labels
 #xtick.minor.pad      : 4      # distance to the minor tick label in points
 #xtick.color          : k      # color of the tick labels
 xtick.labelsize: 18 # fontsize of the tick labels
-#xtick.direction      : in     # direction: in or out
+# xtick.direction      : in     # direction: in or out
 
 #ytick.major.size     : 4      # major tick size in points
 #ytick.minor.size     : 2      # minor tick size in points
@@ -225,7 +225,7 @@ xtick.labelsize: 18 # fontsize of the tick labels
 #ytick.minor.pad      : 4      # distance to the minor tick label in points
 #ytick.color          : k      # color of the tick labels
 ytick.labelsize: 18 # fontsize of the tick labels
-#ytick.direction      : in     # direction: in or out
+# ytick.direction      : in     # direction: in or out
 
 ### GRIDS
 #grid.color       :   black   # grid color
@@ -237,7 +237,7 @@ ytick.labelsize: 18 # fontsize of the tick labels
 # legend, else a rectangle
 #legend.isaxes        : True
 #legend.numpoints     : 2      # the number of points in the legend line
-#legend.fontsize      : 18
+legend.fontsize: 18
 #legend.pad           : 0.0    # deprecated; the fractional whitespace inside the legend border
 #legend.borderpad     : 0.5    # border whitspace in fontsize units
 #legend.markerscale   : 1.0    # the relative size of legend markers vs. original
