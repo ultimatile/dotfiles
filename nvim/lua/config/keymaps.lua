@@ -102,6 +102,28 @@ nmapkey("<leader>snH", function()
   vim.cmd("wincmd T")
 end, { desc = "Noice History (tab)" })
 
+local function put_linewise_below()
+  local reg_content = vim.fn.getreg('"')
+  local lines = vim.split(reg_content, "\n", { plain = true })
+  if lines[#lines] == "" then
+    table.remove(lines, #lines)
+  end
+  vim.api.nvim_put(lines, "l", true, true)
+end
+
+local function put_linewise_above()
+  local reg_content = vim.fn.getreg('"')
+  local lines = vim.split(reg_content, "\n", { plain = true })
+  if lines[#lines] == "" then
+    table.remove(lines, #lines)
+  end
+  vim.api.nvim_put(lines, "l", false, true)
+end
+
+-- <leader>p will conflict with yanky.nvim's keymap if enabled
+nmapkey("<Leader>p", put_linewise_below, { desc = "Linewise paste below" })
+nmapkey("<Leader>P", put_linewise_above, { desc = "Linewise paste above" })
+
 imapkey_noautocmd("<C-B>", "<Esc>I")
 imapkey_noautocmd("<C-E>", "<Esc>g_a")
 imapkey_noautocmd("<C-O>", "<Esc>o")
@@ -164,25 +186,3 @@ nmapkey("Q", function()
     print("No keymap for Q" .. char)
   end)()
 end, { desc = "Q-prefix" })
-
-local function put_linewise_below()
-  local reg_content = vim.fn.getreg('"')
-  local lines = vim.split(reg_content, "\n", { plain = true })
-  if lines[#lines] == "" then
-    table.remove(lines, #lines)
-  end
-  vim.api.nvim_put(lines, "l", true, true)
-end
-
-local function put_linewise_above()
-  local reg_content = vim.fn.getreg('"')
-  local lines = vim.split(reg_content, "\n", { plain = true })
-  if lines[#lines] == "" then
-    table.remove(lines, #lines)
-  end
-  vim.api.nvim_put(lines, "l", false, true)
-end
-
--- <leader>p will conflict with yanky.nvim's keymap if enabled
-vim.keymap.set("n", "<Leader>p", put_linewise_below, { noremap = true, silent = true, desc = "Linewise paste below" })
-vim.keymap.set("n", "<Leader>P", put_linewise_above, { noremap = true, silent = true, desc = "Linewise paste above" })
