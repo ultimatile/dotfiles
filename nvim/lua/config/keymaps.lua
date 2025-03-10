@@ -124,6 +124,9 @@ end
 nmapkey("<Leader>p", put_linewise_below, { desc = "Linewise paste below" })
 nmapkey("<Leader>P", put_linewise_above, { desc = "Linewise paste above" })
 
+-- keep the cursor position when moving lines
+nmapkey("~", "g~l")
+
 imapkey_noautocmd("<C-B>", "<Esc>I")
 imapkey_noautocmd("<C-E>", "<Esc>g_a")
 imapkey_noautocmd("<C-O>", "<Esc>o")
