@@ -7,7 +7,6 @@ fish_add_path $HOME/.local/bin
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-
 # modulefiles
 source /opt/homebrew/opt/modules/init/fish
 module use /Users/$USER/modulefiles
@@ -20,7 +19,6 @@ atuin init --disable-up-arrow fish | source
 starship init fish | source
 # mcfly init fish | source
 #fzf --fish | source
-
 
 # paths
 set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
@@ -114,6 +112,9 @@ if status is-interactive
     # Rosetta terminal
     abbr -a zintel env /usr/bin/arch -x86_64 /bin/zsh --login
     abbr -a zarm env /usr/bin/arch -arm64 /bin/zsh --login
+
+    abbr -a uvr uv run
+
 end
 zoxide init fish | source
 direnv hook fish | source
