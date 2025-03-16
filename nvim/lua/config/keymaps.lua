@@ -45,10 +45,10 @@ local function imapkey_noautocmd(lhs, rhs, opts)
 end
 
 -- duplicate the current line(s)
-nmapkey("<C-P>", ":copy.<CR>")
-nmapkey("<C-S-P>", ":copy-1<CR>")
-xmapkey("<C-P>", ":copy '<-1<CR>gv")
-xmapkey("<C-S-P>", ":copy '>+0<CR>gv")
+nmapkey("<C-P>", ":copy.<CR>", { desc = "Duplicate current line(s) below" })
+nmapkey("<C-S-P>", ":copy-1<CR>", { desc = "Duplicate current line(s) above" })
+xmapkey("<C-P>", ":copy '<-1<CR>gv", { desc = "Duplicate selected lines below" })
+xmapkey("<C-S-P>", ":copy '>+0<CR>gv", { desc = "Duplicate selected lines above" })
 
 -- map <Tab> to switch between windows
 nmapkey("<Tab>", "<C-w><C-w>", { desc = "Next Window" })
@@ -143,14 +143,14 @@ end)
 -- line swapping
 -- Normal mode mappings
 -- move the line up
-nmapkey("<M-Up>", '":move -1-" .. v:count1 .. "<CR>==l"', { expr = true })
+nmapkey("<M-Up>", '":move -1-" .. v:count1 .. "<CR>==l"', { expr = true, desc = "Move line up" })
 -- move the line down
-nmapkey("<M-Down>", '":move +1<CR>==" .. v:count1 .. "l"', { expr = true })
+nmapkey("<M-Down>", '":move +1<CR>==" .. v:count1 .. "l"', { expr = true, desc = "Move line down" })
 -- Visual mode mappings
 -- move the line up
-xmapkey("<M-Up>", ":move '<-2<CR>gv=gv")
+xmapkey("<M-Up>", ":move '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 -- move the line down
-xmapkey("<M-Down>", ":move '>+1<CR>gv=gv")
+xmapkey("<M-Down>", ":move '>+1<CR>gv=gv", { desc = "Move selected lines down" })
 
 -- Map Q in normal mode without timeout
 nmapkey("Q", function()
