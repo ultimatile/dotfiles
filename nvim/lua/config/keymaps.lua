@@ -28,7 +28,6 @@ end
 local function xmapkey(lhs, rhs, opts)
   vim.keymap.set("x", lhs, rhs, defaultopts(opts))
 end
-
 local function imapkey_noautocmd(lhs, rhs, opts)
   vim.keymap.set("i", lhs, function()
     local ei = vim.opt.eventignore
@@ -49,6 +48,8 @@ nmapkey("<C-P>", ":copy.<CR>", { desc = "Duplicate current line(s) below" })
 nmapkey("<C-S-P>", ":copy-1<CR>", { desc = "Duplicate current line(s) above" })
 xmapkey("<C-P>", ":copy '<-1<CR>gv", { desc = "Duplicate selected lines below" })
 xmapkey("<C-S-P>", ":copy '>+0<CR>gv", { desc = "Duplicate selected lines above" })
+
+xmapkey("gp", "y`>p", { desc = "Duplicate selected characters" })
 
 -- map <Tab> to switch between windows
 nmapkey("<Tab>", "<C-w><C-w>", { desc = "Next Window" })
