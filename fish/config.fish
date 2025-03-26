@@ -108,6 +108,7 @@ if status is-interactive
     abbr -a mkrm "makers --makefile \$MKFILE"
     abbr -a dac direnv allow .
     abbr -a dec direnv edit .
+    abbr -a tcm typst compile main.typ
 
     # Rosetta terminal
     abbr -a zintel env /usr/bin/arch -x86_64 /bin/zsh --login
