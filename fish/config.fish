@@ -116,6 +116,8 @@ if status is-interactive
 
     abbr -a uvr uv run
 
+    abbr -a rmv fd -HI .venv -td -X rm -r
+
 end
 zoxide init fish | source
 direnv hook fish | source
