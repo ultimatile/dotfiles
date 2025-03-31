@@ -118,6 +118,9 @@ if status is-interactive
 
     abbr -a rmv fd -HI .venv -td -X rm -r
 
+    if test $TERM_PROGRAM = "iTerm.app"
+        eval "$(devbox global shellenv)"
+    end
 end
 zoxide init fish | source
 direnv hook fish | source
