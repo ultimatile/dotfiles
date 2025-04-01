@@ -17,6 +17,11 @@ ln -s $HOME/{dotfiles,.config}/atuin/config.toml
 ```sh:
 ln -s $HOME/{dotfiles,.config}/direnv/direnvrc
 ```
+## Fancy-cat
+
+```sh:
+ln -s $HOME/{dotfiles,.config}/fancy-cat/config.json
+```
 
 ## Ghostty
 
