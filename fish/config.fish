@@ -121,6 +121,8 @@ if status is-interactive
 
     abbr -a rmv fd -HI .venv -td -X rm -r
 
+    abbr -a gg ghq get git@github.com:ultimatile/
+
 end
 zoxide init fish | source
 direnv hook fish | source
