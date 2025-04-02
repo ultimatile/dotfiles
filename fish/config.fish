@@ -7,6 +7,9 @@ fish_add_path $HOME/.local/bin
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# devbox
+eval "$(devbox global shellenv)"
+
 # modulefiles
 source /opt/homebrew/opt/modules/init/fish
 module use /Users/$USER/modulefiles
@@ -118,9 +121,6 @@ if status is-interactive
 
     abbr -a rmv fd -HI .venv -td -X rm -r
 
-    if test $TERM_PROGRAM = "iTerm.app"
-        eval "$(devbox global shellenv)"
-    end
 end
 zoxide init fish | source
 direnv hook fish | source
