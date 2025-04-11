@@ -37,7 +37,7 @@ autocmd({ "BufNewFile", "BufRead" }, {
   group = augroup("Tinymist"),
 })
 
--- workarond for avoiding conflicts with <CR>-prefix keymaps in command-line window
+-- workaround for avoiding conflicts with <CR>-prefix keymaps in command-line window
 autocmd("CmdwinEnter", {
   callback = function()
     vim.api.nvim_buf_set_keymap(0, "n", "<CR>", "<CR>", { noremap = true, nowait = true })
