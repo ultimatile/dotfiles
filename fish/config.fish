@@ -48,6 +48,7 @@ if status is-interactive
     abbr -a gclr git clone --recursive
     abbr -a gclnt git clone ultimatile:ultimatile/LaTeXNoteTemplate.git
     abbr -a gcltt git clone ultimatile:ultimatile/LaTeXTikZTemplate.git
+    abbr -a gcltnt git clone ultimatile:ultimatile/TypstNoteTemplateJa.git
     abbr -a gcm git commit -m
     abbr -a gcam git commit -am
     abbr -a gamm git commit --amend -m
