@@ -123,6 +123,8 @@ if status is-interactive
 
     abbr -a gg ghq get git@github.com:ultimatile/
 
+    abbr -a mkdd mkdir (date +"%Y%m%d")
+
 end
 zoxide init fish | source
 direnv hook fish | source
