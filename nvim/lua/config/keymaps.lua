@@ -43,6 +43,8 @@ local function imapkey_noautocmd(lhs, rhs, opts)
   end, defaultopts(opts))
 end
 
+xmapkey("p", '"_dP', { desc = "Paste without yanking" })
+
 -- duplicate the current line(s)
 nmapkey("<C-P>", ":copy.<CR>", { desc = "Duplicate current line(s) below" })
 nmapkey("<C-S-P>", ":copy-1<CR>", { desc = "Duplicate current line(s) above" })
