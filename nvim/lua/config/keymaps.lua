@@ -1,6 +1,7 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
+
+-- Keymap utility functions
 
 local function feedkeys(mode, keys, opts)
   opts = opts or {}
@@ -28,6 +29,11 @@ end
 local function xmapkey(lhs, rhs, opts)
   vim.keymap.set("x", lhs, rhs, defaultopts(opts))
 end
+
+local function omapkey(lhs, rhs, opts)
+  vim.keymap.set("o", lhs, rhs, defaultopts(opts))
+end
+
 local function imapkey_noautocmd(lhs, rhs, opts)
   vim.keymap.set("i", lhs, function()
     local ei = vim.opt.eventignore
@@ -42,6 +48,14 @@ local function imapkey_noautocmd(lhs, rhs, opts)
     end)
   end, defaultopts(opts))
 end
+
+-- Add any additional keymaps here
+
+-- https://zenn.dev/vim_jp/articles/43d021f461f3a4#i%3Cspace%3E%E3%81%A7word%E9%81%B8%E6%8A%9E
+omapkey("i<Space>", "iW")
+xmapkey("i<Space>", "iW")
+omapkey("a<Space>", "aW")
+xmapkey("a<Space>", "aW")
 
 xmapkey("p", '"_dP', { desc = "Paste without yanking" })
 
