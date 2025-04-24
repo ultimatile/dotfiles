@@ -17,6 +17,7 @@ ln -s $HOME/{dotfiles,.config}/atuin/config.toml
 ```sh:
 ln -s $HOME/{dotfiles,.config}/direnv/direnvrc
 ```
+
 ## Fancy-cat
 
 ```sh:
@@ -117,6 +118,12 @@ requirement: gsed
 ```sh:
 chmod +x $HOME/dotfiles/sw-nvim-cmp-blink
 ln -s $HOME/{dotfiles,.local/bin}/sw-nvim-cmp-blink
+```
+
+## Typos
+
+```sh:
+ln -s $HOME/{dotfiles/typos/,}.typos.toml
 ```
 
 ## Vim
