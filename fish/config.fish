@@ -126,6 +126,8 @@ if status is-interactive
 
     abbr -a mkdd mkdir (date +"%Y%m%d")
 
+    abbr -a dga devbox global add
+
 end
 zoxide init fish | source
 direnv hook fish | source
