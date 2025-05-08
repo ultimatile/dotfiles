@@ -52,10 +52,8 @@ end
 -- Add any additional keymaps here
 
 -- https://zenn.dev/vim_jp/articles/43d021f461f3a4#i%3Cspace%3E%E3%81%A7word%E9%81%B8%E6%8A%9E
-omapkey("i<Space>", "iW")
-xmapkey("i<Space>", "iW")
-omapkey("a<Space>", "aW")
-xmapkey("a<Space>", "aW")
+omapkey("<Space>", "W")
+xmapkey("<Space>", "W")
 
 xmapkey("p", '"_dP', { desc = "Paste without yanking" })
 
@@ -199,7 +197,7 @@ nmapkey("Q", function()
     Z = function()
       vim.cmd("qa!")
     end, -- Force quit all buffers (QZ)
-  };
+  }
 
   -- Execute the corresponding function if the keymap exists
   (keymap_actions_Q[char] or function()
