@@ -204,3 +204,7 @@ nmapkey("Q", function()
     print("No keymap for Q" .. char)
   end)()
 end, { desc = "Q-prefix" })
+
+nmapkey("<leader>cr", function()
+  require("config.reload").reload_config()
+end, { desc = "Reload Neovim configuration" })
