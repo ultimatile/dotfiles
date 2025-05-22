@@ -24,6 +24,13 @@ ln -s $HOME/{dotfiles,.config}/direnv/direnvrc
 ln -s $HOME/{dotfiles,.config}/fancy-cat/config.json
 ```
 
+## Fish
+
+```sh:
+ln -s $HOME/{dotfiles,.config}/fish/config.fish
+ln -s $HOME/{dotfiles,.config}/fish/functions
+```
+
 ## Ghostty
 
 ```sh:
