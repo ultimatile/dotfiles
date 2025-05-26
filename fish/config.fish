@@ -99,6 +99,7 @@ if status is-interactive
     abbr -a ks ls
     abbr -a l eza
     abbr -a ll eza
+    abbr -a lss ls -ltrh
 
     abbr -a treee eza -T
     alias sed="gsed"
