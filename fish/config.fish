@@ -130,6 +130,8 @@ if status is-interactive
 
     abbr -a dga devbox global add
 
+    abbr -a ch choose
+
 end
 zoxide init fish | source
 direnv hook fish | source
