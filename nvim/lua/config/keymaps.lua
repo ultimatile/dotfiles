@@ -215,3 +215,44 @@ require("which-key").add({
   { "QW", desc = "Write & quit all buffers" },
   { "QZ", desc = "Force quit all buffers" },
 })
+
+nmapkey("<M-w>", function()
+  local line = vim.api.nvim_get_current_line()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  col = col + 1 -- 1-based indexing
+
+  local next_pos = col
+
+  local current_char = line:sub(col, col)
+  if current_char:match("[%w_]") then
+    for i = col, #line do
+      if not line:sub(i, i):match("[%w_]") then
+        next_pos = i
+        break
+      end
+      next_pos = i + 1
+    end
+  elseif current_char:match("[%S]") then
+    for i = col, #line do
+      if line:sub(i, i):match("[%w_%s]") then
+        next_pos = i
+        break
+      end
+      next_pos = i + 1
+    end
+  end
+
+  for i = next_pos, #line do
+    if line:sub(i, i):match("[%S]") then
+      next_pos = i
+      break
+    end
+    next_pos = i + 1
+  end
+
+  if next_pos > #line then
+    next_pos = #line + 1
+  end
+
+  vim.api.nvim_win_set_cursor(0, { row, next_pos - 1 }) -- 0-based indexing
+end, { desc = "snake_case word motion" })
