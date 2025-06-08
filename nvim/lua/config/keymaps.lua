@@ -170,6 +170,7 @@ xmapkey("<M-Down>", ":move '>+1<CR>gv=gv", { desc = "Move selected lines down" }
 -- Map Q in normal mode without timeout
 nmapkey("Q", function()
   -- Wait for a character input
+  require("which-key").show("Q")
   local char = vim.fn.getchar()
 
   -- Convert the input to a readable character if needed
@@ -204,3 +205,13 @@ nmapkey("Q", function()
     print("No keymap for Q" .. char)
   end)()
 end, { desc = "Q-prefix" })
+
+require("which-key").add({
+  { "Q", name = "Q-Commands" },
+  { "QC", desc = "Open command-line window" },
+  { "QQ", desc = "Confirm quit all" },
+  { "QR", desc = "Start/stop macro recording" },
+  { "QS", desc = "Write all buffers" },
+  { "QW", desc = "Write & quit all buffers" },
+  { "QZ", desc = "Force quit all buffers" },
+})
