@@ -117,7 +117,7 @@ if status is-interactive
     abbr -a tcm typst compile main.typ
 
     # Rosetta terminal
-    abbr -a zintel env /usr/bin/arch -x86_64 /bin/zsh --login
+    abbr -a z64 env /usr/bin/arch -x86_64 /bin/zsh --login
     abbr -a zarm env /usr/bin/arch -arm64 /bin/zsh --login
 
     abbr -a uvr uv run
