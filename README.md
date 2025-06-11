@@ -66,6 +66,12 @@ requirement: swpunc
 ln -s $HOME/{dotfiles/,.}hammerspoon/init.lua
 ```
 
+## Lazygit
+
+```sh:
+ln -s $HOME/{dotfiles,Library/Application\ Support}/lazygit/config.yml
+```
+
 ## Matplotlib
 
 ```sh:
