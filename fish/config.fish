@@ -130,7 +130,7 @@ if status is-interactive
 
     abbr -a dga devbox global add
 
-    abbr -a ch choose
+    abbr -a ch choose --one-indexed
 
 end
 zoxide init fish | source
