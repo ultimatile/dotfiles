@@ -6,3 +6,4 @@ customCommands:
     command: "gh pr checkout {{index .PromptResponses 0}}"
     context: "localBranches"
     loadingText: "checking out PR"
+    description: "PR No.を指定してチェックアウト"
