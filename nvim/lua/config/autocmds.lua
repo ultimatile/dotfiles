@@ -7,12 +7,89 @@ local function augroup(name)
 end
 local autocmd = vim.api.nvim_create_autocmd
 
--- leave Japanese input method for specific events
-autocmd({ "InsertLeave", "FocusGained", "VimEnter", "BufEnter" }, {
-  callback = function()
-    vim.system({ "macism", "com.apple.keylayout.ABC" })
-    -- vim.system({ "im-select", "com.apple.inputmethod.Kotoeri.RomajiTyping.Roman" }):wait()
-  end,
+-- IME Control System
+-- Efficiently manage IME state to switch to English input outside of insert mode
+
+-- Check if buffer should be ignored for IME control
+local function should_ignore_buffer(bufnr)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+
+  -- Early return for invalid buffers
+  if not vim.api.nvim_buf_is_valid(bufnr) then
+    return true
+  end
+
+  local buftype = vim.api.nvim_get_option_value("buftype", { buf = bufnr })
+  local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+
+  -- Built-in special buffers
+  if buftype ~= "" and buftype ~= "acwrite" then
+    return true
+  end
+
+  -- Plugin special buffers (common ones)
+  local special_filetypes = {
+    "neo-tree",
+    "lazy",
+    "mason",
+    "trouble",
+    "lspinfo",
+    "checkhealth",
+    "help",
+    "qf",
+    "quickfix",
+    "toggleterm",
+    "TelescopePrompt",
+    "which-key",
+    "notify",
+    "noice",
+    "alpha",
+    "dashboard",
+  }
+
+  for _, ft in ipairs(special_filetypes) do
+    if filetype == ft then
+      return true
+    end
+  end
+
+  -- Special buffer name patterns (brackets-enclosed names or empty buffers)
+  return bufname:match("^%[") ~= nil or bufname == ""
+end
+
+-- State management for IME control
+local ime_state = {
+  last_switch_time = 0,
+  last_mode = "",
+  debounce_ms = 100,
+}
+
+-- Switch IME to English with state management
+local function switch_ime_to_english()
+  local current_time = (vim.uv or vim.loop).now()
+
+  -- Debounce: ignore if called too frequently
+  if current_time - ime_state.last_switch_time < ime_state.debounce_ms then
+    return
+  end
+
+  -- Check if we should ignore current buffer
+  if should_ignore_buffer() then
+    return
+  end
+
+  -- Perform IME switch asynchronously
+  vim.schedule(function()
+    vim.system({ "macism", "com.apple.keylayout.ABC" }, { detach = true })
+  end)
+
+  ime_state.last_switch_time = current_time
+end
+
+-- Enhanced IME switching with comprehensive event coverage
+autocmd({ "InsertLeave", "WinEnter", "FocusGained", "VimEnter", "VimResume", "CmdlineLeave", "TabEnter" }, {
+  callback = switch_ime_to_english,
   group = augroup("IMESwitcher"),
 })
 
