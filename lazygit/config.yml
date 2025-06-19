@@ -6,3 +6,10 @@ customCommands:
     command: "gh pr checkout {{index .PromptResponses 0}}"
     context: "localBranches"
     loadingText: "checking out PR"
+    description: "PR No.を指定してチェックアウト"
+  - key: "y"
+    #TODO: currently once "gh repo set-default owner/repo" command is necessary. To be fixed.
+    command: "gh repo sync"
+    context: "localBranches"
+    loadingText: "syncing upstream branch"
+    description: "フォークをupstreamに同期します。"
