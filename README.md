@@ -1,4 +1,7 @@
 # dotfiles
+![](https://img.shields.io/badge/Neovim-57A143?logo=neovim&logoColor=white)
+![](https://img.shields.io/badge/Shell-Fish-34C534)
+
 
 ## Aerospace
 
