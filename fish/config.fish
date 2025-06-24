@@ -133,6 +133,8 @@ if status is-interactive
 
     abbr -a ch choose --one-indexed
 
+    abbr -a clc claude
+
 end
 zoxide init fish | source
 direnv hook fish | source
