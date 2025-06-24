@@ -125,6 +125,7 @@ if status is-interactive
     abbr -a rmv fd -HI .venv -td -X rm -r
 
     abbr -a gg ghq get git@github.com:ultimatile/
+    abbr -a cggu cd ~/ghq/github.com/ultimatile
 
     abbr -a mkdd mkdir (date +"%Y%m%d")
 
