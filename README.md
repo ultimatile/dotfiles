@@ -1,8 +1,8 @@
 # dotfiles
+
 ![](https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white)
 ![](https://img.shields.io/badge/Neovim-57A143?logo=neovim&logoColor=white)
 ![](https://img.shields.io/badge/Shell-Fish-34C534)
-
 
 ## Aerospace
 
@@ -14,6 +14,13 @@ ln -s  $HOME/dotfiles,.config}/aerospace/aerospace.toml
 
 ```sh:
 ln -s $HOME/{dotfiles,.config}/atuin/config.toml
+```
+
+## Claude
+
+```sh:
+ln -s $HOME/{dotfiles,}/.claude/commands
+ln -s $HOME/{dotfiles,}/.claude/CLAUDE.md
 ```
 
 ## Direnv
