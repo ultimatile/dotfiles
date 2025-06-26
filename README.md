@@ -7,7 +7,7 @@
 ## Aerospace
 
 ```sh:
-ln -s  $HOME/dotfiles,.config}/aerospace/aerospace.toml
+ln -s $HOME/dotfiles,.config}/aerospace/aerospace.toml
 ```
 
 ## Atuin
@@ -45,7 +45,7 @@ ln -s $HOME/{dotfiles,.config}/fish/functions
 ## Ghostty
 
 ```sh:
-ln -s  $HOME/{dotfiles,.config}/ghostty/config
+ln -s $HOME/{dotfiles,.config}/ghostty/config
 ```
 
 ## Git
@@ -54,7 +54,7 @@ Add the following to your `.gitconfig` file:
 
 ```ini:
 [include]
-  path =  /path/to/dotfiles/git/.gitconfig
+  path = /path/to/dotfiles/git/.gitconfig
 ```
 
 ## Glow
@@ -159,5 +159,5 @@ ln -s $HOME/{dotfiles/vim/,}.vimrc
 ## WezTerm
 
 ```sh:
-ln -s  $HOME/{dotfiles,.config}/wezterm
+ln -s $HOME/{dotfiles,.config}/wezterm
 ```
