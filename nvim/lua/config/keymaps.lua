@@ -167,16 +167,33 @@ xmapkey("<M-Up>", ":move '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 -- move the line down
 xmapkey("<M-Down>", ":move '>+1<CR>gv=gv", { desc = "Move selected lines down" })
 
+local function getchar_as_string()
+  local input = vim.fn.getchar()
+  return type(input) == "number" and vim.fn.nr2char(input) or input
+end
+
+local function run_macro()
+  if vim.fn.reg_recording() ~= "" then
+    vim.cmd("normal! q")
+    return
+  end
+
+  vim.api.nvim_echo({ { "Register (a-z, 0-9): ", "Question" } }, false, {})
+  local char = getchar_as_string()
+
+  if char:match("[a-zA-Z0-9]") then
+    vim.cmd("normal! q" .. char)
+  else
+    vim.api.nvim_echo({ { "", "" } }, false, {}) -- clear prompt
+  end
+end
+
 -- Map Q in normal mode without timeout
 nmapkey("Q", function()
   -- Wait for a character input
   require("which-key").show("Q")
-  local char = vim.fn.getchar()
-
-  -- Convert the input to a readable character if needed
-  if type(char) == "number" then
-    char = vim.fn.nr2char(char)
-  end
+  vim.fn.getchar() -- Discard the first 'Q' from which-key
+  local char = getchar_as_string() -- Get the actual keypress
 
   -- Mapping of keys to actions for Q-prefix keymaps
   local keymap_actions_Q = {
@@ -187,7 +204,12 @@ nmapkey("Q", function()
       vim.cmd("confirm qa")
     end, -- Confirm quit all (QQ)
     R = function()
-      feedkeys("n", "q")
+      local f = io.open("./log.txt", "a")
+      if f then
+        f:write("Help")
+        f:close()
+      end
+      run_macro()
     end, -- Start/Stop macro recording (QR)
     S = function()
       vim.cmd("wa")
