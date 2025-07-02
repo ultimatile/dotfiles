@@ -1,0 +1,16 @@
+[default]
+user = "ultimatile"
+julia_version = "1.10.10"
+
+[default.Formatter]
+style = "blue"
+
+[default.Git]
+ssh = true
+ignore = ".vscode,.DS_Store,.claude.local.md"
+
+[default.Tests]
+aqua = true
+
+[default.ProjectFile]
+version = "0.0.1"

@@ -78,6 +78,12 @@ requirement: swpunc
 ln -s $HOME/{dotfiles/,.}hammerspoon/init.lua
 ```
 
+## JuliaPkgTemplateCLI (Personal Project)
+
+```sh:
+ln -s $HOME/{dotfiles,}.config/jtc/config.toml
+```
+
 ## Lazygit
 
 ```sh:
