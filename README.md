@@ -78,7 +78,7 @@ requirement: swpunc
 ln -s $HOME/{dotfiles/,.}hammerspoon/init.lua
 ```
 
-## JuliaPkgTemplateCLI (Personal Project)
+## JuliaPkgTemplatesCLI (Personal Project)
 
 ```sh:
 ln -s $HOME/{dotfiles,}.config/jtc/config.toml
