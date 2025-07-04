@@ -1,0 +1,25 @@
+#%Module
+##
+## OpenBLAS from brew
+##
+
+# Provide information about the module
+module-whatis "LAPACK from brew"
+
+conflict lapack
+
+# Set the installation directory
+set root "$::env(HOMEBREW_PREFIX)/opt/lapack"
+
+# Check if CPPFLAGS is already defined
+if { [info exists ::env(CPPFLAGS)] } {
+    setenv CPPFLAGS "-I$root/include $::env(CPPFLAGS)"
+} else {
+    setenv CPPFLAGS "-I$root/include"
+}
+# Check if LDFLAGS is already defined
+if { [info exists ::env(LDFLAGS)] } {
+    setenv LDFLAGS "-L$root/lib $::env(LDFLAGS)"
+} else {
+    setenv LDFLAGS "-L$root/lib"
+}
