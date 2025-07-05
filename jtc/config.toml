@@ -7,7 +7,7 @@ style = "blue"
 
 [default.Git]
 ssh = true
-ignore = ".vscode,.DS_Store,.claude.local.md"
+ignore = ".vscode,.DS_Store,CLAUDE.local.md"
 
 [default.Tests]
 aqua = true
