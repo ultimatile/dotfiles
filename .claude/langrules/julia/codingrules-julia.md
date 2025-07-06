@@ -179,8 +179,7 @@ See @performance-julia.md for detailed performance guidelines.
 
 - Prefer `isnothing` over `=== nothing` and `!isnothing` over `!== nothing`
 - Prefer shadowing in kwargs: not `f(;A=A)` but `f(;A)`
-- Use consistent indentation (4 spaces)
-- Keep line length under 92 characters when possible
+- For multi-line literals, use triple double quotes ("""...""") instead of multiple `println` calls.
 
 ## Metaprogramming
 
@@ -193,4 +192,3 @@ See @performance-julia.md for detailed performance guidelines.
 ## Package Development
 
 See @packagedev-julia.md for guidelines on developing Julia packages.
-
