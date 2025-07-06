@@ -14,3 +14,8 @@ This document outlines the coding standards and practices.
 - Use fd for finding files
 - Use fzf for fuzzy finder
 - Use hyperfine for benchmarking
+
+## Programming Languages rules
+
+- If you will write Python, see @langrules/python/codingrules-python.md.
+- If you will write Julia, see @langrules/julia/codingrules-julia.md.
