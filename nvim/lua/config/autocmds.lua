@@ -114,6 +114,70 @@ autocmd({ "BufNewFile", "BufRead" }, {
   group = augroup("Tinymist"),
 })
 
+-- for typst doc (split docstring lines with periods)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "rust",
+  callback = function(args)
+    local bufnr = args.buf
+    local function format_rs_comments()
+      vim.schedule(function()
+        local start_pos = vim.fn.getpos("'<")
+        local end_pos = vim.fn.getpos("'>")
+        local start_line = start_pos[2] - 1 -- 0-indexed
+        local end_line = end_pos[2] -- 1-indexed (exclusive)
+
+        if start_line >= end_line or start_line < 0 then
+          return
+        end
+
+        local lines = vim.api.nvim_buf_get_lines(bufnr, start_line, end_line, false)
+
+        if #lines == 0 then
+          return
+        end
+
+        local contents = {}
+        for i = 1, #lines do
+          local content = lines[i]:gsub("^///%s*", "")
+          if content ~= "" then
+            table.insert(contents, content)
+          end
+        end
+
+        if #contents == 0 then
+          return
+        end
+
+        local full_text = table.concat(contents, " ")
+        local result = {}
+        while true do
+          local start_pos, end_pos = full_text:find("%. ")
+          if not start_pos then
+            break
+          end
+          local sentence = full_text:sub(1, start_pos)
+          sentence = sentence:gsub("^%s*", ""):gsub("%s*$", "")
+          if sentence ~= "" then
+            table.insert(result, "/// " .. sentence)
+          end
+
+          full_text = full_text:sub(end_pos + 1)
+        end
+
+        full_text = full_text:gsub("^%s*", ""):gsub("%s*$", "")
+        if full_text ~= "" then
+          table.insert(result, "/// " .. full_text)
+        end
+
+        vim.api.nvim_buf_set_lines(bufnr, start_line, end_line, false, result)
+      end)
+    end
+
+    vim.keymap.set("x", "<leader>j", format_rs_comments, { noremap = true, silent = true, buffer = bufnr })
+  end,
+  group = augroup("TypstDoc"),
+})
+
 -- workaround for avoiding conflicts with <CR>-prefix keymaps in command-line window
 autocmd("CmdwinEnter", {
   callback = function()
