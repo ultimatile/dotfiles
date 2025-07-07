@@ -3,15 +3,13 @@
 ## Code Style and Formatting
 
 ### General Guidelines
+
 - Follow PEP 8 style conventions
-- Use 4 spaces for indentation (never tabs)
-- Maximum line length of 88 characters (Black formatter standard)
 - Use trailing commas in multi-line structures
-- Prefer single quotes for strings unless double quotes avoid escaping
 - **Use f-strings for string formatting (Python 3.6+)**
-- **Avoid string concatenation with `+` operator**
 
 ### Import Organization
+
 - Standard library imports first
 - Third-party imports second
 - Local application imports last
@@ -37,6 +35,7 @@ from myapp.utils import helper_function
 ## Naming Conventions
 
 ### Variables and Functions
+
 - Use snake_case for variables and functions
 - Use descriptive names that clearly indicate purpose
 - Avoid single-letter variables except for short loops or mathematical operations
@@ -44,12 +43,14 @@ from myapp.utils import helper_function
 - **Use `_` for unused variables in unpacking**
 
 ### Classes
+
 - Use PascalCase for class names
 - Use descriptive names that represent the entity or concept
 - Prefer composition over inheritance
 - **Use mixins for shared behavior across unrelated classes**
 
 ### Constants
+
 - Use UPPER_CASE with underscores for constants
 - Define module-level constants at the top of the file
 - **Use `enum.Enum` for related constants**
@@ -64,6 +65,7 @@ class Status(Enum):
 ```
 
 ### Private Members
+
 - Use single underscore prefix for internal use (`_internal_method`)
 - Use double underscore prefix for name mangling when necessary (`__private_attr`)
 - **Prefer single underscore; double underscore should be rare**
@@ -71,6 +73,7 @@ class Status(Enum):
 ## Type Hints
 
 ### Required Usage
+
 - Use type hints for all function parameters and return values
 - Use type hints for class attributes and instance variables
 - Import types from `typing` module when needed
@@ -91,6 +94,7 @@ def process_data(items: list[str], config: dict[str, any]) -> str | None:
 ```
 
 ### Advanced Type Features
+
 - **Use `TypeAlias` for complex type definitions**
 - **Use `Protocol` for structural subtyping**
 - **Use `TypeVar` with bounds for generic functions**
@@ -111,6 +115,7 @@ def find_minimum(items: list[T]) -> T:
 ## Modern Python Features
 
 ### Pattern Matching (Python 3.10+)
+
 - **Use match statements for complex conditional logic**
 - **Prefer match over long if-elif chains**
 - **Use guard clauses with `if` in case statements**
@@ -127,6 +132,7 @@ def process_command(command: dict[str, any]) -> str:
 ```
 
 ### Data Classes
+
 - **Use `@dataclass` for simple data containers**
 - **Use `frozen=True` for immutable data**
 - **Use `slots=True` for memory efficiency (Python 3.10+)**
@@ -144,6 +150,7 @@ class Point:
 ## Asynchronous Programming
 
 ### Async/Await Guidelines
+
 - **Use `async def` for I/O-bound operations**
 - **Use `asyncio.create_task()` for concurrent execution**
 - **Prefer `asyncio.gather()` for waiting on multiple coroutines**
@@ -164,6 +171,7 @@ async def fetch_multiple(urls: list[str]) -> list[dict[str, any]]:
 ```
 
 ### Best Practices
+
 - **Never use blocking I/O in async functions**
 - **Use `asyncio.to_thread()` for CPU-bound operations**
 - **Handle cancellation with try/except `asyncio.CancelledError`**
@@ -171,6 +179,7 @@ async def fetch_multiple(urls: list[str]) -> list[dict[str, any]]:
 ## Documentation
 
 ### Docstrings
+
 - Use triple double quotes for all docstrings
 - Follow Google or NumPy docstring format consistently
 - Include purpose, parameters, return values, and exceptions
@@ -180,24 +189,24 @@ async def fetch_multiple(urls: list[str]) -> list[dict[str, any]]:
 
 ```python
 async def calculate_distance(
-    point1: tuple[float, float], 
+    point1: tuple[float, float],
     point2: tuple[float, float]
 ) -> float:
     """Calculate Euclidean distance between two points.
-    
+
     This is an async function for demonstration purposes.
     In practice, CPU-bound operations should not be async.
-    
+
     Args:
         point1: First point as (x, y) coordinates
         point2: Second point as (x, y) coordinates
-        
+
     Returns:
         Distance between the two points
-        
+
     Raises:
         ValueError: If points are not valid tuples
-        
+
     Example:
         >>> await calculate_distance((0, 0), (3, 4))
         5.0
@@ -205,6 +214,7 @@ async def calculate_distance(
 ```
 
 ### Comments
+
 - Write clear, concise English comments explaining high-level purpose and rationale
 - Document assumptions, side effects, and non-obvious logic
 - Avoid comments that simply restate the code
@@ -214,6 +224,7 @@ async def calculate_distance(
 ## Error Handling
 
 ### Exception Management
+
 - Use specific exception types, not bare `except:`
 - Handle exceptions at the appropriate level
 - Use `finally` blocks for cleanup operations
@@ -240,6 +251,7 @@ with suppress(FileNotFoundError):
 ```
 
 ### Error Context
+
 - **Use `raise from` to preserve exception chains**
 - **Add context with exception notes (Python 3.11+)**
 
@@ -252,31 +264,8 @@ except FileNotFoundError as e:
 
 ## Code Organization
 
-### Project Structure
-```
-project/
-├── src/
-│   └── myapp/
-│       ├── __init__.py
-│       ├── __main__.py      # Entry point for python -m myapp
-│       ├── core/            # Core business logic
-│       ├── api/             # API endpoints
-│       ├── models/          # Data models
-│       ├── services/        # Business services
-│       └── utils/           # Utility functions
-├── tests/
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
-├── docs/
-├── scripts/                 # Maintenance scripts
-├── .env.example
-├── pyproject.toml
-├── README.md
-└── Makefile                 # Common commands
-```
-
 ### Module Structure
+
 - Keep modules focused and cohesive
 - Use `__init__.py` files to control public API
 - Organize related functionality into packages
@@ -284,6 +273,7 @@ project/
 - **Use `__all__` to explicitly define public API**
 
 ### Function Guidelines
+
 - Functions should do one thing well
 - Aim for functions under 20 lines when possible
 - Use early returns to reduce nesting
@@ -292,6 +282,7 @@ project/
 - **Use dependency injection over global state**
 
 ### Class Design
+
 - Follow single responsibility principle
 - Use composition over inheritance
 - Implement `__str__` and `__repr__` methods when appropriate
@@ -302,6 +293,7 @@ project/
 ## Logging
 
 ### Configuration
+
 ```python
 import logging
 import sys
@@ -321,6 +313,7 @@ logger = logging.getLogger(__name__)
 ```
 
 ### Best Practices
+
 - **Use module-level loggers**
 - **Log at appropriate levels (DEBUG, INFO, WARNING, ERROR, CRITICAL)**
 - **Include context in log messages**
@@ -330,6 +323,7 @@ logger = logging.getLogger(__name__)
 ## Environment Configuration
 
 ### Settings Management
+
 ```python
 from pydantic import BaseSettings, Field
 
@@ -338,7 +332,7 @@ class Settings(BaseSettings):
     debug: bool = Field(default=False)
     database_url: str
     api_key: str = Field(..., alias='API_KEY')
-    
+
     class Config:
         env_file = '.env'
         env_file_encoding = 'utf-8'
@@ -347,6 +341,7 @@ settings = Settings()
 ```
 
 ### Best Practices
+
 - **Use pydantic for settings validation**
 - **Never commit `.env` files**
 - **Provide `.env.example` with dummy values**
@@ -355,6 +350,7 @@ settings = Settings()
 ## Testing
 
 ### Test Structure
+
 - Use pytest framework
 - Organize tests to mirror source code structure
 - Use descriptive test names that explain the scenario
@@ -374,13 +370,14 @@ class TestCalculateDistance:
     def test_returns_correct_value(self, point1, point2, expected):
         result = calculate_distance(point1, point2)
         assert result == pytest.approx(expected)
-    
+
     def test_raises_on_invalid_input(self):
         with pytest.raises(ValueError):
             calculate_distance('invalid', (0, 0))
 ```
 
 ### Fixtures and Mocks
+
 ```python
 @pytest.fixture
 async def db_session():
@@ -394,6 +391,7 @@ def mock_api_client(mocker):
 ```
 
 ### Coverage and Quality
+
 - Maintain high test coverage (aim for 90%+)
 - Test edge cases and error conditions
 - Use fixtures for common test data
@@ -404,6 +402,7 @@ def mock_api_client(mocker):
 ## Tool Configuration
 
 ### Pyright (Type Checking)
+
 ```toml
 [tool.pyright]
 include = ["src"]
@@ -416,6 +415,7 @@ typeCheckingMode = "strict"
 ```
 
 ### Ruff (Linting and Formatting)
+
 ```toml
 [tool.ruff]
 line-length = 88
@@ -443,6 +443,7 @@ indent-style = "space"
 ```
 
 ### UV (Package Management)
+
 ```toml
 [project]
 name = "myapp"
@@ -467,6 +468,7 @@ dev = [
 ## Performance Considerations
 
 ### General Guidelines
+
 - Profile before optimizing
 - Use appropriate data structures for the task
 - Avoid premature optimization
@@ -475,6 +477,7 @@ dev = [
 - **Profile with `py-spy` or `scalene` for production issues**
 
 ### Common Patterns
+
 - Use list comprehensions for simple transformations
 - Use generators for large datasets
 - Cache expensive computations when appropriate
@@ -485,6 +488,7 @@ dev = [
 ## Security
 
 ### Input Validation
+
 - Validate all external inputs
 - Sanitize data before processing
 - Use parameterized queries for database operations
@@ -493,6 +497,7 @@ dev = [
 - **Implement rate limiting for APIs**
 
 ### Dependencies
+
 - **Regularly update dependencies**
 - **Use `pip-audit` or `safety` for vulnerability scanning**
 - **Pin exact versions in production**
@@ -501,6 +506,7 @@ dev = [
 ## Continuous Integration
 
 ### GitHub Actions Example
+
 ```yaml
 name: CI
 
@@ -512,27 +518,28 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.11", "3.12"]
-    
+
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-    
-    - name: Install dependencies
-      run: |
-        pip install uv
-        uv sync --dev
-    
-    - name: Run tests
-      run: |
-        uv run pytest --cov=src tests/
-        uv run ruff check .
-        uv run ruff format --check .
-        uv run pyright
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          pip install uv
+          uv sync --dev
+
+      - name: Run tests
+        run: |
+          uv run pytest --cov=src tests/
+          uv run ruff check .
+          uv run ruff format --check .
+          uv run pyright
 ```
 
 ### Pre-commit Configuration
+
 ```yaml
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -540,7 +547,7 @@ repos:
     hooks:
       - id: ruff
       - id: ruff-format
-  
+
   - repo: https://github.com/microsoft/pyright
     rev: v1.1.0
     hooks:
@@ -550,6 +557,7 @@ repos:
 ## Code Review Guidelines
 
 ### Review Checklist
+
 - Code follows style guidelines
 - Type hints are present and correct
 - Tests are included and comprehensive
@@ -561,3 +569,4 @@ repos:
 - **Proper logging is implemented**
 - **Backward compatibility is maintained**
 - **Database migrations are included if needed**
+
