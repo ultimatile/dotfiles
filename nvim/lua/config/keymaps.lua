@@ -22,20 +22,72 @@ local function defaultopts(opts)
   return opts
 end
 
+local function mapkey(mode, lhs, rhs, opts)
+  if not mode then
+    error("mapkey: mode is required")
+  end
+
+  if not lhs or type(lhs) ~= "string" or lhs == "" then
+    error("mapkey: lhs must be a non-empty string")
+  end
+
+  if not rhs then
+    error("mapkey: rhs is required")
+  end
+
+  local valid_modes = {
+    n = true,
+    i = true,
+    v = true,
+    x = true,
+    s = true,
+    o = true,
+    c = true,
+    t = true,
+    l = true,
+    ["!"] = true,
+  }
+
+  if type(mode) == "string" then
+    if not valid_modes[mode] then
+      error("mapkey: invalid mode '" .. mode .. "'")
+    end
+    vim.keymap.set(mode, lhs, rhs, defaultopts(opts))
+  elseif type(mode) == "table" then
+    for _, m in ipairs(mode) do
+      if not valid_modes[m] then
+        error("mapkey: invalid mode '" .. tostring(m) .. "'")
+      end
+      vim.keymap.set(m, lhs, rhs, defaultopts(opts))
+    end
+  else
+    error("mapkey: mode must be a string or table of strings")
+  end
+end
+
+-- Mode-specific convenience functions
 local function nmapkey(lhs, rhs, opts)
-  vim.keymap.set("n", lhs, rhs, defaultopts(opts))
+  mapkey("n", lhs, rhs, opts)
 end
 
 local function xmapkey(lhs, rhs, opts)
-  vim.keymap.set("x", lhs, rhs, defaultopts(opts))
+  mapkey("x", lhs, rhs, opts)
 end
 
 local function omapkey(lhs, rhs, opts)
-  vim.keymap.set("o", lhs, rhs, defaultopts(opts))
+  mapkey("o", lhs, rhs, opts)
 end
 
+-- local function imapkey(lhs, rhs, opts)
+--   mapkey("i", lhs, rhs, opts)
+-- end
+--
+-- local function vmapkey(lhs, rhs, opts)
+--   mapkey("v", lhs, rhs, opts)
+-- end
+
 local function imapkey_noautocmd(lhs, rhs, opts)
-  vim.keymap.set("i", lhs, function()
+  mapkey("i", lhs, function()
     local ei = vim.opt.eventignore
     vim.opt.eventignore = "all"
     if type(rhs) == "function" then
@@ -46,10 +98,10 @@ local function imapkey_noautocmd(lhs, rhs, opts)
     vim.schedule(function()
       vim.opt.eventignore = ei
     end)
-  end, defaultopts(opts))
+  end, opts)
 end
 
--- Add any additional keymaps here
+-- Add any keymaps here
 
 -- https://zenn.dev/vim_jp/articles/43d021f461f3a4#i%3Cspace%3E%E3%81%A7word%E9%81%B8%E6%8A%9E
 omapkey("<Space>", "W")
