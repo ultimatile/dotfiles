@@ -68,6 +68,7 @@ if status is-interactive
     abbr -a gsts git status -s
     abbr -a gsw git switch
     abbr -a gswc git switch -c
+    abbr -a gfrum "git fetch upstream && git rebase upstream/main"
 
     abbr -a lg lazygit
 
