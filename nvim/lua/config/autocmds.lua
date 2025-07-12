@@ -127,7 +127,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
       -- Convert to 0-indexed for API
       local start_idx = start_line - 1
-      local end_idx = end_line  -- end_line is inclusive, nvim_buf_get_lines end is exclusive, so we use end_line as-is
+      local end_idx = end_line -- end_line is inclusive, nvim_buf_get_lines end is exclusive, so we use end_line as-is
 
       if start_idx < 0 or start_idx >= end_idx then
         return
@@ -139,9 +139,11 @@ vim.api.nvim_create_autocmd("FileType", {
         return
       end
 
-      -- Extract content from /// comments and join them, preserving indentation
-      local contents = {}
+      -- Parse lines and identify chunks separated by empty comment lines
+      local chunks = {}
+      local current_chunk = {}
       local common_indent = nil
+
       for i = 1, #lines do
         local line = lines[i]
         local indent, content = line:match("^(%s*)///%s*(.*)")
@@ -152,59 +154,93 @@ vim.api.nvim_create_autocmd("FileType", {
           elseif #indent < #common_indent then
             common_indent = indent
           end
-          if content ~= "" then
-            table.insert(contents, content)
+
+          -- Check if this is an empty comment line (only whitespace or empty)
+          if content:match("^%s*$") then
+            -- End current chunk and add empty line as separator
+            if #current_chunk > 0 then
+              table.insert(chunks, current_chunk)
+              current_chunk = {}
+            end
+            table.insert(chunks, { { indent = indent, content = "", is_empty = true } })
+          else
+            -- Add content to current chunk
+            table.insert(current_chunk, { indent = indent, content = content, is_empty = false })
           end
         end
       end
 
-      if #contents == 0 then
+      -- Add final chunk if it exists
+      if #current_chunk > 0 then
+        table.insert(chunks, current_chunk)
+      end
+
+      if #chunks == 0 then
         return
       end
 
-      local full_text = table.concat(contents, " ")
-
-      -- Split by periods while handling various cases
+      -- Process each chunk
       local result = {}
-      local sentences = {}
+      common_indent = common_indent or ""
 
-      -- Split text by periods, keeping the period with the sentence
-      local current_sentence = ""
-      local i = 1
-      while i <= #full_text do
-        local char = full_text:sub(i, i)
-        current_sentence = current_sentence .. char
+      for _, chunk in ipairs(chunks) do
+        if #chunk == 1 and chunk[1].is_empty then
+          -- This is an empty line chunk, preserve it
+          table.insert(result, common_indent .. "///")
+        else
+          -- This is a content chunk, process it
+          local contents = {}
+          for _, item in ipairs(chunk) do
+            if not item.is_empty and item.content ~= "" then
+              table.insert(contents, item.content)
+            end
+          end
 
-        if char == "." then
-          -- Check if this is actually end of sentence
-          -- Look ahead to see if next char is space, newline, or end of string
-          local next_char = full_text:sub(i + 1, i + 1)
-          if next_char == "" or next_char:match("%s") then
-            -- This is likely end of sentence
+          if #contents > 0 then
+            local full_text = table.concat(contents, " ")
+
+            -- Split by periods while handling various cases
+            local sentences = {}
+
+            -- Split text by periods, keeping the period with the sentence
+            local current_sentence = ""
+            local i = 1
+            while i <= #full_text do
+              local char = full_text:sub(i, i)
+              current_sentence = current_sentence .. char
+
+              if char == "." then
+                -- Check if this is actually end of sentence
+                -- Look ahead to see if next char is space, newline, or end of string
+                local next_char = full_text:sub(i + 1, i + 1)
+                if next_char == "" or next_char:match("%s") then
+                  -- This is likely end of sentence
+                  local trimmed = current_sentence:gsub("^%s*", ""):gsub("%s*$", "")
+                  if trimmed ~= "" then
+                    table.insert(sentences, trimmed)
+                  end
+                  current_sentence = ""
+                  -- Skip whitespace after period
+                  while i < #full_text and full_text:sub(i + 1, i + 1):match("%s") do
+                    i = i + 1
+                  end
+                end
+              end
+              i = i + 1
+            end
+
+            -- Add any remaining text
             local trimmed = current_sentence:gsub("^%s*", ""):gsub("%s*$", "")
             if trimmed ~= "" then
               table.insert(sentences, trimmed)
             end
-            current_sentence = ""
-            -- Skip whitespace after period
-            while i < #full_text and full_text:sub(i + 1, i + 1):match("%s") do
-              i = i + 1
+
+            -- Convert sentences to /// comments with preserved indentation
+            for _, sentence in ipairs(sentences) do
+              table.insert(result, common_indent .. "/// " .. sentence)
             end
           end
         end
-        i = i + 1
-      end
-
-      -- Add any remaining text
-      local trimmed = current_sentence:gsub("^%s*", ""):gsub("%s*$", "")
-      if trimmed ~= "" then
-        table.insert(sentences, trimmed)
-      end
-
-      -- Convert sentences to /// comments with preserved indentation
-      common_indent = common_indent or ""
-      for _, sentence in ipairs(sentences) do
-        table.insert(result, common_indent .. "/// " .. sentence)
       end
 
       vim.api.nvim_buf_set_lines(bufnr, start_idx, end_idx, false, result)
