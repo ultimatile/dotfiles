@@ -119,61 +119,92 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "rust",
   callback = function(args)
     local bufnr = args.buf
-    local function format_rs_comments()
-      vim.schedule(function()
-        local start_pos = vim.fn.getpos("'<")
-        local end_pos = vim.fn.getpos("'>")
-        local start_line = start_pos[2] - 1 -- 0-indexed
-        local end_line = end_pos[2] -- 1-indexed (exclusive)
 
-        if start_line >= end_line or start_line < 0 then
-          return
+    _G.format_rs_comments_func = function(start_line_arg, end_line_arg)
+      -- Use passed arguments or fall back to visual marks
+      local start_line = start_line_arg or vim.fn.line("'<")
+      local end_line = end_line_arg or vim.fn.line("'>")
+
+      -- Convert to 0-indexed for API
+      local start_idx = start_line - 1
+      local end_idx = end_line  -- end_line is inclusive, nvim_buf_get_lines end is exclusive, so we use end_line as-is
+
+      if start_idx < 0 or start_idx >= end_idx then
+        return
+      end
+
+      local lines = vim.api.nvim_buf_get_lines(bufnr, start_idx, end_idx, false)
+
+      if #lines == 0 then
+        return
+      end
+
+      -- Extract content from /// comments and join them
+      local contents = {}
+      for i = 1, #lines do
+        local content = lines[i]:gsub("^///%s*", "")
+        if content ~= "" then
+          table.insert(contents, content)
         end
+      end
 
-        local lines = vim.api.nvim_buf_get_lines(bufnr, start_line, end_line, false)
+      if #contents == 0 then
+        return
+      end
 
-        if #lines == 0 then
-          return
-        end
+      local full_text = table.concat(contents, " ")
 
-        local contents = {}
-        for i = 1, #lines do
-          local content = lines[i]:gsub("^///%s*", "")
-          if content ~= "" then
-            table.insert(contents, content)
+      -- Split by periods while handling various cases
+      local result = {}
+      local sentences = {}
+
+      -- Split text by periods, keeping the period with the sentence
+      local current_sentence = ""
+      local i = 1
+      while i <= #full_text do
+        local char = full_text:sub(i, i)
+        current_sentence = current_sentence .. char
+
+        if char == "." then
+          -- Check if this is actually end of sentence
+          -- Look ahead to see if next char is space, newline, or end of string
+          local next_char = full_text:sub(i + 1, i + 1)
+          if next_char == "" or next_char:match("%s") then
+            -- This is likely end of sentence
+            local trimmed = current_sentence:gsub("^%s*", ""):gsub("%s*$", "")
+            if trimmed ~= "" then
+              table.insert(sentences, trimmed)
+            end
+            current_sentence = ""
+            -- Skip whitespace after period
+            while i < #full_text and full_text:sub(i + 1, i + 1):match("%s") do
+              i = i + 1
+            end
           end
         end
+        i = i + 1
+      end
 
-        if #contents == 0 then
-          return
-        end
+      -- Add any remaining text
+      local trimmed = current_sentence:gsub("^%s*", ""):gsub("%s*$", "")
+      if trimmed ~= "" then
+        table.insert(sentences, trimmed)
+      end
 
-        local full_text = table.concat(contents, " ")
-        local result = {}
-        while true do
-          local start_pos, end_pos = full_text:find("%. ")
-          if not start_pos then
-            break
-          end
-          local sentence = full_text:sub(1, start_pos)
-          sentence = sentence:gsub("^%s*", ""):gsub("%s*$", "")
-          if sentence ~= "" then
-            table.insert(result, "/// " .. sentence)
-          end
+      -- Convert sentences to /// comments
+      for _, sentence in ipairs(sentences) do
+        table.insert(result, "/// " .. sentence)
+      end
 
-          full_text = full_text:sub(end_pos + 1)
-        end
-
-        full_text = full_text:gsub("^%s*", ""):gsub("%s*$", "")
-        if full_text ~= "" then
-          table.insert(result, "/// " .. full_text)
-        end
-
-        vim.api.nvim_buf_set_lines(bufnr, start_line, end_line, false, result)
-      end)
+      vim.api.nvim_buf_set_lines(bufnr, start_idx, end_idx, false, result)
     end
 
-    vim.keymap.set("x", "<leader>j", format_rs_comments, { noremap = true, silent = true, buffer = bufnr })
+    vim.keymap.set("x", "<leader>j", ":<C-u>lua format_rs_comments_func()<CR>", {
+      noremap = true,
+      silent = true,
+      buffer = bufnr,
+      desc = "Format Rust doc comments",
+    })
   end,
   group = augroup("TypstDoc"),
 })
