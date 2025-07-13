@@ -139,11 +139,11 @@ nmapkey("l", "gj") -- go down
 nmapkey(";", "l") -- go right
 nmapkey("h", ";")
 
--- stopping yank when erasing
-nmapkey("x", '"_x') -- character erasure without yank
-nmapkey("d", '"_d') -- stopping yank when end-of-line erasure
-nmapkey("c", '"_c') -- stopping yank when changing
-nmapkey("D", '"_D') -- stopping yank when lines erasure
+nmapkey("x", '"_x', { desc = "Delete a character without yanking" })
+nmapkey("d", '"_d', { desc = "Delete to end of line without yanking" })
+nmapkey("c", '"_c', { desc = "Change text without yanking" })
+nmapkey("C", '"_C', { desc = "Change to end of line without yanking" })
+nmapkey("D", '"_D', { desc = "Delete rest of line without yanking" })
 
 -- original dd
 nmapkey("<leader>D", "d")
@@ -163,7 +163,7 @@ nmapkey("<leader>cp", function()
 end, { desc = "Split current line at cursor" })
 
 -- show all the hidden diagnostics
-nmapkey("<leader>m", vim.diagnostic.open_float, { desc = "show all the hidden diagnostics" })
+nmapkey("<leader>m", vim.diagnostic.open_float, { desc = "Show all the hidden diagnostics" })
 nmapkey("<leader>snH", function()
   require("noice").cmd("history")
   vim.cmd("wincmd T")
