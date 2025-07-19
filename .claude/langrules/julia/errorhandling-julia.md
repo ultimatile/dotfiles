@@ -1,6 +1,9 @@
 # Error-Handling Rules
 
+- Use @warn, @error, and @info for logging instead of `println("warning: ...")`, etc.
+
 ## 1. Union{T, Nothing} Pattern
+
 Most common pattern for fallible operations.
 
 ```julia
@@ -18,6 +21,7 @@ end
 ```
 
 ## 2. Tuple Return Pattern
+
 Return success/failure flag with value.
 
 ```julia
@@ -31,6 +35,7 @@ success || error("Division failed")
 ```
 
 ## 3. Named Tuple Pattern
+
 More explicit return values.
 
 ```julia
@@ -53,6 +58,7 @@ end
 ```
 
 ## 4. Exception Usage Guidelines
+
 - Use exceptions for I/O operations and external resource access
 - Avoid in performance-critical code
 - Use `Union{T, Nothing}` for predictable errors
@@ -69,3 +75,4 @@ function read_config(path::String)
     end
 end
 ```
+

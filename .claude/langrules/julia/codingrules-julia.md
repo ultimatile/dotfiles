@@ -7,9 +7,11 @@
 - Use `SCREAMING_SNAKE_CASE` for constants
 - Use descriptive names that clearly indicate purpose
 - Avoid abbreviations unless they are well-established in the domain
+- Use always ASCII
 
 ## Code Structure
 
+- KISS, YAGNI, SOLID, and DRY principles apply
 - Keep functions small and focused on a single responsibility
 - Use multiple dispatch effectively - define methods for different argument types
 - Group related functionality into modules
@@ -41,7 +43,7 @@ See @typesystem-julia.md for detailed guidelines on using Julia's type system ef
 
    ```julia
    # Inner-loop performance:
-   function process_fast(xs::Vector{Float64})
+   function process_fast(xs::Vector{F}) where F <: AbstractFloat
        @inbounds for x in xs
            # processing logic
        end
@@ -51,13 +53,6 @@ See @typesystem-julia.md for detailed guidelines on using Julia's type system ef
 4. **Avoid `Any` in signatures**
 
    - Prefer `Number`, `AbstractString`, `AbstractDict`, etc.
-   - If truly generic, use `T` with bounds:
-
-   ```julia
-   function wrap(x::T) where T
-       (x,)
-   end
-   ```
 
 5. **Document argument types in docstrings**
 
@@ -180,6 +175,8 @@ See @performance-julia.md for detailed performance guidelines.
 - Prefer `isnothing` over `=== nothing` and `!isnothing` over `!== nothing`
 - Prefer shadowing in kwargs: not `f(;A=A)` but `f(;A)`
 - For multi-line literals, use triple double quotes ("""...""") instead of multiple `println` calls.
+- Never use concrete types in function signatures unless absolutely necessary. Not `f(x::Int)` but `f(::Integer
+)` or `f(x::Number)`.
 
 ## Metaprogramming
 

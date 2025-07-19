@@ -1,32 +1,32 @@
 # Type System
 
 ## Basic Principles
+
 - Define custom types when they improve code clarity
 - Use parametric types for generic code
 - Prefer concrete types over abstract types in performance-critical code
 
 ## Abstract Type Hierarchies
+
 ```julia
 # Good hierarchy design
 abstract type Animal end
 abstract type Mammal <: Animal end
 abstract type Bird <: Animal end
 
-struct Dog <: Mammal
-    name::String
-    age::Int
+struct Dog <: Mammal where {S<:AbstractString, I<:Integer}
+    name::S
+    age::I
 end
 
-struct Eagle <: Bird
-    wingspan::Float64
+struct Eagle <: Bird where {F<:AbstractFloat}
+    wingspan::F
 end
 
-# Common interface
-name(d::Dog) = d.name
-age(d::Dog) = d.age
 ```
 
 ## Union Types
+
 Use for small sets of types. Too many types hurt performance.
 
 ```julia
@@ -37,29 +37,23 @@ Response = Union{String, Nothing, Symbol}
 BadUnion = Union{Int, Float64, String, Symbol, Nothing, Missing}
 
 # Optimized Union branching
-function process(x::Union{Int, Float64})
-    if x isa Int
-        # Compiler can optimize this
-        return x * 2
-    else
-        return x * 2.0
-    end
-end
+process(x::Union{Int, Float64}) = x is Int ? x * 2 : x * 2.0
 ```
 
 ## Parametric Types Best Practices
+
 ```julia
 # Minimal type parameters
-struct Point{T<:Real}
-    x::T
-    y::T
+struct Point{Tx<:Real, Ty<:Real}
+    x::Tx
+    y::Ty
 end
 
 # Type constraints for safety
-struct Matrix{T<:Number, N}
+struct Matrix{T<:Number, N<:Integer}
     data::Array{T, N}
-    
-    function Matrix{T, N}(data) where {T<:Number, N}
+
+    function Matrix{T, N}(data) where {T<:Number, N<:Integer}
         N == 2 || throw(ArgumentError("Only 2D matrices supported"))
         new{T, N}(data)
     end
@@ -67,6 +61,7 @@ end
 ```
 
 ## Type Stability
+
 ```julia
 # Type-stable function
 function stable_sum(v::Vector{Float64})
@@ -89,3 +84,4 @@ end
 # Check with @code_warntype
 @code_warntype stable_sum([1.0, 2.0, 3.0])
 ```
+
