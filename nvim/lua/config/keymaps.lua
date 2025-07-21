@@ -215,12 +215,13 @@ nmapkey("<M-Down>", '":move +1<CR>==" .. v:count1 .. "l"', { expr = true, desc =
 xmapkey("<M-Up>", ":move '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 xmapkey("<M-Down>", ":move '>+1<CR>gv=gv", { desc = "Move selected lines down" })
 
+-- TODO: consider using vim.fn.getcharstr and vim.fn.keytrans
 local function getchar_as_string()
   local input = vim.fn.getchar()
   return type(input) == "number" and vim.fn.nr2char(input) or input
 end
 
-local function run_macro()
+local function toggle_macro()
   if vim.fn.reg_recording() ~= "" then
     vim.cmd("normal! q")
     return
@@ -252,7 +253,7 @@ nmapkey("Q", function()
       vim.cmd("confirm qa")
     end, -- Confirm quit all (QQ)
     R = function()
-      run_macro()
+      toggle_macro()
     end, -- Start/Stop macro recording (QR)
     S = function()
       vim.cmd("wa")
