@@ -256,11 +256,6 @@ nmapkey("Q", function()
       vim.cmd("confirm qa")
     end, -- Confirm quit all (QQ)
     R = function()
-      local f = io.open("./log.txt", "a")
-      if f then
-        f:write("Help")
-        f:close()
-      end
       run_macro()
     end, -- Start/Stop macro recording (QR)
     S = function()
