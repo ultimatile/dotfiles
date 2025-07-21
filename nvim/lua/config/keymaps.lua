@@ -209,14 +209,10 @@ end)
 
 -- line swapping
 -- Normal mode mappings
--- move the line up
 nmapkey("<M-Up>", '":move -1-" .. v:count1 .. "<CR>==l"', { expr = true, desc = "Move line up" })
--- move the line down
 nmapkey("<M-Down>", '":move +1<CR>==" .. v:count1 .. "l"', { expr = true, desc = "Move line down" })
 -- Visual mode mappings
--- move the line up
 xmapkey("<M-Up>", ":move '<-2<CR>gv=gv", { desc = "Move selected lines up" })
--- move the line down
 xmapkey("<M-Down>", ":move '>+1<CR>gv=gv", { desc = "Move selected lines down" })
 
 local function getchar_as_string()
