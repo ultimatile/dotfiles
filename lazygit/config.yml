@@ -7,6 +7,15 @@ customCommands:
     context: "localBranches"
     loadingText: "checking out PR"
     description: "PR No.を指定してチェックアウト"
+  - key: "V"
+    prompts:
+      - type: "input"
+        title: "PR id:"
+    command: "$HOME/dotfiles/lazygit/pr-checkout-as-worktree.sh {{index .PromptResponses 0}}"
+    context: "localBranches"
+    loadingText: "checking out PR as worktree"
+    description: "PR No.を指定してチェックアウト (worktree)"
+    output: terminal
   - key: "y"
     #TODO: currently once "gh repo set-default owner/repo" command is necessary. To be fixed.
     command: "gh repo sync"
