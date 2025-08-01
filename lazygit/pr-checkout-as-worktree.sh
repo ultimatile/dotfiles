@@ -1,7 +1,8 @@
 #!/bin/bash
+set -euo pipefail
 pr_id="$1"
-branch=$(gh pr view "$pr_id" --json headRefName -q .headRefName)
+branch=$(gh pr view "$pr_id" --json headRefName --jq .headRefName)
 repo_name=$(basename "$(git rev-parse --show-toplevel)")
-slashless_branch_name="${branch//\//_}"
-git fetch upstream "$branch"
-git worktree add "../${repo_name}-$slashless_branch_name" "$branch"
+dir_name="${repo_name}-${branch//\//_}"
+git fetch upstream "pull/${pr_id}/head:${branch}"
+git worktree add "../${dir_name}" "$branch"
