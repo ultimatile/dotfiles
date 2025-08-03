@@ -1,5 +1,6 @@
 customCommands:
-  - key: "v" # couldn't think of a better keybinding
+  - key: "v"
+    # https://github.com/jesseduffield/lazygit/wiki/Custom-Commands-Compendium#checkout-branch-via-github-pull-request-id
     prompts:
       - type: "input"
         title: "PR id (v):"
