@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -eu
 pr_id="$1"
 branch=$(gh pr view "$pr_id" --json headRefName --jq .headRefName)
 repo_name=$(basename "$(git rev-parse --show-toplevel)")
