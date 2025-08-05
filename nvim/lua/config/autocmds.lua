@@ -88,7 +88,21 @@ local function switch_ime_to_english()
 end
 
 -- Enhanced IME switching with comprehensive event coverage
-autocmd({ "InsertLeave", "WinEnter", "FocusGained", "VimEnter", "VimResume", "CmdlineLeave", "TabEnter" }, {
+local ime_switch_events = {
+  "InsertLeave",
+  "WinEnter",
+  "FocusGained",
+  "VimEnter",
+  "VimResume",
+  "CmdlineLeave",
+  "TabEnter",
+  "TabLeave",
+  "BufEnter",
+  "BufLeave",
+  "BufNew",
+  "CursorMoved",
+}
+autocmd(ime_switch_events, {
   callback = switch_ime_to_english,
   group = augroup("IMESwitcher"),
 })
