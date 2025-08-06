@@ -78,9 +78,9 @@ local function omapkey(lhs, rhs, opts)
   mapkey("o", lhs, rhs, opts)
 end
 
--- local function imapkey(lhs, rhs, opts)
---   mapkey("i", lhs, rhs, opts)
--- end
+local function imapkey(lhs, rhs, opts)
+  mapkey("i", lhs, rhs, opts)
+end
 --
 -- local function vmapkey(lhs, rhs, opts)
 --   mapkey("v", lhs, rhs, opts)
@@ -108,6 +108,8 @@ omapkey("<Space>", "W")
 xmapkey("<Space>", "W")
 
 xmapkey("p", '"_dP', { desc = "Paste without yanking" })
+
+imapkey("<F1>", "<ESC>", { desc = "Exit insert mode" })
 
 -- duplicate the current line(s)
 nmapkey("<C-P>", ":copy.<CR>", { desc = "Duplicate current line(s) below" })
