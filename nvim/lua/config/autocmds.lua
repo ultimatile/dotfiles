@@ -88,7 +88,21 @@ local function switch_ime_to_english()
 end
 
 -- Enhanced IME switching with comprehensive event coverage
-autocmd({ "InsertLeave", "WinEnter", "FocusGained", "VimEnter", "VimResume", "CmdlineLeave", "TabEnter" }, {
+local ime_switch_events = {
+  "InsertLeave",
+  "WinEnter",
+  "FocusGained",
+  "VimEnter",
+  "VimResume",
+  "CmdlineLeave",
+  "TabEnter",
+  "TabLeave",
+  "BufEnter",
+  "BufLeave",
+  "BufNew",
+  "CursorMoved",
+}
+autocmd(ime_switch_events, {
   callback = switch_ime_to_english,
   group = augroup("IMESwitcher"),
 })
@@ -256,6 +270,135 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup("TypstDoc"),
 })
 
+-- for Typst markdown (split lines with periods)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function(args)
+    local bufnr = args.buf
+
+    _G.format_md_lines_func = function(start_line_arg, end_line_arg)
+      -- Use passed arguments or fall back to visual marks
+      local start_line = start_line_arg or vim.fn.line("'<")
+      local end_line = end_line_arg or vim.fn.line("'>")
+
+      -- Convert to 0-indexed for API
+      local start_idx = start_line - 1
+      local end_idx = end_line -- end_line is inclusive, nvim_buf_get_lines end is exclusive, so we use end_line as-is
+
+      if start_idx < 0 or start_idx >= end_idx then
+        return
+      end
+
+      local lines = vim.api.nvim_buf_get_lines(bufnr, start_idx, end_idx, false)
+
+      if #lines == 0 then
+        return
+      end
+
+      -- Parse lines and identify chunks separated by empty lines
+      local chunks = {}
+      local current_chunk = {}
+
+      for i = 1, #lines do
+        local line = lines[i]
+        -- Check if this is an empty line
+        if line:match("^%s*$") then
+          -- End current chunk and add empty line as separator
+          if #current_chunk > 0 then
+            table.insert(chunks, current_chunk)
+            current_chunk = {}
+          end
+          table.insert(chunks, { { content = "", is_empty = true } })
+        else
+          -- Add content to current chunk
+          table.insert(current_chunk, { content = line, is_empty = false })
+        end
+      end
+
+      -- Add final chunk if it exists
+      if #current_chunk > 0 then
+        table.insert(chunks, current_chunk)
+      end
+
+      if #chunks == 0 then
+        return
+      end
+
+      -- Process each chunk
+      local result = {}
+
+      for _, chunk in ipairs(chunks) do
+        if #chunk == 1 and chunk[1].is_empty then
+          -- This is an empty line chunk, preserve it
+          table.insert(result, "")
+        else
+          -- This is a content chunk, process it
+          local contents = {}
+          for _, item in ipairs(chunk) do
+            if not item.is_empty and item.content ~= "" then
+              table.insert(contents, item.content)
+            end
+          end
+
+          if #contents > 0 then
+            local full_text = table.concat(contents, " ")
+
+            -- Split by periods while handling various cases
+            local sentences = {}
+
+            -- Split text by periods, keeping the period with the sentence
+            local current_sentence = ""
+            local i = 1
+            while i <= #full_text do
+              local char = full_text:sub(i, i)
+              current_sentence = current_sentence .. char
+
+              if char == "." then
+                -- Check if this is actually end of sentence
+                -- Look ahead to see if next char is space, newline, or end of string
+                local next_char = full_text:sub(i + 1, i + 1)
+                if next_char == "" or next_char:match("%s") then
+                  -- This is likely end of sentence
+                  local trimmed = current_sentence:gsub("^%s*", ""):gsub("%s*$", "")
+                  if trimmed ~= "" then
+                    table.insert(sentences, trimmed)
+                  end
+                  current_sentence = ""
+                  -- Skip whitespace after period
+                  while i < #full_text and full_text:sub(i + 1, i + 1):match("%s") do
+                    i = i + 1
+                  end
+                end
+              end
+              i = i + 1
+            end
+
+            -- Add any remaining text
+            local trimmed = current_sentence:gsub("^%s*", ""):gsub("%s*$", "")
+            if trimmed ~= "" then
+              table.insert(sentences, trimmed)
+            end
+
+            -- Convert sentences to regular lines
+            for _, sentence in ipairs(sentences) do
+              table.insert(result, sentence)
+            end
+          end
+        end
+      end
+
+      vim.api.nvim_buf_set_lines(bufnr, start_idx, end_idx, false, result)
+    end
+
+    vim.keymap.set("x", "<leader>j", ":<C-u>lua format_md_lines_func()<CR>", {
+      noremap = true,
+      silent = true,
+      buffer = bufnr,
+      desc = "Format markdown lines by splitting at periods",
+    })
+  end,
+  group = augroup("TypstMarkdownDoc"),
+})
 -- workaround for avoiding conflicts with <CR>-prefix keymaps in command-line window
 autocmd("CmdwinEnter", {
   callback = function()

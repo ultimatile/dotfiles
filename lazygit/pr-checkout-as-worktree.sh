@@ -1,16 +1,8 @@
 #!/bin/bash
-
+set -eu
 pr_id="$1"
-
-# PR の headRefName を取得
-branch=$(gh pr view "$pr_id" --json headRefName -q .headRefName)
-
-# ルートレポジトリ名を取得
+branch=$(gh pr view "$pr_id" --json headRefName --jq .headRefName)
 repo_name=$(basename "$(git rev-parse --show-toplevel)")
-
-# ブランチ名のスラッシュをアンダースコアに変換（ディレクトリ名用）
-safe_branch_name="${branch//\//_}"
-
-# ブランチを fetch → worktree に追加
-git fetch upstream "$branch"
-git worktree add "../${repo_name}-$safe_branch_name" "$branch"
+dir_name="${repo_name}-${branch//\//_}"
+git fetch upstream "pull/${pr_id}/head:${branch}"
+git worktree add "../${dir_name}" "$branch"
