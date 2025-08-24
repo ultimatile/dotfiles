@@ -33,3 +33,9 @@ customCommands:
     loadingText: "checking out remote branch as worktree"
     description: "リモートブランチをworktreeとしてチェックアウト"
     output: log
+  - key: "U"
+    command: "$HOME/dotfiles/lazygit/set-upstream-url.sh"
+    description: "親レポジトリをリモートupstreamに設定"
+    context: "global"
+    loadingText: "adding upstream repository URL"
+    output: log
