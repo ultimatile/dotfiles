@@ -139,3 +139,7 @@ if status is-interactive
 end
 zoxide init fish | source
 direnv hook fish | source
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH "/Users/$HOME/.lmstudio/bin"
+# End of LM Studio CLI section
