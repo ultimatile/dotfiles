@@ -27,3 +27,15 @@ customCommands:
     context: "commits"
     command: "printf {{.SelectedCommit.Hash}} | head -c7 | pbcopy"
     description: "ショートコミットハッシュをクリップボードにコピー"
+  - key: "W"
+    command: "$HOME/dotfiles/lazygit/remote-checkout-as-worktree.sh {{.SelectedRemoteBranch.RemoteName}} {{.SelectedRemoteBranch.Name}}"
+    context: "remoteBranches"
+    loadingText: "checking out remote branch as worktree"
+    description: "リモートブランチをworktreeとしてチェックアウト"
+    output: log
+  - key: "U"
+    command: "$HOME/dotfiles/lazygit/set-upstream-url.sh"
+    description: "親レポジトリをリモートupstreamに設定"
+    context: "global"
+    loadingText: "adding upstream repository URL"
+    output: log
