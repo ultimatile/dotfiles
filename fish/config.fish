@@ -85,6 +85,7 @@ if status is-interactive
     # brew
     abbr -a br brew
     abbr -a brup brew upgrade
+    abbr -a bるp brew upgrade
     abbr -a brst brew list
 
     # make

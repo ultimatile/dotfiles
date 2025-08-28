@@ -86,20 +86,20 @@ end
 --   mapkey("v", lhs, rhs, opts)
 -- end
 
-local function imapkey_noautocmd(lhs, rhs, opts)
-  mapkey("i", lhs, function()
-    local ei = vim.opt.eventignore
-    vim.opt.eventignore = "all"
-    if type(rhs) == "function" then
-      rhs()
-    else
-      feedkeys("n", rhs)
-    end
-    vim.schedule(function()
-      vim.opt.eventignore = ei
-    end)
-  end, opts)
-end
+-- local function imapkey_noautocmd(lhs, rhs, opts)
+--   mapkey("i", lhs, function()
+--     local ei = vim.opt.eventignore
+--     vim.opt.eventignore = "all"
+--     if type(rhs) == "function" then
+--       rhs()
+--     else
+--       feedkeys("n", rhs)
+--     end
+--     vim.schedule(function()
+--       vim.opt.eventignore = ei
+--     end)
+--   end, opts)
+-- end
 
 -- Add any keymaps here
 
@@ -196,13 +196,13 @@ nmapkey("<Leader>P", put_linewise_above, { desc = "Linewise paste above" })
 -- keep the cursor position when moving lines
 nmapkey("~", "g~l")
 
-imapkey_noautocmd("<C-B>", "<Esc>I")
-imapkey_noautocmd("<C-E>", "<Esc>g_a")
-imapkey_noautocmd("<C-O>", "<Esc>o")
+imapkey("<C-B>", "<C-c>I")
+imapkey("<C-E>", "<C-c>g_a")
+imapkey("<C-O>", "<C-c>o")
 -- move to the next line and keep the cursor position
-imapkey_noautocmd("<C-J>", function()
+imapkey("<C-J>", function()
   local col = vim.b.insert_mode_start_col or vim.fn.col(".")
-  feedkeys("n", "<ESC>", { do_lt = false, escape_ks = true })
+  feedkeys("n", "<C-c>", { do_lt = false, escape_ks = true })
   vim.schedule(function()
     vim.cmd("normal! j" .. col .. "|")
     vim.cmd.startinsert()

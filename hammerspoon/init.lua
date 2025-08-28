@@ -6,8 +6,8 @@ hs.hotkey.bind({ "cmd", "ctrl" }, "escape", function()
 	end
 end)
 -- Bind Cmd+Ctrl+c to the copy-flattern-split function
-hs.hotkey.bind({"cmd", "ctrl"}, "c", function()
-	hs.eventtap.keyStroke({"cmd"}, "c")
+hs.hotkey.bind({ "cmd", "ctrl" }, "c", function()
+	hs.eventtap.keyStroke({ "cmd" }, "c")
 	hs.timer.doAfter(0.3, function()
 		hs.execute("pbpaste | tr '\\n' ' ' | sed -e 's/\\([.?!]\\) /\\1\\n/g' -e 's/- //g' | pbcopy", true)
 	end)
