@@ -69,7 +69,7 @@ customCommands:
     command: "$HOME/dotfiles/lazygit/remote-checkout-as-worktree.sh {{.SelectedRemoteBranch.RemoteName}} {{.SelectedRemoteBranch.Name}}"
     context: "remoteBranches"
     loadingText: "checking out remote branch as worktree"
-    description: "リモートブランチをworktreeとしてチェックアウト"
+    description: "リモートブランチをワークツリーとしてチェックアウト"
     output: log
   - key: "U"
     command: "$HOME/dotfiles/lazygit/set-upstream-url.sh"
