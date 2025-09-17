@@ -1,5 +1,5 @@
 return {
-  "echasnovski/mini.ai",
+  "nvim-mini/mini.ai",
   opts = {
     custom_textobjects = {
       -- snake_case用のテキストオブジェクト
