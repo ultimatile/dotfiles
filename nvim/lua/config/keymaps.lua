@@ -126,6 +126,7 @@ xmapkey("<Space>", "W")
 
 xmapkey("p", '"_dP', { desc = "Paste without yanking" })
 
+nmapkey("<F1>", "<nop>", { desc = "No help" })
 imapkey("<F1>", "<ESC>", { desc = "Exit insert mode" })
 
 -- duplicate the current line(s)
