@@ -81,7 +81,7 @@ ln -s $HOME/{dotfiles/,.}hammerspoon/init.lua
 ## JuliaPkgTemplatesCLI (Personal Project)
 
 ```sh:
-ln -s $HOME/{dotfiles,}.config/jtc/config.toml
+ln -s $HOME/{dotfiles,.config}/jtc/config.toml
 ```
 
 ## Lazygit
