@@ -1,6 +1,8 @@
 [default]
 user = "ultimatile"
 julia_version = "1.10.10"
+author = "ultimatile"
+mail = "ultimatile@users.noreply.github.com"
 
 [default.Formatter]
 style = "blue"
