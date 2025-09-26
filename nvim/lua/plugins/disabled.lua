@@ -2,7 +2,7 @@
 return {
   -- { "LazyVim", enabled = false },
   -- { "lazy.nvim", enabled = false },
-  -- { "echasnovski/mini.pairs", enabled = false },
+  -- { "nvim-mini/mini.pairs", enabled = false },
   -- { "schemastore.nvim", enabled = false },
   -- { "bufferline.nvim", enabled = false },
   -- { "catppuccin", enabled = false },

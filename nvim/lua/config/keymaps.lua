@@ -103,12 +103,30 @@ end
 
 -- Add any keymaps here
 
+local function swap_next()
+  local col = vim.fn.col(".")
+  local last = vim.fn.col("$") - 1
+  if col < last then
+    vim.cmd("normal! xp")
+  end
+end
+
+local function swap_prev()
+  if vim.fn.col(".") > 1 then
+    vim.cmd("normal! hxp")
+  end
+end
+
+nmapkey("]x", swap_next, { desc = "Swap char with next" })
+nmapkey("[x", swap_prev, { desc = "Swap char with prev" })
+
 -- https://zenn.dev/vim_jp/articles/43d021f461f3a4#i%3Cspace%3E%E3%81%A7word%E9%81%B8%E6%8A%9E
 omapkey("<Space>", "W")
 xmapkey("<Space>", "W")
 
 xmapkey("p", '"_dP', { desc = "Paste without yanking" })
 
+nmapkey("<F1>", "<nop>", { desc = "No help" })
 imapkey("<F1>", "<ESC>", { desc = "Exit insert mode" })
 
 -- duplicate the current line(s)
