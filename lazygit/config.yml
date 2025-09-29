@@ -1,3 +1,6 @@
+keybinding:
+  universal:
+    copyToClipboard: y
 customCommands:
   - key: "J"
     prompts:
