@@ -9,6 +9,11 @@ return {
         cyclic = true,
       }),
       augend.constant.new({
+        elements = { "yes", "no" },
+        word = true,
+        cyclic = true,
+      }),
+      augend.constant.new({
         elements = { "上", "下" },
         word = false,
         cyclic = true,
