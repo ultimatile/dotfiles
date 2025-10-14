@@ -1,0 +1,33 @@
+#%Module
+
+# Provide information about the module
+module-whatis "LLVM 20 Clang from brew"
+
+conflict llvm llvm20
+
+set root "$::env(HOMEBREW_PREFIX)/opt/llvm@20"
+
+# set PATH
+prepend-path PATH "$root/bin"
+
+# set CPPFLAGS
+if { [info exists ::env(CPPFLAGS)] } {
+    setenv CPPFLAGS "-I$root/include $::env(CPPFLAGS)"
+} else {
+    setenv CPPFLAGS "-I$root/include"
+}
+
+set ldflags "-L$root/lib -L$root/lib/c++ -Wl,-rpath,$root/lib/c++"
+
+# set LDFLAGS
+if { [info exists ::env(LDFLAGS)] } {
+    setenv LDFLAGS "$ldflags $::env(LDFLAGS)"
+} else {
+    setenv LDFLAGS "$ldflags"
+}
+
+setenv CC "$root/bin/clang"
+setenv CXX "$root/bin/clang++"
+
+# Set MLIR_SYS environment variable for Rust mlir-sys crate
+setenv MLIR_SYS_200_PREFIX "$root"
