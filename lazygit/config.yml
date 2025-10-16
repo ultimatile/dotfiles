@@ -58,7 +58,7 @@ customCommands:
     loadingText: "PRをチェックアウト中"
     description: "PR番号を指定してチェックアウト"
     output: log
-  - key: "y"
+  - key: "Y"
     #TODO: currently once "gh repo set-default owner/repo" command is necessary. To be fixed.
     command: "gh repo sync"
     context: "localBranches"
