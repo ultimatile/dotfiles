@@ -79,3 +79,53 @@ customCommands:
     context: "global"
     loadingText: "adding upstream repository URL"
     output: log
+  - key: "<a-r>"
+    context: "global"
+    description: "Pull Rebase戦略を設定"
+    prompts:
+      - type: "menu"
+        title: "Pull Rebase戦略を選択:"
+        key: "RebaseStrategy"
+        options:
+          - name: "merge (default)"
+            description: "pull.rebase false - マージコミットを作成"
+            value: "false"
+          - name: "rebase"
+            description: "pull.rebase true - リベースする"
+            value: "true"
+          - name: "rebase (preserve merges)"
+            description: "pull.rebase merges - マージコミットを保持してリベース"
+            value: "merges"
+      - type: "confirm"
+        title: "実行確認"
+        body: "pull.rebase {{.Form.RebaseStrategy}} に設定しますか？"
+    command: |
+      git config pull.rebase {{.Form.RebaseStrategy}}
+      echo "✓ pull.rebase {{.Form.RebaseStrategy}} に設定しました"
+    loadingText: "Pull Rebase戦略を設定中"
+    output: log
+  - key: "<a-f>"
+    context: "global"
+    description: "Pull Fast-forward戦略を設定"
+    prompts:
+      - type: "menu"
+        title: "Pull Fast-forward戦略を選択:"
+        key: "FFStrategy"
+        options:
+          - name: "allow fast-forward (default)"
+            description: "pull.ff true - fast-forward可能ならfast-forward"
+            value: "true"
+          - name: "fast-forward only"
+            description: "pull.ff only - fast-forwardのみ許可"
+            value: "only"
+          - name: "always merge commit"
+            description: "pull.ff false - 常にマージコミットを作成"
+            value: "false"
+      - type: "confirm"
+        title: "実行確認"
+        body: "pull.ff {{.Form.FFStrategy}} に設定しますか？"
+    command: |
+      git config pull.ff {{.Form.FFStrategy}}
+      echo "✓ pull.ff {{.Form.FFStrategy}} に設定しました"
+    loadingText: "Pull Fast-forward戦略を設定中"
+    output: log
