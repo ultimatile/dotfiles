@@ -79,7 +79,7 @@ customCommands:
     context: "global"
     loadingText: "adding upstream repository URL"
     output: log
-  - key: "<a-r>"
+  - key: "<c-g>"
     context: "global"
     description: "Pull Rebase戦略を設定"
     prompts:
@@ -104,7 +104,7 @@ customCommands:
       echo "✓ pull.rebase {{.Form.RebaseStrategy}} に設定しました"
     loadingText: "Pull Rebase戦略を設定中"
     output: log
-  - key: "<a-f>"
+  - key: "<c-n>"
     context: "global"
     description: "Pull Fast-forward戦略を設定"
     prompts:
