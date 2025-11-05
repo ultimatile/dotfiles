@@ -137,6 +137,10 @@ if status is-interactive
 
     abbr -a clc claude
 
+    #bind ctrl-\] forward-jump
+    #bind ctrl-alt-\] backward-jump
+    bind -M insert ctrl-\] forward-jump
+    bind -M insert ctrl-alt-\] backward-jump
 end
 zoxide init fish | source
 direnv hook fish | source
