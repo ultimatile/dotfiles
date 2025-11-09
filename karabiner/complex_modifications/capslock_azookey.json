@@ -1,0 +1,26 @@
+{
+  "title": "CapsLock: toggle ABC <-> Japanese (works with azooKey)",
+  "rules": [
+    {
+      "description": "CapsLock toggles English <-> Japanese",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "key_code": "caps_lock" },
+          "conditions": [
+            { "type": "input_source_if", "input_sources": [ { "language": "^ja$" } ] }
+          ],
+          "to": [ { "select_input_source": { "language": "^en$" } } ]
+        },
+        {
+          "type": "basic",
+          "from": { "key_code": "caps_lock" },
+          "conditions": [
+            { "type": "input_source_unless", "input_sources": [ { "language": "^ja$" } ] }
+          ],
+          "to": [ { "select_input_source": { "language": "^ja$" } } ]
+        }
+      ]
+    }
+  ]
+}

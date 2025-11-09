@@ -84,6 +84,12 @@ ln -s $HOME/{dotfiles/,.}hammerspoon/init.lua
 ln -s $HOME/{dotfiles,.config}/jtc/config.toml
 ```
 
+## Karabiner-Elements
+
+```sh
+ln -s $HOME/{dotfiles/karabiner/complex_modifications,.config/karabiner/assets}
+```
+
 ## Lazygit
 
 ```sh:

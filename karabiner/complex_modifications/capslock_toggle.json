@@ -1,0 +1,15 @@
+{
+  "title": "CapsLock -> Next Input Source (ABC <-> azooKey)",
+  "rules": [
+    {
+      "description": "CapsLock sends Control-Space (cycle input source)",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "key_code": "caps_lock" },
+          "to": [ { "key_code": "spacebar", "modifiers": [ "control" ] } ]
+        }
+      ]
+    }
+  ]
+}
