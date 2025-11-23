@@ -1,6 +1,8 @@
 keybinding:
   universal:
     copyToClipboard: y
+  commits:
+    copyCommitAttributeToClipboard: "Y"
 customCommands:
   - key: "J"
     prompts:
