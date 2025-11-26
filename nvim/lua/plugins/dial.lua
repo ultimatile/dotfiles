@@ -11,6 +11,13 @@ return {
       augend.constant.new({
         elements = { "yes", "no" },
         word = true,
+        preserve_case = true,
+        cyclic = true,
+      }),
+      augend.constant.new({
+        elements = { "on", "off" },
+        word = true,
+        preserve_case = true,
         cyclic = true,
       }),
       augend.constant.new({
