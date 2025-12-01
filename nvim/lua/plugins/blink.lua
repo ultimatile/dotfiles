@@ -2,12 +2,14 @@ return {
   "saghen/blink.cmp",
   dependencies = { "kdheepak/cmp-latex-symbols", "saghen/blink.compat" },
   opts = {
-    -- fuzzy = {
-    --   max_typos = 0, -- Strict matching without typo tolerance
-    -- },
+    fuzzy = {
+      implementation = "rust", -- Full Unicode support for CJK languages
+      max_typos = 0, -- Strict matching to reduce over-matching in Japanese
+      use_proximity = false, -- Disable proximity scoring for CJK languages
+    },
     completion = {
       keyword = {
-        range = "full", -- Consider full keyword context for matching
+        range = "prefix", -- Only match text before cursor for CJK languages
       },
     },
     keymap = {
