@@ -137,8 +137,8 @@ xmapkey("<C-S-P>", ":copy '>+0<CR>gv", { desc = "Duplicate selected lines above"
 
 xmapkey("gp", "y`>p", { desc = "Duplicate selected characters" })
 
--- map <Tab> to switch between windows
-nmapkey("<Tab>", "<C-w><C-w>", { desc = "Next Window" })
+-- <Tab> mapping is now handled by sidekick.lua plugin config
+-- to support Copilot NES with fallback to window switching
 -- map <S-Tab> to switch between buffers (needs bufferline)
 nmapkey("<S-Tab>", function()
   vim.cmd("BufferLineCycleNext")
