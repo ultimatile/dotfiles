@@ -4,6 +4,13 @@ keybinding:
   commits:
     copyCommitAttributeToClipboard: "Y"
 customCommands:
+  - key: "0"
+    context: "files"
+    prompts:
+      - type: "input"
+        title: "コミットメッセージを入力:"
+        key: "CommitMessage"
+    command: 'git commit --allow-empty -m "{{.Form.CommitMessage}}"'
   - key: "J"
     prompts:
       - type: "menuFromCommand"
