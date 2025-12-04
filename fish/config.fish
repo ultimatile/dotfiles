@@ -70,6 +70,7 @@ if status is-interactive
     abbr -a gswc git switch -c
     abbr -a gfrum "git fetch upstream && git rebase upstream/main"
 
+    abbr -a ghrs gh repo search
     abbr -a lg lazygit
 
     # nvim
