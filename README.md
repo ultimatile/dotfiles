@@ -96,6 +96,14 @@ ln -s $HOME/{dotfiles/karabiner/complex_modifications,.config/karabiner/assets}
 ln -s $HOME/{dotfiles,Library/Application\ Support}/lazygit/config.yml
 ```
 
+## Lazygit Anywhere
+
+```sh:
+chmod +x $HOME/dotfiles/lazygit-anywhere/lazygit-{anywhere,lru}
+ln -s $HOME/{dotfiles/lazygit-anywhere,.local/bin}/lazygit-anywhere
+ln -s $HOME/{dotfiles/lazygit-anywhere,.local/bin}/lazygit-lru
+```
+
 ## Matplotlib
 
 ```sh:

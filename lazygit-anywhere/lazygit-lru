@@ -1,0 +1,80 @@
+#!/usr/bin/env -S uv run -qq --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "pyyaml",
+# ]
+# ///
+
+import os
+import sys
+from pathlib import Path
+
+import yaml
+
+
+def find_state_file() -> Path | None:
+    # 1. $XDG_STATE_HOME/lazygit/state.yml
+    xdg_state = os.environ.get("XDG_STATE_HOME")
+    candidates: list[Path] = []
+    if xdg_state:
+        candidates.append(Path(xdg_state) / "lazygit" / "state.yml")
+    else:
+        candidates.append(Path.home() / ".local" / "state" / "lazygit" / "state.yml")
+
+    # 2. lazygit の config dir 配下の state.yml
+    # lazygit が入っていれば `lazygit --print-config-dir` で取れる
+    from subprocess import run, PIPE  # lazy import
+
+    try:
+        r = run(
+            ["lazygit", "--print-config-dir"],
+            check=True,
+            text=True,
+            stdout=PIPE,
+            stderr=PIPE,
+        )
+        cfg_dir = Path(r.stdout.strip())
+        candidates.append(cfg_dir / "state.yml")
+    except Exception:
+        pass
+
+    # 3. 古いパターン: ~/.config/lazygit/state.yml
+    candidates.append(Path.home() / ".config" / "lazygit" / "state.yml")
+
+    for c in candidates:
+        if c.is_file():
+            return c
+    return None
+
+
+def main() -> int:
+    state_file = find_state_file()
+    if state_file is None:
+        print("lazygit state.yml が見つかりません", file=sys.stderr)
+        return 1
+
+    data = yaml.safe_load(state_file.read_text(encoding="utf-8"))
+
+    recent = None
+    key = "recentrepos"
+    if isinstance(data, dict) and key in data:
+        recent = data[key]
+
+    if not recent:
+        return 0
+
+    # 要素が dict なら .path を取る、文字列ならそのまま
+    for item in recent:
+        if isinstance(item, dict):
+            path = item.get("path") or item.get("repoPath") or item.get("dir")
+        else:
+            path = str(item)
+        if path:
+            print(path)
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

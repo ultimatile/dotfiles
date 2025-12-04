@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+for cmd in ghq fzf lazygit; do
+  command -v "$cmd" >/dev/null 2>&1 || {
+    echo "error: '$cmd' が見つかりません" >&2
+    exit 1
+  }
+done
+
+GHQ_CMD='ghq list --full-path'
+LRU_CMD='lazygit-lru'
+
+repo="$(
+  eval "$GHQ_CMD" | fzf \
+    --prompt="ghq> " \
+    --header="Alt-g: ghq list / Alt-r: lazygit LRU" \
+    --bind="alt-g:reload($GHQ_CMD)+change-prompt(ghq> )" \
+    --bind="alt-r:reload($LRU_CMD)+change-prompt(recent> )"
+)" || exit 0
+
+[ -z "$repo" ] && exit 0
+
+exec lazygit --path "$repo"

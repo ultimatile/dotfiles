@@ -72,6 +72,7 @@ if status is-interactive
 
     abbr -a ghrs gh repo search
     abbr -a lg lazygit
+    abbr -a lga lazygit-anywhere
 
     # nvim
     abbr -a nv nvim
