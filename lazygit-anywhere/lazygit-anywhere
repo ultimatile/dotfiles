@@ -8,8 +8,9 @@ for cmd in ghq fzf lazygit; do
   }
 done
 
-GHQ_CMD='ghq list --full-path'
-LRU_CMD='lazygit-lru'
+GHQ_ROOT="$(ghq root)"
+GHQ_CMD='ghq list'
+LRU_CMD='lazygit-lru | sed "s|^'"$GHQ_ROOT"'/||"'
 
 repo="$(
   eval "$GHQ_CMD" | fzf \
@@ -21,4 +22,4 @@ repo="$(
 
 [ -z "$repo" ] && exit 0
 
-exec lazygit --path "$repo"
+exec lazygit --path "$GHQ_ROOT/$repo"
