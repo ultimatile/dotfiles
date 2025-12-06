@@ -229,8 +229,8 @@ end)
 
 -- line swapping
 -- Normal mode mappings
-nmapkey("<M-Up>", '":move -1-" .. v:count1 .. "<CR>==l"', { expr = true, desc = "Move line up" })
-nmapkey("<M-Down>", '":move +1<CR>==" .. v:count1 .. "l"', { expr = true, desc = "Move line down" })
+nmapkey("<M-Up>", '":move -1-" .. v:count1 .. "<CR>=="', { expr = true, desc = "Move line up" })
+nmapkey("<M-Down>", '":move +1<CR>==" .. v:count1', { expr = true, desc = "Move line down" })
 -- Visual mode mappings
 xmapkey("<M-Up>", ":move '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 xmapkey("<M-Down>", ":move '>+1<CR>gv=gv", { desc = "Move selected lines down" })
