@@ -1,6 +1,9 @@
 return {
   "zbirenbaum/copilot.lua",
-  opts = function()
+  opts = function(_, opts)
+    opts = opts or {}
+    opts.print_log_level = vim.log.levels.ERROR
+
     local copilot = require("copilot.suggestion")
     local copilot_accept_WORD = function()
       copilot.accept(function(suggestion)
@@ -32,5 +35,7 @@ return {
         return true
       end
     end
+
+    return opts
   end,
 }
