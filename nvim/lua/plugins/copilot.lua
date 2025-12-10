@@ -1,5 +1,8 @@
 return {
   "zbirenbaum/copilot.lua",
+  dependencies = {
+    "tpope/vim-repeat",
+  },
   opts = function(_, opts)
     opts = opts or {}
     opts.print_log_level = vim.log.levels.ERROR
@@ -25,6 +28,7 @@ return {
       if copilot.is_visible() then
         LazyVim.create_undo()
         copilot_accept_WORD()
+        vim.fn["repeat#set"](vim.api.nvim_replace_termcodes("<Plug>(copilot-accept-WORD)", true, true, true))
         return true
       end
     end
@@ -32,6 +36,7 @@ return {
       if copilot.is_visible() then
         LazyVim.create_undo()
         copilot.accept_word()
+        vim.fn["repeat#set"](vim.api.nvim_replace_termcodes("<Plug>(copilot-accept-word)", true, true, true))
         return true
       end
     end
