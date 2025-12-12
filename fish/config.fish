@@ -71,6 +71,7 @@ if status is-interactive
     abbr -a gfrum "git fetch upstream && git rebase upstream/main"
 
     abbr -a ghrs gh repo search
+    abbr -a ghrcp "gh repo create \"$(basename $(pwd))\" --private --source=. --remote=origin"
     abbr -a lg lazygit
     abbr -a lga lazygit-anywhere
 
