@@ -2,7 +2,7 @@ keybinding:
   universal:
     copyToClipboard: y
   commits:
-    copyCommitAttributeToClipboard: "Y"
+    copyCommitAttributeToClipboard: "<c-y>"
 customCommands:
   - key: "0"
     context: "files"
@@ -73,7 +73,7 @@ customCommands:
     context: "localBranches"
     loadingText: "syncing upstream branch"
     description: "フォークをupstreamに同期"
-  - key: "Y"
+  - key: "y"
     context: "commits"
     command: "printf {{.SelectedCommit.Hash}} | head -c7 | pbcopy"
     description: "ショートコミットハッシュをクリップボードにコピー"
