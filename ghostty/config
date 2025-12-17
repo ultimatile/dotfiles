@@ -1,6 +1,6 @@
-font-size = 18 
+font-size = 14
 font-family = "UDEV Gothic NF"
-theme = "tokyonight-storm"
+theme = Tokyonight Storm
 font-thicken = true
 shell-integration-features = no-cursor
 cursor-style-blink = false
