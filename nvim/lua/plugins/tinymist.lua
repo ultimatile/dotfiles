@@ -1,40 +1,14 @@
 return {
-  -- requires tinymist
-  {
-    "mason-org/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "tinymist",
-      },
-    },
-  },
-  -- add tinymist to lspconfig
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      "mason.nvim",
-      "mason-org/mason-lspconfig.nvim",
-    },
-    ---@class PluginLspOpts
-    opts = {
-      ---@type lspconfig.options
-      servers = {
-        tinymist = {
-          --- todo: these configuration from lspconfig maybe broken
-          single_file_support = true,
-          root_dir = function()
-            return vim.fn.getcwd()
-          end,
-          --- See [Tinymist Server Configuration](https://github.com/Myriad-Dreamin/tinymist/blob/main/Configuration.md) for references.
-          settings = {
-            -- exportPdf = "onSave",
-            -- exportPdf = "Never",
-            exportPdf = "onType",
-            -- outputPath = "$root/target/$dir/$name",
-            outputPath = "$root/$dir/$name",
-          },
-        },
-      },
-    },
+    opts = function(_, opts)
+      -- Extend LazyVim's tinymist configuration
+      opts.servers = opts.servers or {}
+      opts.servers.tinymist = opts.servers.tinymist or {}
+      opts.servers.tinymist.settings = vim.tbl_deep_extend("force", opts.servers.tinymist.settings or {}, {
+        exportPdf = "onType",
+      })
+      return opts
+    end,
   },
 }

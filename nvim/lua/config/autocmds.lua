@@ -119,14 +119,14 @@ autocmd({ "FileType" }, {
 })
 
 -- for typst
-autocmd({ "BufNewFile", "BufRead" }, {
-  pattern = "*.typ",
-  callback = function()
-    local buf = vim.api.nvim_get_current_buf()
-    vim.api.nvim_set_option_value("filetype", "typst", { buf = buf })
-  end,
-  group = augroup("Tinymist"),
-})
+-- autocmd({ "BufNewFile", "BufRead" }, {
+--   pattern = "*.typ",
+--   callback = function()
+--     local buf = vim.api.nvim_get_current_buf()
+--     vim.api.nvim_set_option_value("filetype", "typst", { buf = buf })
+--   end,
+--   group = augroup("Tinymist"),
+-- })
 
 -- for typst doc (split docstring lines with periods)
 vim.api.nvim_create_autocmd("FileType", {
