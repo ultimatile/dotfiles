@@ -153,3 +153,5 @@ direnv hook fish | source
 # Added by LM Studio CLI (lms)
 set -gx PATH $PATH "/Users/$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
+
+set -gx PATH $PATH "$HOME/.julia/bin"
