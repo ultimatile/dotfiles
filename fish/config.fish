@@ -17,9 +17,7 @@ module use /Users/$USER/modulefiles
 # Rust
 source $HOME/.cargo/env.fish
 
-atuin init --disable-up-arrow fish | source
 # atuin init fish | source
-starship init fish | source
 # mcfly init fish | source
 #fzf --fish | source
 
@@ -28,6 +26,8 @@ set icloud "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs"
 set LOGSEQ_PAGES_ROOT "/Users/$USER/Library/Mobile Documents/iCloud~com~logseq~logseq/Documents/main/pages"
 set AQC "/Users/$USER/Library/Mobile Documents/com~apple~CloudDocs/AQC"
 if status is-interactive
+    atuin init --disable-up-arrow fish | source
+    starship init fish | source
     # for glow
     set -gx EDITOR nvim
     # enable mouse and color support in less
