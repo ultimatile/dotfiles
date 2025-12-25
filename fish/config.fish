@@ -141,6 +141,7 @@ if status is-interactive
     abbr -a ch choose --one-indexed
 
     abbr -a clc claude
+    abbr -a kc kiro-cli
 
     #bind ctrl-\] forward-jump
     #bind ctrl-alt-\] backward-jump
