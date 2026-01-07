@@ -70,6 +70,12 @@ ln -s $HOME/{dotfiles/,Library/Preferences/glow/}glow.yml
 ln -s $HOME/{dotfiles/,}.gnuplot
 ```
 
+## Gwq
+
+```sh:
+ln -s $HOME/{dotfiles,.config}/gwq/config.toml
+```
+
 ## Hammerspoon
 
 requirement: swpunc
