@@ -70,12 +70,24 @@ ln -s $HOME/{dotfiles/,Library/Preferences/glow/}glow.yml
 ln -s $HOME/{dotfiles/,}.gnuplot
 ```
 
+## Gwq
+
+```sh:
+ln -s $HOME/{dotfiles,.config}/gwq/config.toml
+```
+
 ## Hammerspoon
 
 requirement: swpunc
 
 ```sh:
 ln -s $HOME/{dotfiles/,.}hammerspoon/init.lua
+```
+
+## HPC (Personal Project)
+
+```sh:
+ln -s $HOME/{dotfiles,.config}/hpc/config.toml
 ```
 
 ## JuliaPkgTemplatesCLI (Personal Project)

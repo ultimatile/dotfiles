@@ -1,0 +1,17 @@
+[cluster]
+host = "myhpc"
+workdir = "myproj"
+
+[env]
+modules = []
+
+[sync]
+ignore = ["hpc.toml", ".git", ".claude", ".codex", ".kiro"]
+
+[slurm.options]
+partition = "gpu"
+time = "02:00:00"
+mem = "32G"
+gpus = 1
+account = "myaccount"
+nodes = 1
