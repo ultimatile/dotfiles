@@ -84,6 +84,12 @@ requirement: swpunc
 ln -s $HOME/{dotfiles/,.}hammerspoon/init.lua
 ```
 
+## HPC (Personal Project)
+
+```sh:
+ln -s $HOME/{dotfiles,.config}/hpc/config.toml
+```
+
 ## JuliaPkgTemplatesCLI (Personal Project)
 
 ```sh:
