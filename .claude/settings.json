@@ -4,8 +4,10 @@
     "command": "ccusage statusline",
     "padding": 0
   },
-  "alwaysThinkingEnabled": true,
   "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true
-  }
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true,
+  "model": "opus"
 }
