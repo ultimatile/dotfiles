@@ -46,7 +46,8 @@ ln -s $HOME/{dotfiles,.config}/fish/functions
 ## Ghostty
 
 ```sh:
-ln -s $HOME/{dotfiles,.config}/ghostty/config
+ln -s $HOME/dotfiles/ghostty/config ~/Library/Application\ Support/com.mitchellh.ghostty/config
+cp $HOME/dotfiles/ghostty/machine-specific ~/Library/Application\ Support/com.mitchellh.ghostty/
 ```
 
 ## Git
