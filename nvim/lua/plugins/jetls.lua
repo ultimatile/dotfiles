@@ -1,6 +1,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    ft = { "julia" },
     opts = function(_, opts)
       -- Define JETLS server configuration
       opts.servers = opts.servers or {}
