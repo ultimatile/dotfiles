@@ -13,5 +13,6 @@
     "clangd-lsp@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
-  "language": "Japanese"
+  "language": "Japanese",
+  "includeCoAuthoredBy": false
 }
