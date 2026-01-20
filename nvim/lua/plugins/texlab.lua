@@ -3,6 +3,9 @@ return {
   opts = {
     servers = {
       texlab = {
+        -- Lower priority for .latexmkrc to avoid misdetecting home directory as root
+        -- See: https://github.com/neovim/nvim-lspconfig/issues/2975
+        root_markers = { ".git", ".texlabroot", "texlabroot", "Tectonic.toml", ".latexmkrc", "latexmkrc" },
         settings = {
           texlab = {
             build = {
