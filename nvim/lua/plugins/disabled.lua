@@ -1,5 +1,6 @@
 -- if true then return {} end
 return {
+  { "vimtex", enabled = false },
   -- { "LazyVim", enabled = false },
   -- { "lazy.nvim", enabled = false },
   -- { "nvim-mini/mini.pairs", enabled = false },
