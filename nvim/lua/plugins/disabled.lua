@@ -31,7 +31,7 @@ return {
   -- { "mini.icons", enabled = false },
   -- { "mini.pairs", enabled = false },
   -- { "mini.surround", enabled = false },
-  -- { "neo-tree.nvim", enabled = false },
+  { "neo-tree.nvim", enabled = false },
   -- { "noice.nvim", enabled = false },
   -- { "nui.nvim", enabled = false },
   -- { "nvim-autopairs", enabled = false },
