@@ -1,6 +1,6 @@
 return {
   "saghen/blink.cmp",
-  dependencies = { "kdheepak/cmp-latex-symbols", "saghen/blink.compat" },
+  dependencies = { "kdheepak/cmp-latex-symbols", "saghen/blink.compat", "Kaiser-Yang/blink-cmp-dictionary" },
   opts = {
     fuzzy = {
       implementation = "rust", -- Full Unicode support for CJK languages
@@ -24,6 +24,15 @@ return {
     },
     sources = {
       providers = {
+        dictionary = {
+          module = "blink-cmp-dictionary",
+          name = "Dict",
+          min_keyword_length = 3,
+          score_offset = -100,
+          opts = {
+            dictionary_files = { "/usr/share/dict/words" },
+          },
+        },
         path = {
           min_keyword_length = 2, -- Require at least 3 characters before triggering path completion
           opts = {
@@ -42,7 +51,7 @@ return {
       },
       -- enclose by function to avoid automatic loading compat to default
       default = function()
-        return { "lsp", "path", "snippets", "buffer" }
+        return { "lsp", "path", "snippets", "buffer", "dictionary" }
       end,
     },
   },
