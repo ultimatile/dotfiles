@@ -4,8 +4,12 @@ return {
   opts = {
     fuzzy = {
       implementation = "rust", -- Full Unicode support for CJK languages
-      max_typos = 0, -- Strict matching to reduce over-matching in Japanese
+      max_typos = function(keyword)
+        if keyword:match("[^\x00-\x7F]") then return 0 end
+        return math.floor(#keyword / 4)
+      end,
       use_proximity = false, -- Disable proximity scoring for CJK languages
+      sorts = { "exact", "score", "sort_text" },
     },
     completion = {
       keyword = {
