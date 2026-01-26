@@ -1,8 +1,8 @@
 {
+  "includeCoAuthoredBy": false,
   "permissions": {
     "defaultMode": "acceptEdits"
   },
-  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "ccusage statusline",
@@ -12,7 +12,6 @@
     "rust-analyzer-lsp@claude-plugins-official": true,
     "clangd-lsp@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true,
   "language": "Japanese",
-  "includeCoAuthoredBy": false
+  "alwaysThinkingEnabled": true
 }
