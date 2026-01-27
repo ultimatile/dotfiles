@@ -140,7 +140,8 @@ if status is-interactive
 
     abbr -a ch choose --one-indexed
 
-    abbr -a clc claude
+    abbr -a cl claude
+    abbr -a clhi "claude -p --model \"haiku\" \"hi\""
     abbr -a kc kiro-cli
 
     abbr -a ssmb ssh mbpr
