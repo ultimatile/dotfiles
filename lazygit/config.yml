@@ -88,6 +88,11 @@ customCommands:
     command: "$HOME/dotfiles/lazygit/branch-add-worktree.sh {{.SelectedLocalBranch.Name | quote}}"
     loadingText: "ワークツリーを作成中"
     output: log
+  - key: "e"
+    context: "localBranches"
+    description: "ブランチのワークツリーでシェルを起動"
+    command: 'cd "$(gwq get {{.SelectedLocalBranch.Name | quote}})" && $SHELL'
+    output: terminal
   - key: "<c-t>"
     context: "localBranches"
     description: "新規ブランチを作成してワークツリー化 (gwq準拠)"
