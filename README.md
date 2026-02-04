@@ -41,6 +41,7 @@ ln -s $HOME/{dotfiles,.config}/fancy-cat/config.json
 ```sh:
 ln -s $HOME/{dotfiles,.config}/fish/config.fish
 ln -s $HOME/{dotfiles,.config}/fish/functions
+ln -s $HOME/{dotfiles,.config}/fish/completions
 ```
 
 ## Ghostty
