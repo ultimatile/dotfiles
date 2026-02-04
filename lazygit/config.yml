@@ -82,6 +82,22 @@ customCommands:
     context: "remoteBranches"
     loadingText: "checking out remote branch as worktree"
     output: log
+  - key: "t"
+    context: "localBranches"
+    description: "ブランチをワークツリーとして追加 (gwq準拠)"
+    command: "$HOME/dotfiles/lazygit/branch-add-worktree.sh {{.SelectedLocalBranch.Name | quote}}"
+    loadingText: "ワークツリーを作成中"
+    output: log
+  - key: "<c-t>"
+    context: "localBranches"
+    description: "新規ブランチを作成してワークツリー化 (gwq準拠)"
+    prompts:
+      - type: "input"
+        title: "新規ブランチ名を入力:"
+        key: "BranchName"
+    command: "$HOME/dotfiles/lazygit/branch-create-worktree.sh {{.SelectedLocalBranch.Name | quote}} {{.Form.BranchName | quote}}"
+    loadingText: "ブランチを作成してワークツリー化中"
+    output: log
   - key: "U"
     command: "$HOME/dotfiles/lazygit/set-upstream-url.sh"
     description: "親レポジトリをリモートupstreamに設定"
