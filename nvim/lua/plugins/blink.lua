@@ -5,7 +5,9 @@ return {
     fuzzy = {
       implementation = "rust", -- Full Unicode support for CJK languages
       max_typos = function(keyword)
-        if keyword:match("[\128-\255]") then return 0 end
+        if keyword:match("[\128-\255]") then
+          return 0
+        end
         return math.floor(#keyword / 4)
       end,
       use_proximity = false, -- Disable proximity scoring for CJK languages
