@@ -126,7 +126,7 @@ if status is-interactive
     abbr -a zarm env /usr/bin/arch -arm64 /bin/zsh --login
 
     # Python 
-    alias python="python3"
+    alias python=
     # uv 
     abbr -a uvr uv run
     abbr -a uvs uv sync
@@ -142,6 +142,8 @@ if status is-interactive
     abbr -a dga devbox global add
 
     abbr -a ch choose --one-indexed
+
+    abbr -a crc "codex review --uncommitted"
 
     abbr -a cl claude
     abbr -a clhi "claude -p --model \"haiku\" \"hi\""
