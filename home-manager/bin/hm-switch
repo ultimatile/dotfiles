@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -eu
+
+repo_root="$(cd "$(dirname "$0")/.." && pwd)"
+profile="${HM_PROFILE:-ultimatile}"
+
+exec home-manager switch --flake "path:${repo_root}#${profile}" "$@"

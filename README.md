@@ -87,6 +87,21 @@ requirement: swpunc
 ln -s $HOME/{dotfiles/,.}hammerspoon/init.lua
 ```
 
+## Home Manager
+
+```sh
+ln -sfn $HOME/{dotfiles,.config}/home-manager
+cp -n $HOME/dotfiles/home-manager/machine-specific{.example,}.nix
+```
+
+```sh
+$HOME/dotfiles/home-manager/bin/hm-switch
+```
+
+```sh
+home-manager switch --flake "path:$HOME/dotfiles/home-manager#ultimatile"
+```
+
 ## HPC (Personal Project)
 
 ```sh:
