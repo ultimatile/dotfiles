@@ -126,7 +126,7 @@ if status is-interactive
     abbr -a zarm env /usr/bin/arch -arm64 /bin/zsh --login
 
     # Python 
-    alias python=
+    alias python="python3"
     # uv 
     abbr -a uvr uv run
     abbr -a uvs uv sync
