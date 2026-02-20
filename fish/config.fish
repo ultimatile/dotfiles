@@ -147,7 +147,7 @@ if status is-interactive
 
     abbr -a cl claude
     abbr -a clhi "claude -p --model \"haiku\" \"hi\""
-    abbr -a kc kiro-cli chat --model claude-opus-4.6
+    abbr -a kc kiro-cli
 
     abbr -a ssmb ssh mbpr
 
