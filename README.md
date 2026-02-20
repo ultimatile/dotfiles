@@ -95,11 +95,11 @@ cp -n $HOME/dotfiles/home-manager/machine-specific{.example,}.nix
 ```
 
 ```sh
-$HOME/dotfiles/home-manager/bin/hm-switch
+nix run github:nix-community/home-manager -- switch --flake "path:$HOME/dotfiles/home-manager#ultimatile"
 ```
 
 ```sh
-home-manager switch --flake "path:$HOME/dotfiles/home-manager#ultimatile"
+$HOME/dotfiles/home-manager/bin/hm-switch
 ```
 
 ## HPC (Personal Project)
