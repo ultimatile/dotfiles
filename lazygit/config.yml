@@ -73,6 +73,11 @@ customCommands:
     context: "localBranches"
     loadingText: "syncing upstream branch"
     description: "フォークをupstreamに同期"
+  - key: "x"
+    context: "localBranches"
+    description: "PRベース候補を選択して連続削除 (削除後に一覧へ戻る)"
+    command: "/Users/ultimatile/dotfiles/lazygit/pr-merged-branches-status.sh --interactive"
+    output: terminal
   - key: "y"
     context: "commits"
     command: "printf {{.SelectedCommit.Hash}} | head -c7 | pbcopy"
