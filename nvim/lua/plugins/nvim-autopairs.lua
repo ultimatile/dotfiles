@@ -76,9 +76,16 @@ return {
       npairs.add_rule(Rule("```", "```", { "markdown", "markdown_inline" }):with_pair(should_pair_backticks))
 
       -- Add custom single backtick rule with our condition
-      npairs.add_rule(Rule("`", "`"):with_pair(should_pair_backticks):with_move(function(opts)
-        return opts.char == "`" and opts.next_char == "`"
-      end))
+      npairs.add_rule(
+        Rule("`", "`")
+          -- Keep default quote behavior: when already inside an unclosed backtick,
+          -- insert only one backtick instead of auto-pairing another one.
+          :with_pair(cond.not_add_quote_inside_quote(), 1)
+          :with_pair(should_pair_backticks)
+          :with_move(function(opts)
+            return opts.char == "`" and opts.next_char == "`"
+          end)
+      )
     end,
   },
 }
