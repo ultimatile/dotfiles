@@ -173,6 +173,20 @@ nmapkey("<leader>bd", function()
   Snacks.bufdelete()
 end, { desc = "Delete buffer" })
 
+local function yank_current_buffer_basename()
+  local filename = vim.fn.expand("%:t")
+  if filename == "" then
+    vim.notify("Current buffer has no file name", vim.log.levels.WARN)
+    return
+  end
+
+  vim.fn.setreg('"', filename)
+  pcall(vim.fn.setreg, "+", filename)
+  vim.notify("Yanked file name: " .. filename)
+end
+
+nmapkey("<leader>yf", yank_current_buffer_basename, { desc = "Yank file name" })
+
 nmapkey("<leader>cp", function()
   local col = vim.fn.col(".")
   local line = vim.fn.getline(".")
