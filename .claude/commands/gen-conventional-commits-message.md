@@ -1,10 +1,17 @@
 # gen-conventional-commits-message.md
 
-- Generate a commit message in conventional commits format based on staged changes (`git diff --staged`)
+- Generate commit message(s) in conventional commits format based on staged changes (`git diff --staged`)
 
-- The requirement is to show the commit message only, NEVER git operations.
+- The requirement is to show the commit message(s) only, NEVER git operations.
 
 - Keep in your mind that the commit message will be shown in the release notes, so it should be clear and concise.
+
+## Granularity
+
+- Analyze the staged diff and identify distinct logical changes (e.g., a bug fix and a new feature, or changes to different modules with independent purposes).
+- If the staged changes contain **multiple logical changes**, generate a **separate commit message for each** in the order they should be committed.
+- If splitting is recommended, note which files/hunks belong to each commit so the user can stage them separately via `git add -p` or per-file staging.
+- When in doubt, prefer finer granularity over coarser.
 
 ## Type Selection
 
