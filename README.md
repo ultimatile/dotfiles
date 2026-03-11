@@ -37,6 +37,13 @@ ln -s $HOME/{dotfiles,.config}/direnv/direnvrc
 ln -s $HOME/{dotfiles,.config}/fancy-cat/config.json
 ```
 
+## Find Orphan
+
+```sh:
+chmod +x $HOME/dotfiles/find-orphan/find-orphan
+ln -s $HOME/{dotfiles/find-orphan,.local/bin}/find-orphan
+```
+
 ## Fish
 
 ```sh:

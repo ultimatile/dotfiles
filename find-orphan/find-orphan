@@ -1,0 +1,34 @@
+#!/bin/bash
+# List orphan processes owned by the current user.
+# Orphan processes have PPID=1 (re-parented to init/launchd).
+# System services are excluded to show only user-spawned leftovers.
+
+set -euo pipefail
+
+EXCLUDE_PATTERN='/(usr/libexec|usr/sbin/(distnoted|cfprefsd)|System/Library|Applications/|com\.apple\.)'
+
+if [[ "${1-}" == "-k" ]]; then
+    # Kill mode: send SIGTERM, then SIGKILL to survivors
+    pids=$(ps -eo pid,ppid,user,command | awk -v user="$USER" '$2==1 && $3==user' | grep -Ev "$EXCLUDE_PATTERN" | awk 'NR>0{print $1}')
+    if [[ -z "$pids" ]]; then
+        echo "No orphan processes found."
+        exit 0
+    fi
+    echo "Sending SIGTERM to orphan processes..."
+    echo "$pids" | xargs kill 2>/dev/null || true
+    sleep 2
+    survivors=""
+    for pid in $pids; do
+        if kill -0 "$pid" 2>/dev/null; then
+            survivors="$survivors $pid"
+        fi
+    done
+    if [[ -n "$survivors" ]]; then
+        echo "Sending SIGKILL to survivors:$survivors"
+        echo "$survivors" | xargs kill -9 2>/dev/null || true
+    fi
+    echo "Done."
+else
+    # List mode (default)
+    ps -eo pid,ppid,user,stat,lstart,command | awk -v user="$USER" 'NR==1 || ($2==1 && $3==user)' | grep -Ev "$EXCLUDE_PATTERN"
+fi
