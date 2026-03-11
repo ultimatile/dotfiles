@@ -1,6 +1,5 @@
 # dotfiles
 
-ln -s $HOME/{dotfiles,.config}/fish/completions
 ![](https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white)
 ![](https://img.shields.io/badge/Neovim-57A143?logo=neovim&logoColor=white)
 ![](https://img.shields.io/badge/Shell-Fish-34C534)
