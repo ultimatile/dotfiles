@@ -15,5 +15,19 @@
     "skill-creator@claude-plugins-official": true
   },
   "language": "Japanese",
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path'); [[ \"$FILE\" == *.typ ]] && cjk-space-formatter -i \"$FILE\" || true"
+          }
+        ]
+      }
+    ]
+  }
 }
