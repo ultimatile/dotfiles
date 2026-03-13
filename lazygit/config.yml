@@ -139,6 +139,18 @@ customCommands:
       echo "✓ pull.rebase {{.Form.RebaseStrategy}} に設定しました"
     loadingText: "Pull Rebase戦略を設定中"
     output: log
+  - key: "r"
+    context: "submodules"
+    command: "git submodule update --remote"
+    description: "全サブモジュールをリモート最新に更新 (--remote)"
+    loadingText: "全サブモジュールをリモートから更新中"
+    output: log
+  - key: "S"
+    context: "submodules"
+    command: "git submodule update --remote {{.SelectedSubmodule.Name | quote}}"
+    description: "選択サブモジュールをリモート最新に更新 (--remote)"
+    loadingText: "サブモジュールをリモートから更新中"
+    output: log
   - key: "<c-n>"
     context: "global"
     description: "Pull Fast-forward戦略を設定"
