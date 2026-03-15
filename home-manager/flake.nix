@@ -8,13 +8,19 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    arto = {
+      url = "github:arto-app/Arto";
+    };
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }:
+    { nixpkgs, home-manager, arto, ... }:
     let
       system = "aarch64-darwin";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in
     {
       homeConfigurations."ultimatile" = home-manager.lib.homeManagerConfiguration {
@@ -25,6 +31,11 @@
         modules = [
           ./home.nix
           ./machine-specific.nix
+          {
+            home.packages = [
+              arto.packages.${system}.default
+            ];
+          }
         ];
 
         # Optionally use extraSpecialArgs

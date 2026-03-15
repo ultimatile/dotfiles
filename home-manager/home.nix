@@ -32,6 +32,76 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+
+    # -- Homebrew からの移行候補 --
+    pkgs.github-copilot-cli
+    pkgs.atuin
+    # pkgs.cargo-make
+    # pkgs.choose            # brew: choose-rust
+    # pkgs.clang-tools        # brew: clang-format
+    # pkgs.colima
+    # pkgs.direnv
+    # pkgs.docker
+    # pkgs.dust
+    # pkgs.eza
+    # pkgs.fancy-cat
+    # pkgs.fastfetch
+    # pkgs.fd
+    # pkgs.fdupes
+    # pkgs.fortune
+    # pkgs.fzf
+    # pkgs.gh
+    # pkgs.ghq
+    # pkgs.gibo
+    # pkgs.gifsicle
+    # pkgs.delta              # brew: git-delta
+    # pkgs.gitui
+    # pkgs.glow
+    # pkgs.gnused             # brew: gnu-sed
+    # pkgs.gnuplot
+    # pkgs.go
+    # pkgs.graphviz
+    # pkgs.python313Packages.grip
+    # pkgs.hugo
+    # pkgs.hyperfine
+    # pkgs.imagemagick
+    # pkgs.jq
+    # pkgs.lazygit
+    # pkgs.less
+    # pkgs.gnumake            # brew: make
+    # pkgs.meson
+    # pkgs.mkdocs
+    # pkgs.neovim
+    # pkgs.nushell
+    # pkgs.pandoc
+    # pkgs.parallel
+    # pkgs.pdfgrep
+    # pkgs.pre-commit
+    # pkgs.pwgen
+    # pkgs.pyenv
+    # pkgs.rbenv
+    # pkgs.rsync
+    # pkgs.ruff
+    # pkgs.rustup
+    # pkgs.sd
+    # pkgs.starship
+    # pkgs.stylua
+    # pkgs.terminal-notifier
+    # pkgs.tlrc
+    # pkgs.tmux
+    # pkgs.trash-cli
+    # pkgs.tree
+    # pkgs.tree-sitter        # brew: tree-sitter-cli
+    # pkgs.typos              # brew: typos-cli
+    # pkgs.typst
+    # pkgs.uv
+    # pkgs.vhs
+    # pkgs.w3m
+    # pkgs.watchexec
+    # pkgs.wget
+    # pkgs.yq-go              # brew: yq
+    # pkgs.zig
+    # pkgs.zoxide
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

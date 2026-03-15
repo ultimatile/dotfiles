@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# List Homebrew leaf packages that are available in nixpkgs.
+# Re-run after each migration round to discover newly exposed leaves.
+set -euo pipefail
+
+results=$(mktemp)
+trap 'rm -f "$results"' EXIT
+
+check_pkg() {
+  local pkg="$1"
+  if nix eval "nixpkgs#${pkg}.pname" &>/dev/null; then
+    echo "FOUND $pkg"
+  else
+    echo "NOTFOUND $pkg"
+  fi
+}
+export -f check_pkg
+
+echo "Fetching brew leaf packages..." >&2
+brew leaves | xargs -P8 -I{} bash -c 'check_pkg "{}"' > "$results"
+
+found=$(grep '^FOUND ' "$results" | sed 's/^FOUND //' | sort)
+not_found=$(grep '^NOTFOUND ' "$results" | sed 's/^NOTFOUND //' | sort)
+found_count=$(echo "$found" | grep -c . || true)
+not_found_count=$(echo "$not_found" | grep -c . || true)
+
+echo ""
+echo "# Available in nixpkgs (${found_count} packages):"
+echo "$found" | while IFS= read -r pkg; do
+  [ -n "$pkg" ] && echo "    pkgs.$pkg"
+done
+
+echo ""
+echo "# Not found in nixpkgs (${not_found_count} packages):"
+echo "$not_found" | while IFS= read -r pkg; do
+  [ -n "$pkg" ] && echo "    $pkg"
+done
