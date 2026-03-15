@@ -3,20 +3,6 @@
   "permissions": {
     "defaultMode": "acceptEdits"
   },
-  "model": "opus",
-  "statusLine": {
-    "type": "command",
-    "command": "npx -y @owloops/claude-powerline@latest --style=powerline --theme=tokyo-night",
-    "padding": 0
-  },
-  "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true
-  },
-  "language": "Japanese",
-  "alwaysThinkingEnabled": true,
-  "effortLevel": "high",
   "hooks": {
     "PostToolUse": [
       {
@@ -29,5 +15,18 @@
         ]
       }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y @owloops/claude-powerline@latest --style=powerline --theme=tokyo-night",
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true
+  },
+  "language": "Japanese",
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high"
 }
