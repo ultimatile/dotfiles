@@ -34,7 +34,7 @@
     # '')
 
     # -- Homebrew からの移行候補 --
-    pkgs.github-copilot-cli
+    # pkgs.github-copilot-cli
     # pkgs.atuin # old 
     pkgs.cargo-make
     pkgs.choose            # brew: choose-rust
@@ -43,6 +43,7 @@
     pkgs.direnv
     pkgs.docker
     pkgs.dust
+    pkgs.doxygen
     pkgs.eza
     # pkgs.fancy-cat # broken
     pkgs.fastfetch
@@ -70,6 +71,7 @@
     pkgs.meson
     pkgs.mkdocs
     pkgs.neovim
+    pkgs.ninja
     pkgs.nushell
     pkgs.pandoc
     pkgs.parallel
