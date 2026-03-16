@@ -1,0 +1,3 @@
+[submodule ".claude/skills/generate-conventional-commit-messages-skill"]
+	path = .claude/skills/generate-conventional-commit-messages-skill
+	url = git@github.com:ultimatile/generate-conventional-commit-messages-skill.git
