@@ -4,6 +4,15 @@
 fish_add_path $HOME/.cargo-local/bin
 fish_add_path $HOME/.local/bin
 
+# LM Studio CLI
+fish_add_path ~/.lmstudio/bin
+
+# Julia
+fish_add_path ~/.julia/bin
+
+# Obsidian CLI
+fish_add_path /Applications/Obsidian.app/Contents/MacOS
+
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -161,9 +170,3 @@ if status is-interactive
 end
 zoxide init fish | source
 direnv hook fish | source
-
-# Added by LM Studio CLI (lms)
-set -gx PATH $PATH "/Users/$HOME/.lmstudio/bin"
-# End of LM Studio CLI section
-
-set -gx PATH $PATH "$HOME/.julia/bin"
