@@ -83,6 +83,7 @@ if status is-interactive
     abbr -a nvkey nvim $HOME/dotfiles/nvim/lua/config/keymaps.lua
     abbr -a nvauto nvim $HOME/dotfiles/nvim/lua/config/autocmds.lua
     abbr -a nvopt nvim $HOME/dotfiles/nvim/lua/config/options.lua
+    abbr -a nvhn nvim $HOME/dotfiles/home-manager/home.nix
     abbr -a nvc nvim .
 
     # brew
@@ -150,6 +151,8 @@ if status is-interactive
     abbr -a kc kiro-cli
 
     abbr -a ssmb ssh mbpr
+
+    abbr -a nfu "cd $(realpath ~/.config/home-manager) && nix flake update && ./bin/hm-switch"
 
     #bind ctrl-\] forward-jump
     #bind ctrl-alt-\] backward-jump
