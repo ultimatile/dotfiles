@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 set -euo pipefail
 
 for cmd in git gh jq rg; do
@@ -81,9 +81,8 @@ find_merged_pr_for_branch_sha() {
 
 list_candidate_branches_for_menu() {
   local branch match
-  mapfile -t branches < <(git for-each-ref --format='%(refname:short)' refs/heads | sort)
 
-  for branch in "${branches[@]}"; do
+  while IFS= read -r branch; do
     if is_protected_branch "$branch"; then
       continue
     fi
@@ -97,7 +96,7 @@ list_candidate_branches_for_menu() {
     if match=$(find_merged_pr_for_branch_sha "$branch"); then
       printf "%s\t%s\n" "$branch" "$match"
     fi
-  done
+  done < <(git for-each-ref --format='%(refname:short)' refs/heads | sort)
 }
 
 print_status_table() {
@@ -109,8 +108,7 @@ print_status_table() {
   printf "%-10s %-50s %s\n" "status" "branch" "detail"
   printf "%-10s %-50s %s\n" "------" "------" "------"
 
-  mapfile -t branches < <(git for-each-ref --format='%(refname:short)' refs/heads | sort)
-  for branch in "${branches[@]}"; do
+  while IFS= read -r branch; do
     if is_protected_branch "$branch"; then
       continue
     fi
@@ -139,7 +137,7 @@ print_status_table() {
     latest_pr=$(printf "%s" "$prs_json" | jq -r 'sort_by(.mergedAt) | reverse | .[0].number')
     latest_merged_at=$(printf "%s" "$prs_json" | jq -r 'sort_by(.mergedAt) | reverse | .[0].mergedAt')
     printf "%-10s %-50s %s\n" "review" "$branch" "name matched merged PR #$latest_pr at $latest_merged_at, but tip differs"
-  done
+  done < <(git for-each-ref --format='%(refname:short)' refs/heads | sort)
 
   echo
   echo "candidate: local tip SHA is included in merged PR commits (safe deletion candidate)."
@@ -189,20 +187,19 @@ delete_candidate_branch() {
 }
 
 interactive_delete_loop() {
-  local selection branch pr merged_at answer candidates_count
+  local selection branch pr merged_at answer candidates
 
   while true; do
-    mapfile -t candidates < <(list_candidate_branches_for_menu)
-    candidates_count="${#candidates[@]}"
+    candidates=$(list_candidate_branches_for_menu)
 
-    if [[ "$candidates_count" -eq 0 ]]; then
+    if [[ -z "$candidates" ]]; then
       echo "No merged-PR deletion candidates."
       return 0
     fi
 
     echo "Select a branch to delete (ESC/Ctrl-C to exit):"
     selection=$(
-      printf "%s\n" "${candidates[@]}" \
+      printf "%s\n" "$candidates" \
         | fzf \
             --delimiter=$'\t' \
             --with-nth=1,2,3 \
