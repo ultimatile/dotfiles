@@ -117,7 +117,6 @@ if status is-interactive
     abbr -a lss ls -ltrh
 
     abbr -a treee eza -T
-    alias sed="gsed"
     alias head="ghead"
     abbr -a pbpc "pbpaste |tr -d '\n'| sed -e 's/\n/ /g' -e 's/\([.?!]\) /\1\n/g' -e 's/-\ //g' | pbcopy"
     abbr -a ff fastfetch
