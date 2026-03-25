@@ -40,7 +40,7 @@
     pkgs.choose            # brew: choose-rust
     pkgs.clang-tools        # brew: clang-format
     pkgs.colima
-    pkgs.direnv
+    # pkgs.direnv
     pkgs.docker
     pkgs.dust
     pkgs.doxygen
