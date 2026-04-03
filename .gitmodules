@@ -1,3 +1,6 @@
 [submodule ".claude/skills/generate-conventional-commit-messages-skill"]
 	path = .claude/skills/generate-conventional-commit-messages-skill
 	url = git@github.com:ultimatile/generate-conventional-commit-messages-skill.git
+[submodule ".claude/skills/pr-review-automation-skill"]
+	path = .claude/skills/pr-review-automation-skill
+	url = git@github.com:ultimatile/pr-review-automation-skill.git
