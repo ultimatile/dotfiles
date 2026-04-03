@@ -4,3 +4,6 @@
 [submodule ".claude/skills/pr-review-automation-skill"]
 	path = .claude/skills/pr-review-automation-skill
 	url = git@github.com:ultimatile/pr-review-automation-skill.git
+[submodule ".claude/skills/research-and-implement-skill"]
+	path = .claude/skills/research-and-implement-skill
+	url = git@github.com:ultimatile/research-and-implement-skill.git
