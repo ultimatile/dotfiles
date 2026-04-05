@@ -41,6 +41,9 @@
     "research-and-implement@research-and-implement": true,
     "hpc@hpc": true
   },
+  "env": {
+    "CLAUDE_CODE_NO_FLICKER": "1"
+  },
   "language": "Japanese",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high"
