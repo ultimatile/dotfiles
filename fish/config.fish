@@ -81,6 +81,8 @@ if status is-interactive
 
     abbr -a ghrs gh repo search
     abbr -a ghrcp -- 'gh repo create "$(basename $(pwd))" --private --source=. --remote=origin'
+    abbr -a ghd gh dash
+
     abbr -a lg lazygit
     abbr -a lga lazygit-anywhere
 
@@ -156,11 +158,11 @@ if status is-interactive
 
     abbr -a cl claude
     abbr -a clhi "claude -p --model \"haiku\" \"hi\""
-    abbr -a kc kiro-cli
 
     abbr -a ssmb ssh mbpr
 
     abbr -a nfu "cd $(realpath ~/.config/home-manager) && nix flake update && ./bin/hm-switch"
+    abbr -a んふ "cd $(realpath ~/.config/home-manager) && nix flake update && ./bin/hm-switch"
 
     #bind ctrl-\] forward-jump
     #bind ctrl-alt-\] backward-jump
