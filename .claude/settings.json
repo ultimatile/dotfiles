@@ -35,7 +35,11 @@
   "enabledPlugins": {
     "rust-analyzer-lsp@claude-plugins-official": true,
     "clangd-lsp@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true
+    "skill-creator@claude-plugins-official": true,
+    "generate-conventional-commits-messages@generate-conventional-commits-messages": true,
+    "pr-review-automation-skill@pr-review-automation-skill": true,
+    "research-and-implement@research-and-implement": true,
+    "hpc@hpc": true
   },
   "language": "Japanese",
   "alwaysThinkingEnabled": true,
