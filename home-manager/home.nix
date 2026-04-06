@@ -56,7 +56,7 @@
     gifsicle
     delta              # brew: git-delta
     glow
-    gnused             # brew: gnu-sed
+    #gnused # installed as sed  # brew: gnu-sed
     gnuplot
     go
     graphviz
@@ -98,6 +98,7 @@
     vhs
     watchexec
     wget
+    xclip
     yazi
     yq-go              # brew: yq
     zig
