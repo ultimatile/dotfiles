@@ -15,7 +15,7 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -36,72 +36,72 @@
     # -- Homebrew からの移行候補 --
     # pkgs.github-copilot-cli
     # pkgs.atuin # old 
-    pkgs.cargo-make
-    pkgs.choose            # brew: choose-rust
-    pkgs.clang-tools        # brew: clang-format
-    pkgs.colima
-    # pkgs.direnv
-    pkgs.docker
-    pkgs.dust
-    pkgs.doxygen
-    pkgs.eza
-    # pkgs.fancy-cat # broken
-    pkgs.fastfetch
-    pkgs.fd
-    pkgs.fdupes
-    pkgs.fzf
-    pkgs.gh
-    pkgs.ghq
-    pkgs.gibo
-    pkgs.gifsicle
-    pkgs.delta              # brew: git-delta
-    pkgs.glow
-    pkgs.gnused             # brew: gnu-sed
-    pkgs.gnuplot
-    pkgs.go
-    pkgs.graphviz
-    # pkgs.python313Packages.grip
-    pkgs.hugo
-    pkgs.hyperfine
-    pkgs.imagemagick
-    pkgs.jq
-    pkgs.lazygit
-    pkgs.less
-    pkgs.gnumake            # brew: make
-    pkgs.meson
-    pkgs.mkdocs
-    pkgs.neovim
-    pkgs.ninja
-    pkgs.nushell
-    pkgs.pandoc
-    pkgs.parallel
-    pkgs.pdfgrep
-    pkgs.pre-commit
-    pkgs.pwgen
-    pkgs.pyenv
-    pkgs.rbenv
-    pkgs.rsync
-    pkgs.ruff
-    pkgs.rustup
-    pkgs.sd
-    pkgs.starship
-    pkgs.stylua
-    # pkgs.terminal-notifier
-    pkgs.tlrc
-    pkgs.tmux
-    pkgs.trash-cli
-    pkgs.tree
-    pkgs.tree-sitter        # brew: tree-sitter-cli
-    pkgs.typos              # brew: typos-cli
-    pkgs.typst
-    pkgs.uv
-    pkgs.vhs
-    pkgs.watchexec
-    pkgs.wget
-    pkgs.yazi
-    pkgs.yq-go              # brew: yq
-    pkgs.zig
-    pkgs.zoxide
+    cargo-make
+    choose            # brew: choose-rust
+    clang-tools        # brew: clang-format
+    colima
+    # direnv
+    docker
+    dust
+    doxygen
+    eza
+    # fancy-cat # broken
+    fastfetch
+    fd
+    fdupes
+    fzf
+    gh
+    ghq
+    gibo
+    gifsicle
+    delta              # brew: git-delta
+    glow
+    gnused             # brew: gnu-sed
+    gnuplot
+    go
+    graphviz
+    # python313Packages.grip
+    hugo
+    hyperfine
+    imagemagick
+    jq
+    lazygit
+    less
+    gnumake            # brew: make
+    meson
+    mkdocs
+    neovim
+    ninja
+    nushell
+    pandoc
+    parallel
+    pdfgrep
+    pre-commit
+    pwgen
+    pyenv
+    rbenv
+    rsync
+    ruff
+    rustup
+    sd
+    starship
+    stylua
+    # terminal-notifier
+    tlrc
+    tmux
+    trash-cli
+    tree
+    tree-sitter        # brew: tree-sitter-cli
+    typos              # brew: typos-cli
+    typst
+    uv
+    vhs
+    watchexec
+    wget
+    yazi
+    yq-go              # brew: yq
+    zig
+    zoxide
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
