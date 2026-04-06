@@ -98,6 +98,7 @@
     pkgs.vhs
     pkgs.watchexec
     pkgs.wget
+    pkgs.yazi
     pkgs.yq-go              # brew: yq
     pkgs.zig
     pkgs.zoxide
