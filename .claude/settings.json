@@ -10,7 +10,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/deny-python-pytest.sh"
+            "command": "~/.claude/hooks/deny-direct-python.sh"
           }
         ]
       }
