@@ -52,6 +52,12 @@ ln -s $HOME/{dotfiles,.config}/fish/functions
 ln -s $HOME/{dotfiles,.config}/fish/completions
 ```
 
+## DASH
+
+```sh:
+ln -s $HOME/{dotfiles,.config}/gh-dash/config.yml 
+```
+
 ## Ghostty
 
 ```sh:
