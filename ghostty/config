@@ -5,3 +5,4 @@ font-thicken = true
 shell-integration-features = no-cursor
 cursor-style-blink = false
 config-file = "~/Library/Application Support/com.mitchellh.ghostty/machine-specific"
+window-inherit-working-directory = false
