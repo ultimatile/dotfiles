@@ -151,6 +151,10 @@ customCommands:
     description: "選択サブモジュールをリモート最新に更新 (--remote)"
     loadingText: "サブモジュールをリモートから更新中"
     output: log
+  - key: "<c-x>"
+    context: "global"
+    command: "rm -f .git/LAZYGIT_PENDING_COMMIT"
+    description: "保存されたコミットメッセージをクリア"
   - key: "<c-n>"
     context: "global"
     description: "Pull Fast-forward戦略を設定"
