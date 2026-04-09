@@ -42,7 +42,8 @@
     "hpc@hpc": true
   },
   "env": {
-    "CLAUDE_CODE_NO_FLICKER": "1"
+    "CLAUDE_CODE_NO_FLICKER": "1",
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1"
   },
   "language": "Japanese",
   "alwaysThinkingEnabled": true,
