@@ -108,6 +108,22 @@ customCommands:
     command: "$HOME/dotfiles/lazygit/branch-create-worktree.sh {{.SelectedLocalBranch.Name | quote}} {{.Form.BranchName | quote}}"
     loadingText: "ブランチを作成してワークツリー化中"
     output: log
+  - key: "<c-b>"
+    context: "localBranches"
+    description: "ブランチをベースから再作成 (既存ワークツリー維持)"
+    prompts:
+      - type: "input"
+        title: "ベースブランチを入力:"
+        key: "BaseBranch"
+        initialValue: "main"
+        suggestions:
+          preset: "branches"
+      - type: "confirm"
+        title: "実行確認"
+        body: "{{.SelectedLocalBranch.Name}} を {{.Form.BaseBranch}} から再作成し、既存ワークツリーにチェックアウトしますか？"
+    command: "$HOME/dotfiles/lazygit/branch-reset-in-worktree.sh {{.SelectedLocalBranch.Name | quote}} {{.Form.BaseBranch | quote}}"
+    loadingText: "ブランチを再作成中"
+    output: log
   - key: "U"
     command: "$HOME/dotfiles/lazygit/set-upstream-url.sh"
     description: "親レポジトリをリモートupstreamに設定"
