@@ -1,7 +1,14 @@
 {
+  "env": {
+    "CLAUDE_CODE_NO_FLICKER": "1",
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1"
+  },
   "includeCoAuthoredBy": false,
   "permissions": {
-    "defaultMode": "acceptEdits"
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(gh issue view:*)"
+    ]
   },
   "hooks": {
     "PreToolUse": [
@@ -34,16 +41,7 @@
   },
   "enabledPlugins": {
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true,
-    "generate-conventional-commits-messages@generate-conventional-commits-messages": true,
-    "pr-review-automation-skill@pr-review-automation-skill": true,
-    "research-and-implement@research-and-implement": true,
-    "hpc@hpc": true
-  },
-  "env": {
-    "CLAUDE_CODE_NO_FLICKER": "1",
-    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1"
+    "clangd-lsp@claude-plugins-official": true
   },
   "language": "Japanese",
   "alwaysThinkingEnabled": true,
