@@ -168,6 +168,8 @@ if status is-interactive
     #bind ctrl-alt-\] backward-jump
     bind -M insert ctrl-\] forward-jump
     bind -M insert ctrl-alt-\] backward-jump
+
+    /usr/bin/hidutil property --set '{"CapsLockDelayOverride":0}' >/dev/null
 end
 zoxide init fish | source
 direnv hook fish | source
