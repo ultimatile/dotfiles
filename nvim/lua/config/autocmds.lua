@@ -101,6 +101,32 @@ autocmd(ime_switch_events, {
   group = augroup("IMESwitcher"),
 })
 
+-- Detach LSP clients when terminal loses focus, reattach on regain
+local saved_lsp_configs = {}
+
+autocmd("FocusLost", {
+  callback = function()
+    saved_lsp_configs = {}
+    for _, client in ipairs(vim.lsp.get_clients()) do
+      saved_lsp_configs[#saved_lsp_configs + 1] = client.config
+      client:stop()
+    end
+  end,
+  group = augroup("LSPFocusControl"),
+  desc = "stop LSP clients on focus lost",
+})
+
+autocmd("FocusGained", {
+  callback = function()
+    for _, config in ipairs(saved_lsp_configs) do
+      vim.lsp.start(config)
+    end
+    saved_lsp_configs = {}
+  end,
+  group = augroup("LSPFocusControlResume"),
+  desc = "restart LSP clients on focus gained",
+})
+
 -- stop comment continuation
 -- https://github.com/LazyVim/LazyVim/discussions/598
 autocmd({ "FileType" }, {
