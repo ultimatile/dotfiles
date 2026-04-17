@@ -87,20 +87,14 @@ local function switch_ime_to_english()
   ime_state.last_switch_time = current_time
 end
 
--- Enhanced IME switching with comprehensive event coverage
+-- IME switching on user-initiated events only
+-- Avoid BufEnter/BufLeave/BufNew/WinEnter/CursorMoved as LSP (e.g. pyright)
+-- triggers these in the background, switching system IME while in other apps
 local ime_switch_events = {
   "InsertLeave",
-  "WinEnter",
-  "FocusGained",
+  "CmdlineLeave",
   "VimEnter",
   "VimResume",
-  "CmdlineLeave",
-  "TabEnter",
-  "TabLeave",
-  "BufEnter",
-  "BufLeave",
-  "BufNew",
-  "CursorMoved",
 }
 autocmd(ime_switch_events, {
   callback = switch_ime_to_english,
