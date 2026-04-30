@@ -1,195 +1,198 @@
 ---
 name: julia-coding-rules
-description: User's Julia coding standards covering naming, multiple dispatch, type system, error handling patterns (Union{T,Nothing}, tuples), performance (allocations, @inbounds, @simd, StaticArrays), and package development (Project.toml, testing, CI). TRIGGER when writing or editing any Julia (.jl) file, reviewing Julia code, or setting up a Julia package. Read companion files (typesystem.md, errorhandling.md, performance.md, packagedev.md) in this skill directory when those topics are in scope. SKIP for non-Julia work.
+description: User's opinionated Julia preferences. Four real frictions: (1) ASCII-only identifiers — never use Unicode (π, ≤, χ, …) because editor / terminal glyphs collapse confusables (e.g. x vs χ) and the resulting bugs are silent; (2) Tooling — scaffold with `jtc create MyPackage.jl`, manage deps with `mise run add`, and use `TestItemRunner.jl` with tags for test selection (mise tasks filter by tag); never `Pkg.generate` / `Pkg.add` / `Pkg.test` by hand; (3) Union{T, Nothing} for optional / fallible values rather than throwing or sentinel returns; (4) parameter-pack factory pattern — @kwdef struct with parametric types fed by a factory constructor that takes a loose Dict{String, Any} from CLI / config parsing. Plus opinions on multiple dispatch, type stability, performance idioms (@view, @inbounds, @simd, StaticArrays), and Project.toml compat. TRIGGER when writing or editing any Julia (.jl) file, Project.toml, test/, or mise.toml. SKIP for non-Julia work.
 ---
 
 # Julia Coding Rules
 
-## Naming Conventions
+Standard Julia practice (`snake_case` / `PascalCase`, multiple dispatch, `@testset`, exporting public API) is assumed and not restated. Only listed: opinions that diverge from defaults, patterns that have actually caused friction, and bug-prone choices.
 
-- Use `snake_case` for variables and functions
-- Use `PascalCase` for types and modules
-- Use `SCREAMING_SNAKE_CASE` for constants
-- Use descriptive names that clearly indicate purpose
-- Avoid abbreviations unless they are well-established in the domain
-- Use always ASCII
+Comment policy follows the global rule: write comments only when the WHY is non-obvious. No mandatory docstrings.
 
-## Code Structure
+## Real frictions
 
-- KISS, YAGNI, SOLID, and DRY principles apply
-- Keep functions small and focused on a single responsibility
-- Use multiple dispatch effectively - define methods for different argument types
-- Group related functionality into modules
-- Export only the public API from modules
+### 1. ASCII-only identifiers and operators
 
-## Type System
+Julia allows Unicode identifiers (`π`, `χ`, `∇`, `≤`, …) but **do not use them**. Editors, terminals, and code review tools render confusable glyphs identically — `x` vs `χ`, `v` vs `ν`, `p` vs `ρ` — and the resulting bugs are silent: code parses, runs, but binds the wrong variable.
 
-See `typesystem.md` in this skill directory for detailed guidelines on using Julia's type system effectively.
+- Identifiers: ASCII letters, digits, `_` only. Spell out `chi`, `nu`, `rho`, `nabla`, `lambda`.
+- Constants: use the ASCII alias when Julia provides one (`pi`, not `π`; `Inf`, `NaN`).
+- Operators: `<=`, `>=`, `!=`, `in` — never `≤`, `≥`, `≠`, `∈`.
+- Strings and comments: ASCII too — keep the failure mode out of the source.
 
-## Argument-Type Rules
+The cost of being unable to type `π` is trivial; the cost of `x` silently shadowing `χ` in a long-running simulation is not.
 
-1. **Use abstract types for generic APIs**
+### 2. Tooling: `jtc` for scaffolding, `mise run …` for everything else
 
-   ```julia
-   function greet(name::AbstractString)
-       println("Hello, $name!")
-   end
-   ```
+- New package: `jtc create MyPackage.jl` — never `Pkg.generate` / `PkgTemplates.generate` by hand.
+- Add a dependency from inside an existing project: `mise run add <PackageName>` — never `julia -e 'using Pkg; Pkg.add(...)'` or `]add` from a fresh REPL outside the project env.
+- Removing / updating deps: use the corresponding `mise run` task; if one isn't defined, add it rather than reaching for `Pkg` directly.
 
-2. **Parameterize collections with `<:`**
+The point is that environment activation and the resulting `Project.toml` / `Manifest.toml` edits stay consistent across machines and CI. Bypassing the wrappers tends to land deps in the wrong env or skip the project's compat conventions.
 
-   ```julia
-   function mean_value(xs::AbstractVector{<:Number})
-       sum(xs) / length(xs)
-   end
-   ```
+#### Tests: `TestItemRunner.jl` with tags
 
-3. **Reserve concrete types for hot paths**
-
-   ```julia
-   # Inner-loop performance:
-   function process_fast(xs::Vector{F}) where F <: AbstractFloat
-       @inbounds for x in xs
-           # processing logic
-       end
-   end
-   ```
-
-4. **Avoid `Any` in signatures**
-
-   - Prefer `Number`, `AbstractString`, `AbstractDict`, etc.
-
-5. **Document argument types in docstrings**
-
-   ```julia
-   """
-       join_words(words::AbstractVector{<:AbstractString}) -> String
-
-   Join an array of strings with spaces.
-   """
-   function join_words(words::AbstractVector{<:AbstractString})
-       join(words, " ")
-   end
-   ```
-
-## Error-Handling Rules
-
-See `errorhandling.md` in this skill directory for best practices on error handling in Julia.
-
-## Pattern Selection by Complexity
-
-### 1. Table Map
-
-**Use when**: You have a small, fixed set of keys → handlers
-**Why**: O(1) lookup, minimal boilerplate
+Test selection is the framework's job, not `runtests.jl`'s. Use `TestItemRunner.jl` and tag tests at definition:
 
 ```julia
-const HANDLERS = Dict(
-    :add => (x,y) -> x + y,
-    :sub => (x,y) -> x - y,
-    :mul => (x,y) -> x * y,
-)
+# test/test_core.jl
+using TestItems
 
-function calc(op::Symbol, x, y)
-    handler = get(HANDLERS, op, nothing)
-    handler !== nothing ? handler(x, y) : error("Unknown op")
+@testitem "addition" begin
+    using MyPackage
+    @test add(1, 2) == 3
+end
+
+# test/test_aqua.jl
+@testitem "Aqua quality" tags=[:quality] begin
+    using MyPackage, Aqua
+    Aqua.test_all(MyPackage)
 end
 ```
 
-### 2. If-Else Chain
-
-**Use when**: Only 2–3 mutually exclusive conditions, simple logic
-**Why**: Clear, no dispatch overhead
+`test/runtests.jl` becomes one line:
 
 ```julia
-function classify(x)
-    if x < 0
-        :negative
-    elseif x == 0
-        :zero
-    else
-        :positive
+using TestItemRunner; @run_package_tests
+```
+
+mise tasks select by tag:
+- `mise run test` → `filter = ti -> !(:quality in ti.tags)` (fast feedback, skips Aqua)
+- `mise run test:aqua` → `filter = ti -> :quality in ti.tags`
+- `mise run test:all` → no filter (CI default)
+
+Bonus: each `@testitem` runs in an isolated module (no test-to-test state leaks), enables parallel execution, and is recognized by the VS Code Julia extension.
+
+For legacy packages still on `@testset` that you don't want to migrate, fall back to gating sections on `ENV["GROUP"]` in `runtests.jl` (`get(ENV, "GROUP", "All")`, branch on `"Core"` / `"Aqua"` / `"All"`). Treat this as an interim workaround, not a target state.
+
+### 3. `Union{T, Nothing}` for optional / fallible values
+
+Default representation for "may be absent":
+
+```julia
+function find_user(id::Integer)::Union{User, Nothing}
+    haskey(users, id) ? users[id] : nothing
+end
+```
+
+- Prefer this over throwing for predictable absence.
+- Reserve exceptions for I/O and unexpected failure.
+- Optional struct fields: type as `Union{T, Nothing}` with `nothing` default.
+- Test with `isnothing(x)` (not `x === nothing`).
+
+### 4. Parameter pack: typed `@kwdef struct` + factory from `Dict{String, Any}`
+
+For configuration objects fed by loose input (parsed CLI args, JSON, …) keep a strict separation: `Dict{String, Any}` at the boundary, parametric `@kwdef struct` internally, factory constructor bridging them.
+
+```julia
+@kwdef struct ModPara{R<:Real, I<:Integer, S<:AbstractString}
+    N::I = 10
+    J::R = 1.0
+    spin::S = "S=1/2"
+    conserve_qns::Bool = true
+end
+
+# Factory from loose input
+function ModPara(pargs::Dict{String, Any})
+    return ModPara(
+        pargs["num_spin"], pargs["J"], pargs["spin"], pargs["conserve_qns"],
+    )
+end
+```
+
+When fields need validation, use an inner constructor:
+
+```julia
+@kwdef struct OptTPara{R<:Real, I<:Integer}
+    Tmin::R = 1.0
+    Tmax::R = 10.0
+    iter_max::I = 100
+    function OptTPara(Tmin::R, Tmax::R, iter_max::I) where {R<:Real, I<:Integer}
+        @validate_positive Tmin Tmax iter_max
+        return new{R, I}(Tmin, Tmax, iter_max)
     end
 end
 ```
 
-### 3. Multiple Dispatch
-
-**Use when**: Behavior varies by argument types/domains
-**Why**: Leverages Julia's core feature, extensible
+For top-level containers filled in stages (e.g. `MainPara` = mod + rte + util + …), use `@kwdef mutable struct` with `Union{T, Nothing} = nothing` fields and assign as each sub-pack is built:
 
 ```julia
-abstract type Shape end
-struct Circle <: Shape; r::Float64; end
-struct Square <: Shape; a::Float64; end
-
-area(c::Circle) = π * c.r^2
-area(s::Square) = s.a^2
-```
-
-### 4. Holy Traits
-
-**Use when**: You need ad-hoc "type" variations without proliferating concrete types
-**Why**: Encapsulates behavior without type explosion
-
-```julia
-# 1. Define trait types
-struct FastTrait end
-struct SafeTrait end
-
-# 2. Trait selector
-trait(::Type{T}) where {T<:Integer} = FastTrait()
-trait(::Type{T}) where {T<:AbstractString} = SafeTrait()
-
-# 3. Internal dispatch
-_process(x, ::FastTrait) = @inbounds sum(x)
-_process(x, ::SafeTrait) = sum(parse.(Int, collect(x)))
-
-# 4. User API
-function process(x)
-    _process(x, trait(typeof(x)))
+@kwdef mutable struct MainPara
+    mod::Union{ModPara, Nothing} = nothing
+    rte::Union{RTEPara, Nothing} = nothing
+    outputlevel::Int = 0
 end
 ```
 
-## Performance Guidelines
+## Type system
 
-See `performance.md` in this skill directory for detailed performance guidelines.
+- Default to abstract types in signatures: `Number`, `Integer`, `AbstractString`, `AbstractVector{<:Real}`. `f(::Integer)` not `f(::Int)`.
+- Reserve concrete types for hot inner loops where dispatch / type stability matters.
+- Avoid `Any` in signatures.
+- Parametric struct syntax: `struct Dog{S<:AbstractString, I<:Integer} <: Mammal`. The `where` clause goes on the struct name, NOT after `<: Mammal`.
 
-## Memory Management
+## Type stability
 
-- Be aware of memory allocations in performance-critical code
-- Use views (`@view`) to avoid copying arrays when possible
-- Pre-allocate arrays when size is known
-- Use `sizehint!` for collections that will grow
+- Initialize accumulators with the result type: `s = 0.0` for a `Float64` sum, not `s = 0`.
+- Check with `@code_warntype` when uncertain.
+- Avoid non-`const` globals — they prevent type inference.
 
-## Documentation
+## Dispatch — pattern selection
 
-- Document all exported functions with docstrings
-- Include examples in docstrings when helpful
-- Document function parameters and return values in docstrings
+| Situation | Use |
+|---|---|
+| Behavior varies by argument type | Multiple dispatch |
+| Small fixed key → handler map | `const HANDLERS = Dict(...)` |
+| 2–3 mutually exclusive branches | `if` / `elseif` |
+| Ad-hoc behavior variants without exploding concrete types | Holy traits |
 
-## Testing
+Holy trait skeleton:
 
-- Write comprehensive tests for all public functions
-- Use descriptive test names that explain what is being tested
-- Group related tests using `@testset`
-- Test edge cases and error conditions
+```julia
+struct FastTrait end
+struct SafeTrait end
+trait(::Type{<:Integer})         = FastTrait()
+trait(::Type{<:AbstractString})  = SafeTrait()
+_process(x, ::FastTrait) = @inbounds sum(x)
+_process(x, ::SafeTrait) = sum(parse.(Int, collect(x)))
+process(x) = _process(x, trait(typeof(x)))
+```
 
-## Code Style
+## Performance idioms
 
-- Prefer `isnothing` over `=== nothing` and `!isnothing` over `!== nothing`
-- Prefer shadowing in kwargs: not `f(;A=A)` but `f(;A)`
-- For multi-line literals, use triple double quotes ("""...""") instead of multiple `println` calls.
-- Never use concrete types in function signatures unless absolutely necessary. Not `f(x::Int)` but `f(::Integer)` or `f(x::Number)`.
+- Pre-allocate buffers; mutate with `!` functions (`sort!`, `push!`, `mul!`).
+- Slice via `@view M[1:100, :]` to skip the copy.
+- Hot numeric loops: `@inbounds for i in eachindex(x)`, add `@simd` for reductions.
+- Small fixed-size arrays (≤100 elements) → `StaticArrays.jl` (`SVector`, `SMatrix`).
+- Use concrete element types in hot containers (`Vector{Float64}`, not `Vector{<:Real}`).
+- Don't splat in tight loops.
+- `@fastmath` only when IEEE compliance is acceptable to lose.
 
-## Metaprogramming
+## Logging
 
-- Use macros sparingly and only when they provide clear benefits:
-  - Code generation for repetitive patterns
-  - Simplifying boilerplate code
-- Prefer functions over macros when possible
-- Use `@generated` functions for type-based code generation
+- `@info`, `@warn`, `@error`. Never `println("warning: …")`.
 
-## Package Development
+## Package development
 
-See `packagedev.md` in this skill directory for guidelines on developing Julia packages.
+- Scaffolding, dep management, and test selection: see Non-negotiable #2.
+- `Project.toml` `[compat]`: pin meaningful lower bounds. Default `julia = "1.10"` (current LTS).
+- `@test_throws ArgumentError …` for negative cases.
+
+## Style notes (low priority — formatter territory)
+
+These don't matter much when an agent writes code, but apply on touch:
+
+- `isnothing(x)` over `x === nothing`; `!isnothing(x)` over `x !== nothing`.
+- Kwarg shorthand: `f(; width)` over `f(; width=width)`.
+- Triple-quoted `"""..."""` for multi-line literals, not chained `println`.
+
+## Anti-patterns
+
+- `struct Dog <: Mammal where {S<:…}` — invalid syntax. Use `struct Dog{S<:…} <: Mammal`.
+- `x is Int` — Python syntax. Julia uses `x isa Int`.
+- Throwing exceptions for predictable absence → use `Union{T, Nothing}`.
+- Over-narrow signatures: `f(x::Int)` when `f(::Integer)` works (hot loops are the exception).
+- Globals without `const` — kills type inference.
+- Unicode identifiers / operators (`π`, `χ`, `∇`, `≤`) — see Non-negotiable #1.
+- `Pkg.generate` / `]add` outside the project's `mise` task — see Non-negotiable #2.
+- Loose `Dict` plumbed deep into the codebase — keep it at the boundary, convert to typed pack early.
