@@ -1,3 +1,8 @@
+---
+name: python-coding-rules
+description: User's Python coding standards covering style (PEP 8, ruff, pyright strict), type hints (3.10+ syntax), modern features (match, dataclasses, async), error handling, testing (pytest), tooling (uv, pre-commit), and security. TRIGGER when writing or editing any Python (.py) file, reviewing Python code, or setting up a Python project (pyproject.toml, ruff.toml, pre-commit). SKIP for non-Python work.
+---
+
 # Python Coding Rules
 
 ## Code Style and Formatting
@@ -569,4 +574,3 @@ repos:
 - **Proper logging is implemented**
 - **Backward compatibility is maintained**
 - **Database migrations are included if needed**
-

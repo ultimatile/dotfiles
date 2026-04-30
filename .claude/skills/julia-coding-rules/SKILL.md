@@ -1,3 +1,8 @@
+---
+name: julia-coding-rules
+description: User's Julia coding standards covering naming, multiple dispatch, type system, error handling patterns (Union{T,Nothing}, tuples), performance (allocations, @inbounds, @simd, StaticArrays), and package development (Project.toml, testing, CI). TRIGGER when writing or editing any Julia (.jl) file, reviewing Julia code, or setting up a Julia package. Read companion files (typesystem.md, errorhandling.md, performance.md, packagedev.md) in this skill directory when those topics are in scope. SKIP for non-Julia work.
+---
+
 # Julia Coding Rules
 
 ## Naming Conventions
@@ -19,7 +24,7 @@
 
 ## Type System
 
-See @typesystem-julia.md for detailed guidelines on using Julia's type system effectively.
+See `typesystem.md` in this skill directory for detailed guidelines on using Julia's type system effectively.
 
 ## Argument-Type Rules
 
@@ -69,13 +74,13 @@ See @typesystem-julia.md for detailed guidelines on using Julia's type system ef
 
 ## Error-Handling Rules
 
-See @errorhandling-julia.md for best practices on error handling in Julia.
+See `errorhandling.md` in this skill directory for best practices on error handling in Julia.
 
 ## Pattern Selection by Complexity
 
 ### 1. Table Map
 
-**Use when**: You have a small, fixed set of keys → handlers  
+**Use when**: You have a small, fixed set of keys → handlers
 **Why**: O(1) lookup, minimal boilerplate
 
 ```julia
@@ -93,7 +98,7 @@ end
 
 ### 2. If-Else Chain
 
-**Use when**: Only 2–3 mutually exclusive conditions, simple logic  
+**Use when**: Only 2–3 mutually exclusive conditions, simple logic
 **Why**: Clear, no dispatch overhead
 
 ```julia
@@ -110,7 +115,7 @@ end
 
 ### 3. Multiple Dispatch
 
-**Use when**: Behavior varies by argument types/domains  
+**Use when**: Behavior varies by argument types/domains
 **Why**: Leverages Julia's core feature, extensible
 
 ```julia
@@ -124,7 +129,7 @@ area(s::Square) = s.a^2
 
 ### 4. Holy Traits
 
-**Use when**: You need ad-hoc "type" variations without proliferating concrete types  
+**Use when**: You need ad-hoc "type" variations without proliferating concrete types
 **Why**: Encapsulates behavior without type explosion
 
 ```julia
@@ -148,7 +153,7 @@ end
 
 ## Performance Guidelines
 
-See @performance-julia.md for detailed performance guidelines.
+See `performance.md` in this skill directory for detailed performance guidelines.
 
 ## Memory Management
 
@@ -175,8 +180,7 @@ See @performance-julia.md for detailed performance guidelines.
 - Prefer `isnothing` over `=== nothing` and `!isnothing` over `!== nothing`
 - Prefer shadowing in kwargs: not `f(;A=A)` but `f(;A)`
 - For multi-line literals, use triple double quotes ("""...""") instead of multiple `println` calls.
-- Never use concrete types in function signatures unless absolutely necessary. Not `f(x::Int)` but `f(::Integer
-)` or `f(x::Number)`.
+- Never use concrete types in function signatures unless absolutely necessary. Not `f(x::Int)` but `f(::Integer)` or `f(x::Number)`.
 
 ## Metaprogramming
 
@@ -188,4 +192,4 @@ See @performance-julia.md for detailed performance guidelines.
 
 ## Package Development
 
-See @packagedev-julia.md for guidelines on developing Julia packages.
+See `packagedev.md` in this skill directory for guidelines on developing Julia packages.

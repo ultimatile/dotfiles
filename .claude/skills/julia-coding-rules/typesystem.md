@@ -84,4 +84,3 @@ end
 # Check with @code_warntype
 @code_warntype stable_sum([1.0, 2.0, 3.0])
 ```
-

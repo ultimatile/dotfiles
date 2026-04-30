@@ -43,7 +43,7 @@ using Test
         @test my_function(2, 3) == 5
         @test_throws ArgumentError my_function(-1, 3)
     end
-    
+
     @testset "Edge cases" begin
         @test isnan(my_function(NaN, 1))
         @test_broken known_bug() == expected  # Known bug

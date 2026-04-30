@@ -57,7 +57,7 @@ end
    ```julia
    # Good
    a::Vector{Float64} = zeros(1_000_000)
-   
+
    # Bad in tight loops
    a::Vector{<:Real} = zeros(1_000_000)
    ```
@@ -65,7 +65,7 @@ end
 2. **Eliminate global variables**
    ```julia
    const SCALE = 2.0
-   
+
    function scale!(x::Vector{Float64})
        @. x *= SCALE
    end
