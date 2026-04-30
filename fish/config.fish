@@ -132,6 +132,8 @@ if status is-interactive
     abbr -a dec direnv edit .
     abbr -a tcm typst compile main.typ
 
+    abbr -a ruu rustup up
+    abbr -a juu juliaup up
     # Rosetta terminal
     abbr -a z64 env /usr/bin/arch -x86_64 /bin/zsh --login
     abbr -a zarm env /usr/bin/arch -arm64 /bin/zsh --login
