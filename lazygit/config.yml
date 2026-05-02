@@ -196,3 +196,13 @@ customCommands:
       echo "✓ pull.ff {{.Form.FFStrategy}} に設定しました"
     loadingText: "Pull Fast-forward戦略を設定中"
     output: log
+  - key: "<c-u>"
+    context: "global"
+    description: "デフォルトブランチ保護(protect-default-branch)をスキップしてpush"
+    prompts:
+      - type: "confirm"
+        title: "実行確認"
+        body: "protect-default-branch hookをスキップして現在のブランチをpushします。実行しますか？"
+    command: "SKIP=protect-default-branch git push"
+    loadingText: "保護をスキップしてpush中"
+    output: log
