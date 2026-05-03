@@ -16,9 +16,6 @@ fish_add_path /Applications/Obsidian.app/Contents/MacOS
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# devbox
-eval "$(devbox global shellenv)"
-
 # modulefiles
 source /opt/homebrew/opt/modules/init/fish
 module use /Users/$USER/modulefiles
