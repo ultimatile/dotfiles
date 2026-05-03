@@ -72,8 +72,24 @@ if [[ "$url_or_remote" =~ ://|@.*: ]]; then
   # 6) Fetch the head ref and point the upstream to remote/headRefName
   git fetch "$remote_name" "$head_ref"
   git branch --set-upstream-to="$remote_name/$head_ref" "$current_branch"
+
+  # 7) gh also stores pushRemote as a URL; rewrite it to the named remote so
+  # that `git push` is not treated as triangular and pushes to headRefName
+  # instead of creating a new same-named branch.
+  push_url_or_remote="$(git config --get "branch.${current_branch}.pushRemote" || true)"
+  if [[ "$push_url_or_remote" =~ ://|@.*: ]]; then
+    git config "branch.${current_branch}.pushRemote" "$remote_name"
+  fi
+
   echo "Added remote '$remote_name' and set tracking to $remote_name/$head_ref"
 fi
+
+# 8) Local branch name is intentionally prefixed (pr-<num>-) to avoid colliding
+# with branches the user already has, so it will rarely match the upstream
+# branch name. Under the default push.default=simple this mismatch makes
+# `git push` refuse. Set push.default=upstream for this worktree only so
+# `git push` follows the configured upstream regardless of name.
+git config push.default upstream
 
 echo "PR #${pr} checked out as tracked worktree at: $wt"
 echo "Worktree path: $wt"
