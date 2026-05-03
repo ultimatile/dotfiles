@@ -71,6 +71,7 @@
     meson
     mkdocs
     neovim
+    mise
     ninja
     nushell
     pandoc
