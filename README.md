@@ -20,6 +20,7 @@ ln -s $HOME/{dotfiles,.config}/atuin/config.toml
 
 ```sh:
 ln -s $HOME/{dotfiles/,}.claude/skills
+ln -s $HOME/{dotfiles/,}.claude/rules
 ln -s $HOME/{dotfiles/,}.claude/hooks
 ln -s $HOME/{dotfiles/,}.claude/CLAUDE.md
 ln -s $HOME/{dotfiles/,}.claude/settings.json
