@@ -51,8 +51,13 @@
     ],
     "deny": [
       "Bash(pip:*)",
-      "Bash(pip3:*)"
-    ]
+      "Bash(pip3:*)",
+      "Bash(conda:*)",
+      "Bash(mamba:*)",
+      "Bash(micromamba:*)",
+      "Bash(pixi:*)"
+    ],
+    "defaultMode": "auto"
   },
   "hooks": {
     "PreToolUse": [
