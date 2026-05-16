@@ -67,6 +67,10 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/deny-direct-python.sh"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/deny-gh-body-hardwrap.sh"
           }
         ]
       }
