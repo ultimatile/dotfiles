@@ -56,8 +56,7 @@
       "Bash(mamba:*)",
       "Bash(micromamba:*)",
       "Bash(pixi:*)"
-    ],
-    "defaultMode": "auto"
+    ]
   },
   "hooks": {
     "PreToolUse": [
