@@ -69,7 +69,7 @@
           },
           {
             "type": "command",
-            "command": "~/.claude/hooks/deny-gh-body-hardwrap.sh"
+            "command": "~/.claude/hooks/deny-gh-direct-body.sh"
           }
         ]
       }
