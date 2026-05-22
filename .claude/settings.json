@@ -72,6 +72,15 @@
             "command": "~/.claude/hooks/deny-gh-direct-body.sh"
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit|NotebookEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/block-suppress.py"
+          }
+        ]
       }
     ],
     "PostToolUse": [

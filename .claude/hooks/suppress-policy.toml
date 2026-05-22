@@ -1,0 +1,34 @@
+# Suppression-attribute policy for block-suppress.py
+#
+# action:
+#   "block"          - 常に拒否。bypass トークンも受け付けない。
+#   "require_token"  - user の最新メッセージに `token` が含まれていれば通す。
+# tools:
+#   省略時は全ツール対象。指定時はそのツールにのみ適用。
+#   候補: Write / Edit / NotebookEdit / Bash
+
+# ---- Rust ----
+
+[[rule]]
+id      = "dead_code"
+pattern = '#!?\[\s*allow\s*\(\s*dead_code\s*\)\s*\]'
+action  = "block"
+message = "#[allow(dead_code)] is never permitted"
+
+[[rule]]
+id      = "doc_hidden"
+pattern = '#!?\[\s*doc\s*\(\s*hidden\s*\)\s*\]'
+action  = "require_token"
+token   = "BYPASS:doc_hidden"
+
+[[rule]]
+id      = "clippy_allow"
+pattern = '#!?\[\s*allow\s*\(\s*clippy::'
+action  = "require_token"
+token   = "BYPASS:lint"
+
+[[rule]]
+id      = "unused_allow"
+pattern = '#!?\[\s*allow\s*\(\s*unused[a-z_]*\s*\)\s*\]'
+action  = "require_token"
+token   = "BYPASS:lint"
