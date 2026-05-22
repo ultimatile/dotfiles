@@ -6,29 +6,39 @@
 # tools:
 #   省略時は全ツール対象。指定時はそのツールにのみ適用。
 #   候補: Write / Edit / NotebookEdit / Bash
+# extensions:
+#   ルールを適用するファイル拡張子のリスト（先頭に "." を付ける）。
+#   省略時は全ファイル対象。
+#   Write / Edit / NotebookEdit は tool_input.file_path / notebook_path の拡張子で判定。
+#   Bash はコマンド文字列に当該拡張子の substring が含まれるかで判定。
+#   検出できない場合はそのルールをスキップ（誤検知よりも見逃しを優先）。
 
 # ---- Rust ----
 
 [[rule]]
-id      = "dead_code"
-pattern = '#!?\[\s*allow\s*\(\s*dead_code\s*\)\s*\]'
-action  = "block"
-message = "#[allow(dead_code)] is never permitted"
+id         = "dead_code"
+pattern    = '#!?\[\s*allow\s*\(\s*dead_code\s*\)\s*\]'
+action     = "block"
+message    = "#[allow(dead_code)] is never permitted"
+extensions = [".rs"]
 
 [[rule]]
-id      = "doc_hidden"
-pattern = '#!?\[\s*doc\s*\(\s*hidden\s*\)\s*\]'
-action  = "require_token"
-token   = "BYPASS:doc_hidden"
+id         = "doc_hidden"
+pattern    = '#!?\[\s*doc\s*\(\s*hidden\s*\)\s*\]'
+action     = "require_token"
+token      = "BYPASS:doc_hidden"
+extensions = [".rs"]
 
 [[rule]]
-id      = "clippy_allow"
-pattern = '#!?\[\s*allow\s*\(\s*clippy::'
-action  = "require_token"
-token   = "BYPASS:lint"
+id         = "clippy_allow"
+pattern    = '#!?\[\s*allow\s*\(\s*clippy::'
+action     = "require_token"
+token      = "BYPASS:lint"
+extensions = [".rs"]
 
 [[rule]]
-id      = "unused_allow"
-pattern = '#!?\[\s*allow\s*\(\s*unused[a-z_]*\s*\)\s*\]'
-action  = "require_token"
-token   = "BYPASS:lint"
+id         = "unused_allow"
+pattern    = '#!?\[\s*allow\s*\(\s*unused[a-z_]*\s*\)\s*\]'
+action     = "require_token"
+token      = "BYPASS:lint"
+extensions = [".rs"]

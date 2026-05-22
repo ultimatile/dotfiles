@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# PreToolUse hook: blocks Rust suppression attributes (and any rule declared in
-# suppress-policy.toml) unless the user has explicitly authorized them in their
-# latest message via a bypass token.
+# PreToolUse hook: blocks suppression attributes declared in suppress-policy.toml
+# unless the user has explicitly authorized them in their latest message via a
+# bypass token.
 #
 # Policy lives in ~/.claude/hooks/suppress-policy.toml. Logic stays here.
 # Exit 2 surfaces stderr to the agent and aborts the tool call.
@@ -15,17 +15,51 @@ import tomllib
 POLICY_PATH = pathlib.Path.home() / ".claude/hooks/suppress-policy.toml"
 
 # Per-tool fields whose textual content we scan for suppression patterns.
-TOOL_FIELDS = {
+TOOL_CONTENT_FIELDS = {
     "Write":        ["content"],
     "Edit":         ["new_string"],
     "NotebookEdit": ["new_source"],
     "Bash":         ["command"],
 }
 
+# Per-tool field that names the target file (used for extension scoping).
+TOOL_PATH_FIELD = {
+    "Write":        "file_path",
+    "Edit":         "file_path",
+    "NotebookEdit": "notebook_path",
+}
+
 
 def collect_blob(tool: str, tool_input: dict) -> str:
-    fields = TOOL_FIELDS.get(tool, [])
+    fields = TOOL_CONTENT_FIELDS.get(tool, [])
     return "\n".join(str(tool_input.get(k, "")) for k in fields)
+
+
+def rule_applies_to_path(rule: dict, tool: str, tool_input: dict, blob: str) -> bool:
+    """Decide whether a rule with an `extensions` filter applies to this call.
+
+    Rules without `extensions` apply unconditionally.
+
+    For file-editing tools, the target path is taken from tool_input and matched
+    against the listed extensions.
+
+    For Bash, the command itself is scanned for the literal extension substrings;
+    a match means the command likely touches a file of that kind. If no match is
+    found we skip the rule rather than block — the user explicitly chose
+    "extensions" as a scope, so silent over-blocking would surprise them.
+    """
+    exts = rule.get("extensions")
+    if not exts:
+        return True
+
+    if tool in TOOL_PATH_FIELD:
+        path = str(tool_input.get(TOOL_PATH_FIELD[tool], ""))
+        return any(path.endswith(ext) for ext in exts)
+
+    if tool == "Bash":
+        return any(ext in blob for ext in exts)
+
+    return True
 
 
 def latest_user_message(transcript_path: str) -> str:
@@ -81,6 +115,8 @@ def main() -> int:
 
     for rule in rules:
         if "tools" in rule and tool not in rule["tools"]:
+            continue
+        if not rule_applies_to_path(rule, tool, tool_input, blob):
             continue
         if not re.search(rule["pattern"], blob):
             continue
