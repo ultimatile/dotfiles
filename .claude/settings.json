@@ -70,6 +70,10 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/deny-gh-direct-body.sh"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/block-broad-fs-scan.py"
           }
         ]
       },
