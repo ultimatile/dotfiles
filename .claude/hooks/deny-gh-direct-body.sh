@@ -43,6 +43,15 @@ if printf '%s' "$COMMAND" | rg -qP '^\s*(cd\s+\S+\s*&&\s*)?git\s+'; then
   exit 0
 fi
 
+# Strip quoted substrings before the gh-shape matching below. Like the git skip
+# above, this defends against a quoted string literal (echo prose, doc text)
+# merely *mentioning* `gh pr create --body ...` rather than invoking it: the raw
+# command text has no notion of shell quoting. Real invocations keep their flag
+# tokens (only the quoted *values* are removed: `--body "x"` -> `--body `), so
+# detection of genuine commands is preserved. Heuristic, not a full parser —
+# accepts the rare false negative of a gh call hidden inside quotes.
+SCAN=$(printf '%s' "$COMMAND" | sed -E -e 's/"[^"]*"//g' -e "s/'[^']*'//g")
+
 emit_deny() {
   jq -n --arg reason "$1" '{
     hookSpecificOutput: {
@@ -58,9 +67,9 @@ emit_deny() {
 # flag on the same logical command. The body-flag alternatives intentionally
 # match --body / --body= / --body-file / --body-file= but not --body-stdin
 # (which gh does not have and gh-post does).
-if printf '%s' "$COMMAND" \
+if printf '%s' "$SCAN" \
   | rg -qP '\bgh\s+(issue|pr)\s+(create|edit|comment)\b'; then
-  if printf '%s' "$COMMAND" \
+  if printf '%s' "$SCAN" \
     | rg -qP '(?<!-)--body(=|\s|$)|--body-file(=|\s)'; then
     emit_deny "Direct gh body invocation blocked. Use ~/.local/bin/gh-post instead, which validates every body via --body-file or --body-stdin. See https://github.com/ultimatile/gh-post for usage."
     exit 0
@@ -72,8 +81,8 @@ fi
 # accepts: short `-F` / `-f` with space / equals / cluster, and long
 # `--field` / `--raw-field` with space or equals. Anchored so an
 # inner substring like `--no-field body=...` does not false-fire.
-if printf '%s' "$COMMAND" | rg -qP '\bgh\s+api\b'; then
-  if printf '%s' "$COMMAND" \
+if printf '%s' "$SCAN" | rg -qP '\bgh\s+api\b'; then
+  if printf '%s' "$SCAN" \
     | rg -qP '(?<![A-Za-z0-9_-])((-F|-f)\s*=?\s*|--(raw-)?field(=|\s+))body='; then
     # Reply-to-thread endpoint (POST). More specific than the single-comment
     # pattern below — checked first so its tailored deny message wins. The

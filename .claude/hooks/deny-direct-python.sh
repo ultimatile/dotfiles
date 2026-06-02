@@ -7,7 +7,16 @@
 
 COMMAND=$(jq -r '.tool_input.command' < /dev/stdin)
 
-if echo "$COMMAND" | grep -q 'python3 -m pytest\|python -m pytest'; then
+# Strip quoted substrings before pattern matching. The checks below scan the raw
+# command text, which has no notion of shell quoting, so a keyword or command
+# separator appearing inside a string literal (echo messages, commit text, the
+# semicolon in `echo "...; conda removed"`) would otherwise false-positive.
+# This is a heuristic, not a real parser: it accepts the rare false negative of a
+# blocked command genuinely hidden inside quotes (e.g. bash -c "conda ...") in
+# exchange for not firing on prose that merely mentions these tools.
+SCAN=$(printf '%s' "$COMMAND" | sed -E -e 's/"[^"]*"//g' -e "s/'[^']*'//g")
+
+if echo "$SCAN" | grep -q 'python3 -m pytest\|python -m pytest'; then
   jq -n '{
     hookSpecificOutput: {
       hookEventName: "PreToolUse",
@@ -15,7 +24,7 @@ if echo "$COMMAND" | grep -q 'python3 -m pytest\|python -m pytest'; then
       permissionDecisionReason: "Use `uv run pytest` instead of `python3 -m pytest`"
     }
   }'
-elif echo "$COMMAND" | grep -qE '(^|[;&|] *)(pip3?|python3? -m pip) '; then
+elif echo "$SCAN" | grep -qE '(^|[;&|] *)(pip3?|python3? -m pip) '; then
   jq -n '{
     hookSpecificOutput: {
       hookEventName: "PreToolUse",
@@ -23,7 +32,7 @@ elif echo "$COMMAND" | grep -qE '(^|[;&|] *)(pip3?|python3? -m pip) '; then
       permissionDecisionReason: "Use `uv add` instead of pip/pip3"
     }
   }'
-elif echo "$COMMAND" | grep -qE '(^|[;&|] *)(conda|mamba|micromamba|pixi)( |$)'; then
+elif echo "$SCAN" | grep -qE '(^|[;&|] *)(conda|mamba|micromamba|pixi)( |$)'; then
   jq -n '{
     hookSpecificOutput: {
       hookEventName: "PreToolUse",
