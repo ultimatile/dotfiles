@@ -1,6 +1,6 @@
 #!/bin/bash
-# Block direct python/pip and conda-family commands; suggest mise/uv alternatives.
-# This user manages Python tooling with mise + uv. Conda / pixi / mamba / micromamba
+# Block direct python/pip and conda-family commands; suggest uv alternatives.
+# This user manages Python tooling with uv. Conda / pixi / mamba / micromamba
 # are not in use; suggestions to install or invoke them are reflex-prior failures
 # rather than informed choices, so they are denied at hook time as a safety net
 # on top of permissions.deny.
@@ -28,7 +28,7 @@ elif echo "$COMMAND" | grep -qE '(^|[;&|] *)(conda|mamba|micromamba|pixi)( |$)';
     hookSpecificOutput: {
       hookEventName: "PreToolUse",
       permissionDecision: "deny",
-      permissionDecisionReason: "conda / pixi / mamba family is not used in this user'\''s projects. Use mise + uv for Python environments and dependencies."
+      permissionDecisionReason: "conda / pixi / mamba family is not used in this user'\''s projects. Use uv for Python environments and dependencies."
     }
   }'
 fi
