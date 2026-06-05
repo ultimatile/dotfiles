@@ -36,9 +36,12 @@
     # -- Homebrew からの移行候補 --
     # pkgs.github-copilot-cli
     # pkgs.atuin # old 
+    actionlint
+    arpack
     cargo-make
     choose            # brew: choose-rust
     clang-tools        # brew: clang-format
+    cloc
     colima
     # direnv
     docker
