@@ -97,6 +97,28 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/detect-leaked-toolcall.py",
+            "statusMessage": "Checking for leaked tool-call markup"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/detect-leaked-toolcall.py",
+            "statusMessage": "Checking for leaked tool-call markup"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
