@@ -2,6 +2,16 @@
 # gpa: git pull all (parallel, grouped output)
 function gpa
     set -l tmpdir (mktemp -d)
+
+    # Give each parallel pull its own SSH connection instead of multiplexing.
+    # The user's ssh config enables ControlMaster=auto, which here is actively
+    # harmful: funnelling all pulls through one shared master serializes their
+    # transfers over a single TCP connection (~15x slower, measured), and the
+    # all-at-once launch races over whether a master even exists, making the
+    # runtime swing wildly. Independent connections let bandwidth run in
+    # parallel and keep the runtime stable.
+    set -lx GIT_SSH_COMMAND "ssh -o ControlMaster=no -o ControlPath=none"
+
     for d in */.git
         set -l repo (dirname $d)
         begin
