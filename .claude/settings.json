@@ -75,6 +75,10 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/block-broad-fs-scan.py"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/block-rg-replace-confusion.py"
           }
         ]
       },
