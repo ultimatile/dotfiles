@@ -5,6 +5,9 @@
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
   },
   "includeCoAuthoredBy": false,
+  "attribution": {
+    "sessionUrl": false
+  },
   "permissions": {
     "allow": [
       "Bash(gh issue view:*)",
