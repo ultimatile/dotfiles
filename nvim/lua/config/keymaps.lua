@@ -249,10 +249,17 @@ nmapkey("<M-Down>", '":move +1<CR>==" .. v:count1', { expr = true, desc = "Move 
 xmapkey("<M-Up>", ":move '<-2<CR>gv=gv", { desc = "Move selected lines up" })
 xmapkey("<M-Down>", ":move '>+1<CR>gv=gv", { desc = "Move selected lines down" })
 
--- TODO: consider using vim.fn.getcharstr and vim.fn.keytrans
+-- Read a single keypress and return it as a human-readable string.
+-- getcharstr()+keytrans() normalizes special/modified keys to their canonical
+-- "<...>" notation (e.g. <Esc>, <C-a>) instead of raw control bytes, so callers
+-- can match and display them reliably. Returns nil when the read is interrupted
+-- (e.g. <C-c>), letting callers treat that as a silent cancellation.
 local function getchar_as_string()
-  local input = vim.fn.getchar()
-  return type(input) == "number" and vim.fn.nr2char(input) or input
+  local ok, char = pcall(vim.fn.getcharstr)
+  if not ok then
+    return nil
+  end
+  return vim.fn.keytrans(char)
 end
 
 local function toggle_macro()
@@ -264,7 +271,7 @@ local function toggle_macro()
   vim.api.nvim_echo({ { "Register (a-z, 0-9): ", "Question" } }, false, {})
   local char = getchar_as_string()
 
-  if char:match("[a-zA-Z0-9]") then
+  if char and char:match("[a-zA-Z0-9]") then
     vim.cmd("normal! q" .. char)
   else
     vim.api.nvim_echo({ { "", "" } }, false, {}) -- clear prompt
@@ -300,14 +307,18 @@ nmapkey("Q", function()
     end, -- Force quit all buffers (QZ)
   }
 
-  -- Execute the corresponding function if the keymap exists
-  (keymap_actions_Q[char] or function()
-    print("No keymap for Q" .. char)
-  end)()
+  -- <C-c>/interrupt (nil) and <Esc> are explicit cancellations: close silently.
+  -- Any other unmapped key is likely a mistake, so surface it as a warning.
+  local action = keymap_actions_Q[char]
+  if action then
+    action()
+  elseif char ~= nil and char ~= "<Esc>" then
+    vim.notify(("No Q-prefix mapping: Q%s"):format(char), vim.log.levels.WARN)
+  end
 end, { desc = "Q-prefix" })
 
 require("which-key").add({
-  { "Q", name = "Q-Commands" },
+  { "Q", group = "Q-Commands" },
   { "QC", desc = "Open command-line window" },
   { "QQ", desc = "Confirm quit all" },
   { "QR", desc = "Start/stop macro recording" },
