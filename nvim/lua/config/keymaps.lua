@@ -271,61 +271,44 @@ local function toggle_macro()
   vim.api.nvim_echo({ { "Register (a-z, 0-9): ", "Question" } }, false, {})
   local char = getchar_as_string()
 
-  if char and char:match("[a-zA-Z0-9]") then
+  -- Anchor the match: a register is exactly one char. getcharstr()+keytrans()
+  -- can yield multi-char names like "<Esc>"/"<Nul>", and an unanchored pattern
+  -- would let those through on their embedded letters and feed an invalid
+  -- register to `normal! q`.
+  if char and char:match("^[a-zA-Z0-9]$") then
     vim.cmd("normal! q" .. char)
   else
     vim.api.nvim_echo({ { "", "" } }, false, {}) -- clear prompt
   end
 end
 
--- Map Q in normal mode without timeout
-nmapkey("Q", function()
-  -- Wait for a character input
-  require("which-key").show("Q")
-  vim.fn.getchar() -- Discard the first 'Q' from which-key
-  local char = getchar_as_string() -- Get the actual keypress
+-- Q-prefix commands, behaving like the built-in ZZ/ZQ (waits for the next key
+-- without Vim's mapping timeoutlen). Q itself is left unmapped here: the QX leaf
+-- maps below make Q a prefix node, and which-key turns it into a `nowait`
+-- trigger that drives its own getcharstr loop -- the same intercept-and-block
+-- technique a hand-rolled `Q -> getchar` dispatcher uses.
+-- NOTE: which-key's <auto> triggers refuse single-key uppercase prefixes except
+-- Z (see is_safe in which-key's buf.lua), so Q must be registered explicitly in
+-- opts.triggers (see lua/plugins/which-key.lua). Without that, Q falls through
+-- to Neovim's built-in Q (macro replay) and errors with E354.
+require("which-key").add({ { "Q", group = "Q-Commands" } })
 
-  -- Mapping of keys to actions for Q-prefix keymaps
-  local keymap_actions_Q = {
-    C = function()
-      feedkeys("n", "q:")
-    end, -- Open command-line window (QC)
-    Q = function()
-      vim.cmd("confirm qa")
-    end, -- Confirm quit all (QQ)
-    R = function()
-      toggle_macro()
-    end, -- Start/Stop macro recording (QR)
-    S = function()
-      vim.cmd("wa")
-    end, -- Write all buffers (QS)
-    W = function()
-      vim.cmd("xa")
-    end, -- Write and quit all buffers (QW)
-    Z = function()
-      vim.cmd("qa!")
-    end, -- Force quit all buffers (QZ)
-  }
-
-  -- <C-c>/interrupt (nil) and <Esc> are explicit cancellations: close silently.
-  -- Any other unmapped key is likely a mistake, so surface it as a warning.
-  local action = keymap_actions_Q[char]
-  if action then
-    action()
-  elseif char ~= nil and char ~= "<Esc>" then
-    vim.notify(("No Q-prefix mapping: Q%s"):format(char), vim.log.levels.WARN)
-  end
-end, { desc = "Q-prefix" })
-
-require("which-key").add({
-  { "Q", group = "Q-Commands" },
-  { "QC", desc = "Open command-line window" },
-  { "QQ", desc = "Confirm quit all" },
-  { "QR", desc = "Start/stop macro recording" },
-  { "QS", desc = "Write all buffers" },
-  { "QW", desc = "Write & quit all buffers" },
-  { "QZ", desc = "Force quit all buffers" },
-})
+nmapkey("QC", function()
+  feedkeys("n", "q:")
+end, { desc = "Open command-line window" })
+nmapkey("QQ", function()
+  vim.cmd("confirm qa")
+end, { desc = "Confirm quit all" })
+nmapkey("QR", toggle_macro, { desc = "Start/stop macro recording" })
+nmapkey("QS", function()
+  vim.cmd("wa")
+end, { desc = "Write all buffers" })
+nmapkey("QW", function()
+  vim.cmd("xa")
+end, { desc = "Write & quit all buffers" })
+nmapkey("QZ", function()
+  vim.cmd("qa!")
+end, { desc = "Force quit all buffers" })
 
 nmapkey("<M-w>", function()
   local line = vim.api.nvim_get_current_line()
