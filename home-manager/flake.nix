@@ -8,13 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    arto = {
-      url = "github:arto-app/Arto";
-    };
   };
 
   outputs =
-    { nixpkgs, home-manager, arto, ... }:
+    { nixpkgs, home-manager, ... }:
     let
       system = "aarch64-darwin";
       pkgs = import nixpkgs {
@@ -31,11 +28,6 @@
         modules = [
           ./home.nix
           ./machine-specific.nix
-          {
-            home.packages = [
-              arto.packages.${system}.default
-            ];
-          }
         ];
 
         # Optionally use extraSpecialArgs
