@@ -70,6 +70,7 @@
     jq
     lazygit
     less
+    git-filter-repo
     gnumake            # brew: make
     meson
     mkdocs
