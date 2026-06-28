@@ -82,6 +82,10 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/block-rg-replace-confusion.py"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/redirect-git-worktree-add.py"
           }
         ]
       },
