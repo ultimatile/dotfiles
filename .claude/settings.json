@@ -135,7 +135,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "npx -y @owloops/claude-powerline@latest --style=powerline --theme=tokyo-night",
+    "command": "npx -y @owloops/claude-powerline --style=powerline --theme=tokyo-night",
     "padding": 0
   },
   "enabledPlugins": {
