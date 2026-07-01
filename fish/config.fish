@@ -150,14 +150,12 @@ if status is-interactive
 
     abbr -a mkdd mkdir (date +"%Y%m%d")
 
-    abbr -a dga devbox global add
-
     abbr -a ch choose --one-indexed
 
     abbr -a crc "codex review --uncommitted"
 
     abbr -a cl claude
-    abbr -a clhi "claude -p --model \"haiku\" \"hi\""
+    abbr -a fncl CLAUDE_CONFIG_DIR=~/.claude_fn claude
 
     abbr -a ssmb ssh mbpr
 
