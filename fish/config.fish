@@ -162,6 +162,8 @@ if status is-interactive
     abbr -a nfu "cd $(realpath ~/.config/home-manager) && nix flake update && ./bin/hm-switch"
     abbr -a んふ "cd $(realpath ~/.config/home-manager) && nix flake update && ./bin/hm-switch"
 
+    abbr -a yz yazi
+
     #bind ctrl-\] forward-jump
     #bind ctrl-alt-\] backward-jump
     bind -M insert ctrl-\] forward-jump
