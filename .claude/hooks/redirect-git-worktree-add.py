@@ -11,6 +11,12 @@
 #
 # Only `add` (creation) is redirected — that is where placement is decided.
 # `git worktree list/remove/prune` are left untouched.
+#
+# Exemption: ephemeral worktrees. Placement determinism only matters for
+# worktrees that must be findable later (`gwq get <branch>`). Scratch
+# worktrees under `.claude/worktree/` (harness-managed) or a tmp directory
+# have the opposite lifecycle — created to be discarded — so forcing them
+# through gwq would pollute the durable basedir with throwaway branches.
 
 import json
 import re
@@ -22,6 +28,12 @@ import sys
 # git and the subcommand (e.g. `git -C /path worktree add`).
 PATTERN = re.compile(r"\bgit\b[^|&;\n]*\bworktree\s+add\b")
 
+# Ephemeral target locations exempt from the redirect (see header comment).
+# Checked against the RAW command (paths are often quoted, and strip_quoted
+# would erase them). Heuristic: a durable worktree add that merely *mentions*
+# one of these strings slips through, which is acceptable.
+EPHEMERAL = re.compile(r"\.claude/worktree/|/tmp/|\$TMPDIR")
+
 REASON = (
     "Use `gwq` instead of `git worktree add`:\n"
     "- create:  gwq add -b <branch>      (existing branch: gwq add <branch>)\n"
@@ -29,7 +41,9 @@ REASON = (
     "- run in:  gwq exec <branch> -- <cmd>\n"
     "- list:    gwq list --json / gwq status --json\n"
     "- remove:  gwq remove <branch>\n"
-    "Non-interactive flags only. If raw `git worktree` is required, ask the user."
+    "Non-interactive flags only. If raw `git worktree` is required, ask the user.\n"
+    "Exempt: ephemeral/scratch worktrees are allowed as-is when the target path\n"
+    "is under `.claude/worktree/` or a tmp directory (`/tmp/`, `$TMPDIR`)."
 )
 
 
@@ -52,6 +66,9 @@ def main() -> None:
         return
 
     if not PATTERN.search(strip_quoted(command)):
+        return
+
+    if EPHEMERAL.search(command):
         return
 
     print(json.dumps({
