@@ -159,8 +159,8 @@ if status is-interactive
 
     abbr -a ssmb ssh mbpr
 
-    abbr -a nfu "cd $(realpath ~/.config/home-manager) && nix flake update && ./bin/hm-switch"
-    abbr -a んふ "cd $(realpath ~/.config/home-manager) && nix flake update && ./bin/hm-switch"
+    abbr -a nfu "cd $(realpath ~/.config/home-manager) && nix flake update --option access-tokens \"github.com=\$(gh auth token)\" && ./bin/hm-switch"
+    abbr -a んふ "cd $(realpath ~/.config/home-manager) && nix flake update --option access-tokens \"github.com=\$(gh auth token)\" && ./bin/hm-switch"
 
     abbr -a yz yazi
 
