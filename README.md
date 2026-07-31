@@ -222,3 +222,9 @@ ln -s $HOME/{dotfiles/vim/,}.vimrc
 ```sh:
 ln -s $HOME/{dotfiles,.config}/wezterm
 ```
+
+## Z shell
+
+```sh:
+ln -s $HOME/{dotfiles/zsh/,}.zprofile
+```
