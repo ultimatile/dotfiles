@@ -206,3 +206,13 @@ customCommands:
     command: "SKIP=protect-default-branch git push"
     loadingText: "保護をスキップしてpush中"
     output: log
+  - key: "<f5>"
+    context: "global"
+    description: "リモート追跡ブランチをpruneしてfetch"
+    prompts:
+      - type: "confirm"
+        title: "実行確認"
+        body: "git fetch --prune を実行しますか？"
+    command: "git fetch --prune"
+    loadingText: "fetch --pruneを実行中"
+    output: log
