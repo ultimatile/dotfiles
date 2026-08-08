@@ -43,7 +43,7 @@
     clang-tools        # brew: clang-format
     cloc
     colima
-    # direnv
+    direnv
     docker
     dust
     doxygen
