@@ -156,12 +156,12 @@ if status is-interactive
 
     abbr -a cl claude
     abbr -a fncl CLAUDE_CONFIG_DIR=~/.claude_fn claude
+    abbr -a clpg "claude -p --model \"haiku\" \"/generate-conventional-commit-messages-skill\""
 
     abbr -a ssmb ssh mbpr
 
     abbr -a nfu "cd $(realpath ~/.config/home-manager) && nix flake update --option access-tokens \"github.com=\$(gh auth token)\" && ./bin/hm-switch"
     abbr -a んふ "cd $(realpath ~/.config/home-manager) && nix flake update --option access-tokens \"github.com=\$(gh auth token)\" && ./bin/hm-switch"
-
     abbr -a yz yazi
 
     #bind ctrl-\] forward-jump
