@@ -82,9 +82,11 @@
     parallel
     pdfgrep
     pre-commit
+    prettier
     pwgen
     pyenv
     rbenv
+    ripgrep
     rsync
     ruff
     rustup
@@ -107,6 +109,7 @@
     yazi
     yq-go              # brew: yq
     zig
+    zizmor
     zoxide
   ];
 
