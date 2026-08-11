@@ -52,6 +52,8 @@
     fastfetch
     fd
     fdupes
+    fish
+    fishPlugins.done
     fzf
     gh
     ghq
