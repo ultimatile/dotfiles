@@ -13,15 +13,15 @@ owner_repo=$(echo "$current_remote" | sed -E 's#^(https://github\.com/|git@githu
 parent_url=$(gh api repos/"$owner_repo" --jq '.source.clone_url // .parent.clone_url // empty')
 
 if [ -z "$parent_url" ]; then
-	echo "No parent repository found. This might not be a fork."
-	exit 1
+  echo "No parent repository found. This might not be a fork."
+  exit 1
 fi
 
 # Add upstream remote
 echo "Adding upstream remote: $parent_url"
 git remote add upstream "$parent_url" 2>/dev/null || {
-	echo "Upstream remote already exists. Updating URL..."
-	git remote set-url upstream "$parent_url"
+  echo "Upstream remote already exists. Updating URL..."
+  git remote set-url upstream "$parent_url"
 }
 
 echo "Successfully set upstream to: $parent_url"

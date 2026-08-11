@@ -21,3 +21,8 @@ repos:
         entry: prettier --write
         language: system
         types: [yaml]
+      - id: shfmt
+        name: shfmt
+        entry: shfmt -w -i 2 -ci -bn
+        language: system
+        types: [shell]

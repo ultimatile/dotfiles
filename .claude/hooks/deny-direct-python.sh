@@ -5,7 +5,7 @@
 # rather than informed choices, so they are denied at hook time as a safety net
 # on top of permissions.deny.
 
-COMMAND=$(jq -r '.tool_input.command' < /dev/stdin)
+COMMAND=$(jq -r '.tool_input.command' </dev/stdin)
 
 # Strip quoted substrings before pattern matching. The checks below scan the raw
 # command text, which has no notion of shell quoting, so a keyword or command

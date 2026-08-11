@@ -17,7 +17,7 @@ check_pkg() {
 export -f check_pkg
 
 echo "Fetching brew leaf packages..." >&2
-brew leaves | xargs -P8 -I{} bash -c 'check_pkg "{}"' > "$results"
+brew leaves | xargs -P8 -I{} bash -c 'check_pkg "{}"' >"$results"
 
 found=$(grep '^FOUND ' "$results" | sed 's/^FOUND //' | sort)
 not_found=$(grep '^NOTFOUND ' "$results" | sed 's/^NOTFOUND //' | sort)

@@ -201,12 +201,12 @@ interactive_delete_loop() {
     selection=$(
       printf "%s\n" "$candidates" \
         | fzf \
-            --delimiter=$'\t' \
-            --with-nth=1,2,3 \
-            --layout=reverse \
-            --height=80% \
-            --prompt="delete-branch> " \
-            --header=$'branch\tpr\tmergedAt'
+          --delimiter=$'\t' \
+          --with-nth=1,2,3 \
+          --layout=reverse \
+          --height=80% \
+          --prompt="delete-branch> " \
+          --header=$'branch\tpr\tmergedAt'
     ) || return 0
 
     branch="${selection%%$'\t'*}"

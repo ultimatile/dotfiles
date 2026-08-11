@@ -93,6 +93,7 @@
     ruff
     rustup
     sd
+    shfmt
     starship
     stylua
     # terminal-notifier

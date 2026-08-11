@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-branch="$1"  # SelectedLocalBranch.Name — the branch to reset
-base="$2"    # base branch the reset should point to (e.g. main)
+branch="$1" # SelectedLocalBranch.Name — the branch to reset
+base="$2"   # base branch the reset should point to (e.g. main)
 
 # Resolve the worktree hosting <branch> via the git worktree registry.
 # `gwq get` is avoided here because it falls back to an interactive fuzzy

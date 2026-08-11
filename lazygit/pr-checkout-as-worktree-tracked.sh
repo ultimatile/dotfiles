@@ -6,7 +6,7 @@ repo_name=$(basename "$repo_path")
 
 # 1) Keep headRefName as-is; only sanitize for display and directory usage.
 head_ref=$(gh pr view "$pr" --json headRefName --jq .headRefName)
-safe_ref="${head_ref//\//-}"   # Sanitized variant for directory names
+safe_ref="${head_ref//\//-}" # Sanitized variant for directory names
 
 # Guard against worktree directory collisions (PR may already be checked out)
 wt="${repo_path}/../${repo_name}-${safe_ref}"
@@ -22,7 +22,7 @@ local_branch="pr-${pr}-${safe_ref}"
 git worktree add --no-checkout "$wt"
 cd "$wt"
 gh -R "$(gh repo view --json nameWithOwner --jq .nameWithOwner)" \
-   pr checkout "$pr" -b "$local_branch"
+  pr checkout "$pr" -b "$local_branch"
 
 # 3) Capture the branch that actually ended up checked out as a safeguard
 current_branch=$(git rev-parse --abbrev-ref HEAD)
@@ -31,9 +31,9 @@ current_branch=$(git rev-parse --abbrev-ref HEAD)
 url_or_remote="$(git config --get "branch.${current_branch}.remote" || true)"
 if [[ "$url_or_remote" =~ ://|@.*: ]]; then
   # Query owner/name/sshUrl for the PR head repository
-  head_repo_info="$( \
+  head_repo_info="$(
     gh pr view "$pr" --json headRepository \
-      --jq '[.headRepository.owner.login // "", .headRepository.name // "", .headRepository.sshUrl // ""] | @tsv' \
+      --jq '[.headRepository.owner.login // "", .headRepository.name // "", .headRepository.sshUrl // ""] | @tsv'
   )"
   read -r head_owner head_repo head_ssh <<<"$head_repo_info"
 
@@ -49,21 +49,23 @@ if [[ "$url_or_remote" =~ ://|@.*: ]]; then
       head_repo="${BASH_REMATCH[2]}"
     fi
   else
-    fork_url="$head_ssh"  # Prefer sshUrl
+    fork_url="$head_ssh" # Prefer sshUrl
   fi
 
   # 5) Reuse an existing remote or create a unique owner-repo[-n] name
   remote_name=""
   for r in $(git remote); do
     if [[ "$(git remote get-url "$r" 2>/dev/null || true)" == "$fork_url" ]]; then
-      remote_name="$r"; break
+      remote_name="$r"
+      break
     fi
   done
   if [[ -z "$remote_name" ]]; then
     candidate="${head_owner}-${head_repo}"
     remote_name="$candidate"
     if git remote | grep -qx "$remote_name"; then
-      i=2; while git remote | grep -qx "${candidate}-${i}"; do ((i++)); done
+      i=2
+      while git remote | grep -qx "${candidate}-${i}"; do ((i++)); done
       remote_name="${candidate}-${i}"
     fi
     git remote add "$remote_name" "$fork_url"

@@ -28,7 +28,7 @@
 
 export LC_ALL=C
 
-COMMAND=$(jq -r '.tool_input.command' < /dev/stdin)
+COMMAND=$(jq -r '.tool_input.command' </dev/stdin)
 
 if [ -z "$COMMAND" ] || [ "$COMMAND" = "null" ]; then
   exit 0
