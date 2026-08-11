@@ -32,9 +32,7 @@
     },
     "width_mode": {
       "key": "w",
-      "modifiers": [
-        "ctrl"
-      ]
+      "modifiers": ["ctrl"]
     },
     "enter_command_mode": {
       "key": "colon",
@@ -66,18 +64,10 @@
     "enabled": true,
     "style": {
       "bg": {
-        "rgb": [
-          216,
-          74,
-          74
-        ]
+        "rgb": [216, 74, 74]
       },
       "fg": {
-        "rgb": [
-          255,
-          255,
-          255
-        ]
+        "rgb": [255, 255, 255]
       }
     }
   },

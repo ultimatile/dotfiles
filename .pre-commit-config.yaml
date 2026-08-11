@@ -20,7 +20,8 @@ repos:
         name: prettier
         entry: prettier --write
         language: system
-        types: [yaml]
+        types_or: [yaml, json]
+        exclude: -lock\.json$
       - id: shfmt
         name: shfmt
         entry: shfmt -w -i 2 -ci -bn
