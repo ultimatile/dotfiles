@@ -1,46 +1,46 @@
 # Print an optspec for argparse to handle cmd's options that are independent of any subcommand.
 function __fish_typst_global_optspecs
-	string join \n color= cert= h/help V/version
+    string join \n color= cert= h/help V/version
 end
 
 function __fish_typst_needs_command
-	# Figure out if the current invocation already has a command.
-	set -l cmd (commandline -opc)
-	set -e cmd[1]
-	argparse -s (__fish_typst_global_optspecs) -- $cmd 2>/dev/null
-	or return
-	if set -q argv[1]
-		# Also print the command, so this can be used to figure out what it is.
-		echo $argv[1]
-		return 1
-	end
-	return 0
+    # Figure out if the current invocation already has a command.
+    set -l cmd (commandline -opc)
+    set -e cmd[1]
+    argparse -s (__fish_typst_global_optspecs) -- $cmd 2>/dev/null
+    or return
+    if set -q argv[1]
+        # Also print the command, so this can be used to figure out what it is.
+        echo $argv[1]
+        return 1
+    end
+    return 0
 end
 
 function __fish_typst_using_subcommand
-	set -l cmd (__fish_typst_needs_command)
-	test -z "$cmd"
-	and return 1
-	contains -- $cmd[1] $argv
+    set -l cmd (__fish_typst_needs_command)
+    test -z "$cmd"
+    and return 1
+    contains -- $cmd[1] $argv
 end
 
-complete -c typst -n "__fish_typst_needs_command" -l color -d 'Whether to use color. When set to `auto` if the terminal to supports it' -r -f -a "auto\t''
+complete -c typst -n __fish_typst_needs_command -l color -d 'Whether to use color. When set to `auto` if the terminal to supports it' -r -f -a "auto\t''
 always\t''
 never\t''"
-complete -c typst -n "__fish_typst_needs_command" -l cert -d 'Path to a custom CA certificate to use when making network requests' -r -F
-complete -c typst -n "__fish_typst_needs_command" -s h -l help -d 'Print help'
-complete -c typst -n "__fish_typst_needs_command" -s V -l version -d 'Print version'
-complete -c typst -n "__fish_typst_needs_command" -f -a "compile" -d 'Compiles an input file into a supported output format'
-complete -c typst -n "__fish_typst_needs_command" -f -a "c" -d 'Compiles an input file into a supported output format'
-complete -c typst -n "__fish_typst_needs_command" -f -a "watch" -d 'Watches an input file and recompiles on changes'
-complete -c typst -n "__fish_typst_needs_command" -f -a "w" -d 'Watches an input file and recompiles on changes'
-complete -c typst -n "__fish_typst_needs_command" -f -a "init" -d 'Initializes a new project from a template'
-complete -c typst -n "__fish_typst_needs_command" -f -a "query" -d 'Processes an input file to extract provided metadata'
-complete -c typst -n "__fish_typst_needs_command" -f -a "fonts" -d 'Lists all discovered fonts in system and custom font paths'
-complete -c typst -n "__fish_typst_needs_command" -f -a "update" -d 'Self update the Typst CLI'
-complete -c typst -n "__fish_typst_needs_command" -f -a "completions" -d 'Generates shell completion scripts'
-complete -c typst -n "__fish_typst_needs_command" -f -a "info" -d 'Displays debugging information about Typst'
-complete -c typst -n "__fish_typst_needs_command" -f -a "help" -d 'Print this message or the help of the given subcommand(s)'
+complete -c typst -n __fish_typst_needs_command -l cert -d 'Path to a custom CA certificate to use when making network requests' -r -F
+complete -c typst -n __fish_typst_needs_command -s h -l help -d 'Print help'
+complete -c typst -n __fish_typst_needs_command -s V -l version -d 'Print version'
+complete -c typst -n __fish_typst_needs_command -f -a compile -d 'Compiles an input file into a supported output format'
+complete -c typst -n __fish_typst_needs_command -f -a c -d 'Compiles an input file into a supported output format'
+complete -c typst -n __fish_typst_needs_command -f -a watch -d 'Watches an input file and recompiles on changes'
+complete -c typst -n __fish_typst_needs_command -f -a w -d 'Watches an input file and recompiles on changes'
+complete -c typst -n __fish_typst_needs_command -f -a init -d 'Initializes a new project from a template'
+complete -c typst -n __fish_typst_needs_command -f -a query -d 'Processes an input file to extract provided metadata'
+complete -c typst -n __fish_typst_needs_command -f -a fonts -d 'Lists all discovered fonts in system and custom font paths'
+complete -c typst -n __fish_typst_needs_command -f -a update -d 'Self update the Typst CLI'
+complete -c typst -n __fish_typst_needs_command -f -a completions -d 'Generates shell completion scripts'
+complete -c typst -n __fish_typst_needs_command -f -a info -d 'Displays debugging information about Typst'
+complete -c typst -n __fish_typst_needs_command -f -a help -d 'Print this message or the help of the given subcommand(s)'
 complete -c typst -n "__fish_typst_using_subcommand compile" -s f -l format -d 'The format of the output file, inferred from the extension by default' -r -f -a "pdf\t''
 png\t''
 svg\t''
@@ -265,12 +265,12 @@ complete -c typst -n "__fish_typst_using_subcommand info" -s f -l format -d 'The
 yaml\t''"
 complete -c typst -n "__fish_typst_using_subcommand info" -l pretty -d 'Whether to pretty-print the serialized output'
 complete -c typst -n "__fish_typst_using_subcommand info" -s h -l help -d 'Print help (see more with \'--help\')'
-complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a "compile" -d 'Compiles an input file into a supported output format'
-complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a "watch" -d 'Watches an input file and recompiles on changes'
-complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a "init" -d 'Initializes a new project from a template'
-complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a "query" -d 'Processes an input file to extract provided metadata'
-complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a "fonts" -d 'Lists all discovered fonts in system and custom font paths'
-complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a "update" -d 'Self update the Typst CLI'
-complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a "completions" -d 'Generates shell completion scripts'
-complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a "info" -d 'Displays debugging information about Typst'
-complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a "help" -d 'Print this message or the help of the given subcommand(s)'
+complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a compile -d 'Compiles an input file into a supported output format'
+complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a watch -d 'Watches an input file and recompiles on changes'
+complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a init -d 'Initializes a new project from a template'
+complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a query -d 'Processes an input file to extract provided metadata'
+complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a fonts -d 'Lists all discovered fonts in system and custom font paths'
+complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a update -d 'Self update the Typst CLI'
+complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a completions -d 'Generates shell completion scripts'
+complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a info -d 'Displays debugging information about Typst'
+complete -c typst -n "__fish_typst_using_subcommand help; and not __fish_seen_subcommand_from compile watch init query fonts update completions info help" -f -a help -d 'Print this message or the help of the given subcommand(s)'

@@ -16,7 +16,7 @@ function gpa
         set -l repo (dirname $d)
         begin
             git -C $repo pull >$tmpdir/$repo.log 2>&1
-            or echo "__GPA_FAILED__" >>$tmpdir/$repo.log
+            or echo __GPA_FAILED__ >>$tmpdir/$repo.log
         end &
     end
     wait
@@ -49,7 +49,7 @@ function gpa
         echo "── failed ──"
         for repo in $failed
             echo "== $repo =="
-            sed '/__GPA_FAILED__/d' $tmpdir/$repo.log
+            sed /__GPA_FAILED__/d $tmpdir/$repo.log
         end
     end
 

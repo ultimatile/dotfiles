@@ -4,10 +4,10 @@
 complete -c jtc -f
 
 # Subcommands
-complete -c jtc -n "__fish_use_subcommand" -a "create" -d "Create a new Julia package"
-complete -c jtc -n "__fish_use_subcommand" -a "config" -d "Configuration management"
-complete -c jtc -n "__fish_use_subcommand" -a "plugin-info" -d "Show information about plugins"
-complete -c jtc -n "__fish_use_subcommand" -a "completion" -d "Generate shell completion script"
+complete -c jtc -n __fish_use_subcommand -a create -d "Create a new Julia package"
+complete -c jtc -n __fish_use_subcommand -a config -d "Configuration management"
+complete -c jtc -n __fish_use_subcommand -a plugin-info -d "Show information about plugins"
+complete -c jtc -n __fish_use_subcommand -a completion -d "Generate shell completion script"
 
 # Global options
 complete -c jtc -l help -d "Show help message"
@@ -31,8 +31,8 @@ complete -c jtc -n "__fish_seen_subcommand_from create" -l no-mise -d "Disable m
 
 # config command and subcommands (only when no config options are specified)
 # Note: removed 'authors' from option detection as it's been unified under 'author'
-complete -c jtc -n "__fish_seen_subcommand_from config; and not __fish_contains_opt author user mail license julia-version mise-filename-base with-mise no-mise config-file git tests formatter project-file github-actions codecov documenter tagbot compat-helper" -a "show" -d "Display current configuration values"
-complete -c jtc -n "__fish_seen_subcommand_from config; and not __fish_contains_opt author user mail license julia-version mise-filename-base with-mise no-mise config-file git tests formatter project-file github-actions codecov documenter tagbot compat-helper" -a "set" -d "Set configuration values"
+complete -c jtc -n "__fish_seen_subcommand_from config; and not __fish_contains_opt author user mail license julia-version mise-filename-base with-mise no-mise config-file git tests formatter project-file github-actions codecov documenter tagbot compat-helper" -a show -d "Display current configuration values"
+complete -c jtc -n "__fish_seen_subcommand_from config; and not __fish_contains_opt author user mail license julia-version mise-filename-base with-mise no-mise config-file git tests formatter project-file github-actions codecov documenter tagbot compat-helper" -a set -d "Set configuration values"
 
 # config command options (for direct invocation and set subcommand)
 complete -c jtc -n "__fish_seen_subcommand_from config" -l author -d "Set default author(s) (supports multiple authors)"
@@ -51,5 +51,4 @@ complete -c jtc -n "__fish_seen_subcommand_from config" -l config-file -d "Path 
 complete -c jtc -n "__fish_seen_subcommand_from plugin-info" -a "AppVeyor BlueStyleBadge CirrusCI Citation CodeOwners Codecov ColPracBadge CompatHelper Coveralls Dependabot Develop Documenter DroneCI Formatter Git GitHubActions GitLabCI License PkgBenchmark PkgEvalBadge ProjectFile Readme RegisterAction Runic SrcDir TagBot Tests TravisCI " -d "Plugin name"
 
 # completion command options
-complete -c jtc -n "__fish_seen_subcommand_from completion" -l shell -d "Shell type" -a "fish"
-
+complete -c jtc -n "__fish_seen_subcommand_from completion" -l shell -d "Shell type" -a fish
