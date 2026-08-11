@@ -6,3 +6,8 @@ repos:
         entry: stylua
         language: system
         types: [lua]
+      - id: nixfmt
+        name: nixfmt
+        entry: nixfmt
+        language: system
+        types: [nix]

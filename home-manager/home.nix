@@ -35,12 +35,12 @@
 
     # -- Homebrew からの移行候補 --
     # pkgs.github-copilot-cli
-    # pkgs.atuin # old 
+    # pkgs.atuin # old
     actionlint
     arpack
     cargo-make
-    choose            # brew: choose-rust
-    clang-tools        # brew: clang-format
+    choose # brew: choose-rust
+    clang-tools # brew: clang-format
     cloc
     colima
     direnv
@@ -57,7 +57,7 @@
     ghq
     gibo
     gifsicle
-    delta              # brew: git-delta
+    delta # brew: git-delta
     glow
     #gnused # installed as sed  # brew: gnu-sed
     gnuplot
@@ -71,13 +71,14 @@
     lazygit
     less
     git-filter-repo
-    gnumake            # brew: make
+    gnumake # brew: make
     meson
     mkdocs
     neovim
     mise
     nh
     ninja
+    nixfmt
     nushell
     pandoc
     parallel
@@ -99,8 +100,8 @@
     tmux
     trash-cli
     tree
-    tree-sitter        # brew: tree-sitter-cli
-    typos              # brew: typos-cli
+    tree-sitter # brew: tree-sitter-cli
+    typos # brew: typos-cli
     typst
     uv
     vhs
@@ -108,7 +109,7 @@
     wget
     xclip
     yazi
-    yq-go              # brew: yq
+    yq-go # brew: yq
     zig
     zizmor
     zoxide
