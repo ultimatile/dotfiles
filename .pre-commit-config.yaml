@@ -16,3 +16,8 @@ repos:
         entry: tombi format
         language: system
         types: [toml]
+      - id: prettier
+        name: prettier
+        entry: prettier --write
+        language: system
+        types: [yaml]
