@@ -76,6 +76,7 @@
     mkdocs
     neovim
     mise
+    nh
     ninja
     nushell
     pandoc

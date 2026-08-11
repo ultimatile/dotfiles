@@ -111,10 +111,6 @@ cp -n $HOME/dotfiles/home-manager/machine-specific{.example,}.nix
 ```
 
 ```sh
-nix run github:nix-community/home-manager -- switch --flake "path:$HOME/dotfiles/home-manager#ultimatile"
-```
-
-```sh
 $HOME/dotfiles/home-manager/bin/hm-switch
 ```
 

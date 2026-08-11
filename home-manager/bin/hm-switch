@@ -3,5 +3,18 @@ set -eu
 
 repo_root="$(cd "$(dirname "$0")/.." && pwd)"
 profile="${HM_PROFILE:-ultimatile}"
+flake="path:${repo_root}"
 
-exec home-manager switch --flake "path:${repo_root}#${profile}" "$@"
+if command -v nh >/dev/null 2>&1; then
+  exec nh home switch -c "${profile}" "$@" "${flake}"
+fi
+
+# Bootstrap: nh itself is installed by this configuration, so the first switch
+# on a new machine has to activate without it. Build the activation package
+# with the home-manager pinned in flake.lock and run it directly.
+if [ "$#" -gt 0 ]; then
+  echo "hm-switch: nh not found, bootstrapping; ignoring args: $*" >&2
+fi
+out="$(nix build --no-link --print-out-paths \
+  "${flake}#homeConfigurations.${profile}.activationPackage")"
+exec "${out}/activate"
