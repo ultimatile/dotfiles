@@ -287,10 +287,10 @@ end
 -- maps below make Q a prefix node, and which-key turns it into a `nowait`
 -- trigger that drives its own getcharstr loop -- the same intercept-and-block
 -- technique a hand-rolled `Q -> getchar` dispatcher uses.
--- NOTE: which-key's <auto> triggers refuse single-key uppercase prefixes except
--- Z (see is_safe in which-key's buf.lua), so Q must be registered explicitly in
--- opts.triggers (see lua/plugins/which-key.lua). Without that, Q falls through
--- to Neovim's built-in Q (macro replay) and errors with E354.
+-- NOTE: which-key's default <auto> trigger refuses single-key uppercase
+-- prefixes except Z, so lua/plugins/which-key.lua keeps <auto> and adds Q as an
+-- explicit trigger. Without the explicit Q trigger, Q falls through to Neovim's
+-- built-in macro replay and errors with E354 when no register is available.
 require("which-key").add({ { "Q", group = "Q-Commands" } })
 
 nmapkey("QC", function()
