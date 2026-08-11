@@ -1,4 +1,5 @@
 /.claude/skills/hpc
 /.claude/hooks/__pycache__
 /.claude/hooks-test/__pycache__
+/.claude/.ruff_cache
 /.pytest_cache

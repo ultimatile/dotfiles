@@ -17,7 +17,6 @@
 from __future__ import annotations
 
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -36,7 +35,7 @@ SCANNERS = {"find", "rg", "grep", "egrep", "fgrep", "fd", "fdfind"}
 # find global options that appear BEFORE path operands.
 FIND_GLOBAL_EXACT = {"-H", "-L", "-P"}
 
-HOME = os.path.expanduser("~")
+HOME = str(Path.home())
 
 
 def is_broad_root(tok: str) -> bool:
@@ -49,9 +48,7 @@ def is_broad_root(tok: str) -> bool:
     norm = t.rstrip("/")
     if norm in ("", "~", "$HOME", "${HOME}"):  # "" comes from "/" after rstrip
         return True
-    if t == HOME or norm == HOME.rstrip("/"):
-        return True
-    return False
+    return t == HOME or norm == HOME.rstrip("/")
 
 
 def find_path_operands(args: list[str]) -> list[str]:
@@ -59,7 +56,9 @@ def find_path_operands(args: list[str]) -> list[str]:
     expression (which begins at the first -predicate / ( / ! / )).
     """
     j = 0
-    while j < len(args) and (args[j] in FIND_GLOBAL_EXACT or args[j].startswith(("-D", "-O"))):
+    while j < len(args) and (
+        args[j] in FIND_GLOBAL_EXACT or args[j].startswith(("-D", "-O"))
+    ):
         j += 1
     operands: list[str] = []
     while j < len(args):
@@ -111,13 +110,17 @@ def main() -> None:
     if not hits:
         return
 
-    print(json.dumps({
-        "hookSpecificOutput": {
-            "hookEventName": "PreToolUse",
-            "permissionDecision": "deny",
-            "permissionDecisionReason": REASON.format(roots=", ".join(hits)),
-        }
-    }))
+    print(
+        json.dumps(
+            {
+                "hookSpecificOutput": {
+                    "hookEventName": "PreToolUse",
+                    "permissionDecision": "deny",
+                    "permissionDecisionReason": REASON.format(roots=", ".join(hits)),
+                }
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

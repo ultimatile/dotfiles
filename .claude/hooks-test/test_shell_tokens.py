@@ -12,9 +12,15 @@ from shell_tokens import invocations, is_separator, tokenize
     ("command", "expected"),
     [
         # The case shlex.split() gets wrong: ';' glued to the preceding token.
-        ("rg -n pat src; rm -rf /tmp/x", ["rg", "-n", "pat", "src", ";", "rm", "-rf", "/tmp/x"]),
+        (
+            "rg -n pat src; rm -rf /tmp/x",
+            ["rg", "-n", "pat", "src", ";", "rm", "-rf", "/tmp/x"],
+        ),
         # ...and a newline, which shlex.split() drops as plain whitespace.
-        ("rg -n pat src\nrm -rf /tmp/x", ["rg", "-n", "pat", "src", "\n", "rm", "-rf", "/tmp/x"]),
+        (
+            "rg -n pat src\nrm -rf /tmp/x",
+            ["rg", "-n", "pat", "src", "\n", "rm", "-rf", "/tmp/x"],
+        ),
         # Separators need no surrounding whitespace.
         ("rg pat src|xargs rm", ["rg", "pat", "src", "|", "xargs", "rm"]),
         ("a&&b", ["a", "&&", "b"]),
@@ -31,7 +37,9 @@ def test_tokenize_separates_commands(command: str, expected: list[str]) -> None:
 
 
 def test_tokenize_falls_back_on_unbalanced_quotes() -> None:
-    """A malformed command still yields tokens, so callers inspect it instead of skipping."""
+    """A malformed command still yields tokens, so callers inspect it rather
+    than skip it.
+    """
     assert tokenize('rg -n "unclosed src') == ["rg", "-n", '"unclosed', "src"]
 
 
@@ -59,7 +67,10 @@ def test_is_separator_false(tok: str) -> None:
         ("{ rg -n pat src; rm -rf /tmp/x; }", [("rg", ["-n", "pat", "src"])]),
         ("(rg -n pat src)", [("rg", ["-n", "pat", "src"])]),
         # Redirections end the argument list too.
-        ("rg -n pat src > /dev/null 2>&1; rm -rf /tmp/x", [("rg", ["-n", "pat", "src"])]),
+        (
+            "rg -n pat src > /dev/null 2>&1; rm -rf /tmp/x",
+            [("rg", ["-n", "pat", "src"])],
+        ),
         # Basename match, so an absolute path or a pipeline stage still counts.
         ("/opt/homebrew/bin/rg -n pat", [("rg", ["-n", "pat"])]),
         ("fd -H | rg -n pat", [("rg", ["-n", "pat"])]),
@@ -80,4 +91,6 @@ def test_invocations_accepts_any_iterable_of_names() -> None:
     """SCANNERS-style frozensets, lists and generators all work as `names`."""
     variants: list[Iterable[str]] = [["rg"], frozenset({"rg"}), (n for n in ["rg"])]
     for names in variants:
-        assert list(invocations("rg -n pat src", names)) == [("rg", ["-n", "pat", "src"])]
+        assert list(invocations("rg -n pat src", names)) == [
+            ("rg", ["-n", "pat", "src"])
+        ]

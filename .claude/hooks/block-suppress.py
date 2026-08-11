@@ -16,16 +16,16 @@ POLICY_PATH = pathlib.Path.home() / ".claude/hooks/suppress-policy.toml"
 
 # Per-tool fields whose textual content we scan for suppression patterns.
 TOOL_CONTENT_FIELDS = {
-    "Write":        ["content"],
-    "Edit":         ["new_string"],
+    "Write": ["content"],
+    "Edit": ["new_string"],
     "NotebookEdit": ["new_source"],
-    "Bash":         ["command"],
+    "Bash": ["command"],
 }
 
 # Per-tool field that names the target file (used for extension scoping).
 TOOL_PATH_FIELD = {
-    "Write":        "file_path",
-    "Edit":         "file_path",
+    "Write": "file_path",
+    "Edit": "file_path",
     "NotebookEdit": "notebook_path",
 }
 
@@ -85,9 +85,7 @@ def latest_user_message(transcript_path: str) -> str:
             return content
         if isinstance(content, list):
             return "".join(
-                block.get("text", "")
-                for block in content
-                if isinstance(block, dict)
+                block.get("text", "") for block in content if isinstance(block, dict)
             )
     return ""
 

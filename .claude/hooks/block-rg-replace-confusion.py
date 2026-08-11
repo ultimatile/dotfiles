@@ -97,13 +97,17 @@ def main() -> None:
     if not offending_rg(command):
         return
 
-    print(json.dumps({
-        "hookSpecificOutput": {
-            "hookEventName": "PreToolUse",
-            "permissionDecision": "deny",
-            "permissionDecisionReason": REASON,
-        }
-    }))
+    print(
+        json.dumps(
+            {
+                "hookSpecificOutput": {
+                    "hookEventName": "PreToolUse",
+                    "permissionDecision": "deny",
+                    "permissionDecisionReason": REASON,
+                }
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

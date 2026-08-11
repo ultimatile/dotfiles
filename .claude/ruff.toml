@@ -1,0 +1,16 @@
+# ruff settings for the Python under .claude/ — the PreToolUse hooks in hooks/
+# and their tests in hooks-test/. Kept here rather than at the repository root
+# because dotfiles is a polyglot config repository, not a Python project: ruff
+# resolves the closest config in a file's ancestors, so this governs
+# .claude/**/*.py and leaves anything added elsewhere on ruff's defaults.
+#
+# target-version is the floor the hooks have to run on, not the newest available.
+# They are launched through `#!/usr/bin/env python3`, so whatever python3 the
+# machine resolves is what executes them; block-suppress.py imports tomllib,
+# which puts that floor at 3.11.
+
+line-length = 88
+target-version = "py311"
+
+[lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "ARG", "SIM", "PTH"]

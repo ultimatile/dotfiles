@@ -24,10 +24,11 @@ Deliberate properties:
   retiring the guard — though zero can also come from low usage, a model
   change, or the regex missing a new variant, so it is a signal, not proof.
 """
+
 import json
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 LOG_PATH = Path(__file__).with_name("leaked-toolcall-triggers.log")
@@ -45,7 +46,7 @@ LEAK_RE = re.compile(
 def last_assistant_text(transcript_path: str) -> str:
     """Concatenated text blocks of the last assistant entry in the JSONL."""
     text = ""
-    with open(transcript_path, encoding="utf-8") as f:
+    with Path(transcript_path).open(encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if not line:
@@ -84,8 +85,8 @@ def main() -> None:
     match = LEAK_RE.search(text)
     if not match:
         return
-    timestamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    with open(LOG_PATH, "a", encoding="utf-8") as log:
+    timestamp = datetime.now(UTC).isoformat(timespec="seconds")
+    with LOG_PATH.open("a", encoding="utf-8") as log:
         log.write(
             f"{timestamp} session={payload.get('session_id', '?')} "
             f"match={match.group(0).strip()!r}\n"
