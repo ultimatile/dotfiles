@@ -98,6 +98,7 @@
     # terminal-notifier
     tlrc
     tmux
+    tombi
     trash-cli
     tree
     tree-sitter # brew: tree-sitter-cli

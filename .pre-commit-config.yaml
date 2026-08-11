@@ -11,3 +11,8 @@ repos:
         entry: nixfmt
         language: system
         types: [nix]
+      - id: tombi
+        name: tombi
+        entry: tombi format
+        language: system
+        types: [toml]

@@ -16,29 +16,29 @@
 # ---- Rust ----
 
 [[rule]]
-id         = "dead_code"
-pattern    = '#!?\[\s*allow\s*\(\s*dead_code\s*\)\s*\]'
-action     = "block"
-message    = "#[allow(dead_code)] is never permitted"
+id = "dead_code"
+pattern = '#!?\[\s*allow\s*\(\s*dead_code\s*\)\s*\]'
+action = "block"
+message = "#[allow(dead_code)] is never permitted"
 extensions = [".rs"]
 
 [[rule]]
-id         = "doc_hidden"
-pattern    = '#!?\[\s*doc\s*\(\s*hidden\s*\)\s*\]'
-action     = "require_token"
-token      = "BYPASS:doc_hidden"
+id = "doc_hidden"
+pattern = '#!?\[\s*doc\s*\(\s*hidden\s*\)\s*\]'
+action = "require_token"
+token = "BYPASS:doc_hidden"
 extensions = [".rs"]
 
 [[rule]]
-id         = "clippy_allow"
-pattern    = '#!?\[\s*allow\s*\(\s*clippy::'
-action     = "require_token"
-token      = "BYPASS:lint"
+id = "clippy_allow"
+pattern = '#!?\[\s*allow\s*\(\s*clippy::'
+action = "require_token"
+token = "BYPASS:lint"
 extensions = [".rs"]
 
 [[rule]]
-id         = "unused_allow"
-pattern    = '#!?\[\s*allow\s*\(\s*unused[a-z_]*\s*\)\s*\]'
-action     = "require_token"
-token      = "BYPASS:lint"
+id = "unused_allow"
+pattern = '#!?\[\s*allow\s*\(\s*unused[a-z_]*\s*\)\s*\]'
+action = "require_token"
+token = "BYPASS:lint"
 extensions = [".rs"]
