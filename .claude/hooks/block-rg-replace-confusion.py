@@ -14,14 +14,20 @@
 # replace, not the reflex bug. grep -r is also untouched — there -r really is
 # recursive; the trap is ripgrep-specific.
 
+from __future__ import annotations
+
 import json
-import os
-import shlex
 import sys
+from pathlib import Path
 
-# Shell tokens that terminate one simple command's argument list.
-OPERATORS = {";", "&&", "||", "|", "|&", "&", "(", ")", "{", "}"}
+# A script's own directory is normally already on sys.path, but not under
+# PYTHONSAFEPATH=1 — and there the sibling import below would raise, which the
+# harness reports as a non-blocking hook error and then runs the command anyway.
+# A silently disabled guard is the worst outcome, so put the directory on the
+# path explicitly.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from shell_tokens import invocations  # noqa: E402
 
 # ripgrep short flags that consume an argument: when one of these appears in a
 # bundled cluster, the REST of the cluster is its value, not further flags. `r`
@@ -57,25 +63,11 @@ def is_short_r_cluster(tok: str) -> bool:
 
 def offending_rg(command: str) -> bool:
     """True if any rg invocation in the command uses a short -r cluster."""
-    try:
-        tokens = shlex.split(command)
-    except ValueError:
-        # Unbalanced quotes etc. — fall back to a coarse split so a malformed
-        # command cannot slip the pattern through unchecked.
-        tokens = command.split()
-
-    i, n = 0, len(tokens)
-    while i < n:
-        if os.path.basename(tokens[i]) == "rg":
-            j = i + 1
-            while j < n and tokens[j] not in OPERATORS:
-                if is_short_r_cluster(tokens[j]):
-                    return True
-                j += 1
-            i = j
-        else:
-            i += 1
-    return False
+    return any(
+        is_short_r_cluster(arg)
+        for _, args in invocations(command, {"rg"})
+        for arg in args
+    )
 
 
 REASON = (

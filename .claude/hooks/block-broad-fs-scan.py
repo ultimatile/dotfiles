@@ -14,16 +14,24 @@
 # precede the expression); for the grep-likes we flag any broad-root argument,
 # since "/" or "$HOME" essentially never appears as a legitimate search target.
 
+from __future__ import annotations
+
 import json
 import os
-import shlex
 import sys
+from pathlib import Path
+
+# A script's own directory is normally already on sys.path, but not under
+# PYTHONSAFEPATH=1 — and there the sibling import below would raise, which the
+# harness reports as a non-blocking hook error and then runs the command anyway.
+# A silently disabled guard is the worst outcome, so put the directory on the
+# path explicitly.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from shell_tokens import invocations  # noqa: E402
 
 # Commands whose directory targets we police.
 SCANNERS = {"find", "rg", "grep", "egrep", "fgrep", "fd", "fdfind"}
-
-# Shell tokens that terminate one simple command's argument list.
-OPERATORS = {";", "&&", "||", "|", "|&", "&", "(", ")", "{", "}"}
 
 # find global options that appear BEFORE path operands.
 FIND_GLOBAL_EXACT = {"-H", "-L", "-P"}
@@ -53,7 +61,7 @@ def find_path_operands(args: list[str]) -> list[str]:
     j = 0
     while j < len(args) and (args[j] in FIND_GLOBAL_EXACT or args[j].startswith(("-D", "-O"))):
         j += 1
-    operands = []
+    operands: list[str] = []
     while j < len(args):
         t = args[j]
         if t.startswith("-") or t in ("(", "!", ")"):
@@ -65,29 +73,12 @@ def find_path_operands(args: list[str]) -> list[str]:
 
 def broad_roots(command: str) -> list[str]:
     """Return the distinct broad-root targets found across scanner invocations."""
-    try:
-        tokens = shlex.split(command)
-    except ValueError:
-        # Unbalanced quotes etc. — fall back to a coarse whitespace scan so a
-        # malformed command can't slip a broad scan through unchecked.
-        tokens = command.split()
-
     hits: list[str] = []
-    i, n = 0, len(tokens)
-    while i < n:
-        base = os.path.basename(tokens[i])
-        if base in SCANNERS:
-            j = i + 1
-            while j < n and tokens[j] not in OPERATORS:
-                j += 1
-            args = tokens[i + 1:j]
-            candidates = find_path_operands(args) if base == "find" else args
-            for c in candidates:
-                if is_broad_root(c) and c not in hits:
-                    hits.append(c)
-            i = j
-        else:
-            i += 1
+    for base, args in invocations(command, SCANNERS):
+        candidates = find_path_operands(args) if base == "find" else args
+        for c in candidates:
+            if is_broad_root(c) and c not in hits:
+                hits.append(c)
     return hits
 
 

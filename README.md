@@ -28,6 +28,14 @@ ln -s $HOME/{dotfiles/,}.claude/skills/japanese-writing
 ln -s $HOME/{dotfiles/,}.claude/skills/logseq-paper-notes
 ```
 
+Tests for the hooks live in `.claude/hooks-test/` and are deliberately absent from
+the links above: they are only ever run from this repository, so `~/.claude` has no
+reason to carry them. Run them from the repository root.
+
+```sh:
+uvx pytest .claude/hooks-test
+```
+
 ## Direnv
 
 ```sh:
