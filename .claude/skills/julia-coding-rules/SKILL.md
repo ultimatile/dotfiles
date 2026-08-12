@@ -1,6 +1,6 @@
 ---
 name: julia-coding-rules
-description: User's opinionated Julia preferences. Four real frictions: (1) ASCII-only identifiers — never use Unicode (π, ≤, χ, …) because editor / terminal glyphs collapse confusables (e.g. x vs χ) and the resulting bugs are silent; (2) Tooling — scaffold with `jtc create MyPackage.jl`, manage deps with `mise run add`, and use `TestItemRunner.jl` with tags for test selection (mise tasks filter by tag); never `Pkg.generate` / `Pkg.add` / `Pkg.test` by hand; (3) Union{T, Nothing} for optional / fallible values rather than throwing or sentinel returns; (4) parameter-pack factory pattern — @kwdef struct with parametric types fed by a factory constructor that takes a loose Dict{String, Any} from CLI / config parsing. Plus opinions on multiple dispatch, type stability, performance idioms (@view, @inbounds, @simd, StaticArrays), and Project.toml compat. TRIGGER when writing or editing any Julia (.jl) file, Project.toml, test/, or mise.toml. SKIP for non-Julia work.
+description: User's opinionated Julia conventions — only what diverges from Julia defaults. Read when working in a Julia project; skip for non-Julia work.
 ---
 
 # Julia Coding Rules
