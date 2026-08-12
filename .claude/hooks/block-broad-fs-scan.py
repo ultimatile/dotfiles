@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --no-project --script
+# /// script
+# requires-python = ">=3.11"
+# ///
 # PreToolUse hook: deny filesystem scans rooted at / or $HOME.
 #
 # Walking the whole root or the entire home directory is slow and almost always

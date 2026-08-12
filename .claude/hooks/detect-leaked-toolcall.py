@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --no-project --script
+# /// script
+# requires-python = ">=3.11"
+# ///
 """Stop/SubagentStop hook: bounce leaked tool-call markup back to the model.
 
 Models occasionally regress to the legacy in-text XML tool-call format

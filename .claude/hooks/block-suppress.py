@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --no-project --script
+# /// script
+# requires-python = ">=3.11"
+# ///
 # PreToolUse hook: blocks suppression attributes declared in suppress-policy.toml
 # unless the user has explicitly authorized them in their latest message via a
 # bypass token.

@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --no-project --script
+# /// script
+# requires-python = ">=3.11"
+# ///
 # PreToolUse hook: block ripgrep's short -r used with grep-recursive intent.
 #
 # The grep habit "-r = recursive, -n = line numbers" silently corrupts ripgrep

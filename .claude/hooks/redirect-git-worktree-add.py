@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --no-project --script
+# /// script
+# requires-python = ">=3.11"
+# ///
 # PreToolUse hook: redirect `git worktree add` to `gwq add`.
 #
 # The value gwq provides over raw `git worktree` is PLACEMENT DETERMINISM:
