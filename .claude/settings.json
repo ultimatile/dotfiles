@@ -61,7 +61,7 @@
       "Bash(micromamba:*)",
       "Bash(pixi:*)"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
   "model": "opus[1m]",
   "hooks": {
