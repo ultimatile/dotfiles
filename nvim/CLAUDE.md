@@ -2,57 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Code Architecture
-
-This is a **LazyVim-based Neovim configuration** with extensive customizations. The codebase follows LazyVim's modular plugin architecture:
-
-- **`init.lua`**: Entry point that loads the lazy.nvim plugin manager
-- **`lua/config/`**: Core LazyVim configuration overrides
-  - `lazy.lua`: Plugin manager setup and LazyVim base configuration
-  - `options.lua`: Vim options and global settings
-  - `keymaps.lua`: Custom key mappings with utility functions
-  - `autocmds.lua` & `usercmds.lua`: Autocommands and user commands
-- **`lua/plugins/`**: Individual plugin configurations that extend/override LazyVim defaults
-- **`lazyvim.json`**: LazyVim extras configuration defining enabled language support and features
-
-## Plugin Configuration Patterns
-
-### Plugin File Structure
-All plugin files return Lua tables following LazyVim conventions:
-```lua
-return {
-  "plugin/name",
-  opts = { ... },  -- Simple configuration
-  -- or
-  opts = function() return { ... } end,  -- Complex/conditional configuration
-}
-```
-
-### Key Configuration Approaches
-- **Minimal Overrides**: Most plugins only override necessary settings, preserving LazyVim defaults
-- **Functional Composition**: Complex behaviors built by composing simple functions (see `copilot.lua`)
-- **Filetype-Specific**: Configurations adapt based on file types (e.g., Julia-specific settings in `blink.lua`)
-- **LazyVim Integration**: Heavy use of `LazyVim.cmp.actions` and other LazyVim utilities
-
-## Development Commands
-
-### Code Formatting
-```bash
-# Format Lua code (uses stylua.toml config)
-stylua .
-```
-
-### Configuration Management
-```bash
-# Update plugin lockfile
-:Lazy sync
-
-# Check plugin status
-:Lazy
-
-# Update LazyVim
-:LazyVim
-```
+This is a LazyVim-based Neovim configuration. Layout, plugin-spec conventions,
+and enabled extras are all readable from the tree itself (`lua/config/`,
+`lua/plugins/`, `lazyvim.json`); what follows is only what the code cannot tell
+you.
 
 ## Key Customizations
 
@@ -73,14 +26,3 @@ This configuration uses a **custom JKLS movement scheme**:
 - Copilot enabled with `vim.g.ai_cmp = false` (tab-based acceptance)
 - Blink completion engine with copilot integration
 - Custom word-level suggestion acceptance
-
-## Configuration Philosophy
-
-- **LazyVim-First**: Extend rather than replace LazyVim functionality
-- **Minimal Changes**: Only override what's necessary for personal workflow
-- **Modular Design**: Each plugin gets its own configuration file
-- **Integration Focus**: Plugins configured to work seamlessly together
-
-## Language Support
-
-Enabled LazyVim extras include: Python, Rust, C/C++, TeX/LaTeX, Markdown, JSON, YAML, TOML, Nushell, and Git integration.
