@@ -19,6 +19,12 @@ from conftest import HOOKS_DIR, HookRunner, child_env
 SHARED_MODULE_HOOKS = [
     ("block-rg-replace-confusion.py", "rg -rn pat src"),
     ("block-broad-fs-scan.py", "fd foo /"),
+    # block-git-discard denies here because the payload carries no working
+    # directory, which is its fail-closed path rather than a measurement. That
+    # still discharges what this table is for — a hook whose sibling import
+    # failed would abort before reaching any decision — but it is not evidence
+    # that the measurement works; test_block_git_discard.py owns that.
+    ("block-git-discard.py", "git checkout -- f"),
 ]
 
 

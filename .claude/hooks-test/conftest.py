@@ -27,12 +27,12 @@ sys.path.insert(0, str(HOOKS_DIR))
 def child_env(extra: dict[str, str] | None = None) -> dict[str, str]:
     """The environment a hook is launched with, minus the test runner's own bin dir.
 
-    The hooks resolve their interpreter through `#!/usr/bin/env python3`, so what
-    `python3` means to a child process decides which Python is under test. A
-    runner like `uvx pytest` prepends its tool environment's bin — which contains
-    a `python3` — to PATH, and every hook would then be tested under that Python
-    instead of the one a normal shell hands the harness. Dropping the runner's bin
-    dir keeps the choice of test runner from silently changing the subject.
+    The hooks resolve their interpreter through their shebang, so what PATH means
+    to a child process decides what is under test. A runner like `uvx pytest`
+    prepends its own tool-environment bin, and the hooks would then run under that
+    environment rather than the one a normal shell hands the harness. Dropping the
+    runner's bin dir keeps the choice of test runner from silently changing the
+    subject.
     """
     env = {**os.environ, **(extra or {})}
     runner_bin = Path(sys.prefix) / "bin"
@@ -44,7 +44,7 @@ def child_env(extra: dict[str, str] | None = None) -> dict[str, str]:
 
 
 class HookRunner(Protocol):
-    """(hook, command[, extra_env][, cwd]) -> deny reason, or None if allowed."""
+    """(hook, command[, extra_env][, cwd][, payload_cwd]) -> deny reason, or None."""
 
     def __call__(
         self,
@@ -52,6 +52,8 @@ class HookRunner(Protocol):
         command: str,
         extra_env: dict[str, str] | None = None,
         cwd: Path | None = None,
+        *,
+        payload_cwd: Path | str | None = None,
     ) -> str | None: ...
 
 
@@ -60,6 +62,8 @@ def _run_hook(
     command: str,
     extra_env: dict[str, str] | None = None,
     cwd: Path | None = None,
+    *,
+    payload_cwd: Path | str | None = None,
 ) -> str | None:
     """Run a hook against a Bash command; return its deny reason, or None if allowed.
 
@@ -68,11 +72,21 @@ def _run_hook(
     hooks are tested under the same Python the harness gives them no matter which
     interpreter happens to be running pytest. It also puts the sibling-module
     import and the executable bit inside what gets tested.
+
+    `cwd` sets the subprocess's directory; `payload_cwd` sets the `cwd` field of
+    the JSON payload. The harness supplies both and they normally agree, but a
+    hook that resolves paths from the payload has to keep working when they do
+    not, so they are controlled separately here. `payload_cwd` is keyword-only:
+    an existing caller passes `cwd` positionally, and both are path-typed, so a
+    positional insertion would silently rebind it with nothing to catch the swap.
     """
     script = HOOKS_DIR / hook
+    payload: dict[str, object] = {"tool_input": {"command": command}}
+    if payload_cwd is not None:
+        payload["cwd"] = str(payload_cwd)
     proc = subprocess.run(
         [str(script)],
-        input=json.dumps({"tool_input": {"command": command}}),
+        input=json.dumps(payload),
         capture_output=True,
         text=True,
         check=False,

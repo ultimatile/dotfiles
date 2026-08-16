@@ -93,6 +93,10 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/redirect-git-worktree-add.py"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/block-git-discard.py"
           }
         ]
       },
