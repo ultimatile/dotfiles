@@ -15,7 +15,9 @@ import pytest
 from conftest import HOOKS_DIR, HookRunner, child_env
 
 # Hooks that import the shared `shell_tokens` module, paired with a command each
-# one is known to deny. A deny proves the import resolved and the check ran.
+# one is known to deny. A deny proves the import resolved — a hook whose sibling
+# import failed would abort before reaching any decision. It does not always
+# prove the hook's own check ran; see block-git-discard below.
 SHARED_MODULE_HOOKS = [
     ("block-rg-replace-confusion.py", "rg -rn pat src"),
     ("block-broad-fs-scan.py", "fd foo /"),

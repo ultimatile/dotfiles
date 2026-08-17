@@ -32,7 +32,7 @@ from pathlib import PurePosixPath
 PUNCT = "();<>|&\n"
 
 
-def tokenize(command: str) -> list[str]:
+def tokenize(command: str, *, comments: bool = True) -> list[str]:
     """Split a shell command line, keeping separators as standalone tokens.
 
     Quoting is honored, so a metacharacter inside an argument (`rg -n 'a;b'`)
@@ -40,6 +40,13 @@ def tokenize(command: str) -> list[str]:
     metacharacter (`rg -n ';'`) is indistinguishable from a real separator and
     ends that invocation's argument list early; the effect is a narrower scope,
     never a wider one.
+
+    `comments=False` stops shlex ending a token at `#`. Its default fires on a
+    `#` ANYWHERE in a word, where the shell only starts a comment at a word's
+    beginning: `rm f#1.txt` truncates to `f`, and a caller reading that as the
+    filename is reading one the command never names. A caller that turns this
+    off owes its own comment handling, since the whole rest of the line then
+    arrives as arguments.
 
     On unbalanced quotes this falls back to a whitespace split so a malformed
     command still gets inspected rather than skipped. Separators stay glued to
@@ -50,6 +57,8 @@ def tokenize(command: str) -> list[str]:
     lex = shlex.shlex(io.StringIO(command), posix=True, punctuation_chars=PUNCT)
     lex.whitespace_split = True
     lex.whitespace = " \t\r"
+    if not comments:
+        lex.commenters = ""
     try:
         return list(lex)
     except ValueError:
