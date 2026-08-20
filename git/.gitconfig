@@ -6,6 +6,7 @@ autocorrect = 1
 hooksPath = ~/dotfiles/git/hooks
 # pager = less --mouse
 pager = delta
+	excludesFile = ~/dotfiles/git/ignore
 [interactive]
 diffFilter = delta --color-only
 [delta]
