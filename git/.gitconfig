@@ -1,6 +1,8 @@
 [help]
 # Automatically correct and execute mistyped commands.
 autocorrect = 1
+[user]
+useConfigOnly = true
 [core]
  editor = nvim
 hooksPath = ~/dotfiles/git/hooks
