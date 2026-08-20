@@ -1,0 +1,25 @@
+#!/bin/sh
+# Resolve each #n in the commit title via gh and reject if it is an issue.
+# PR numbers (e.g. "(#123)" from squash merges) are allowed.
+# Fails open when gh is unavailable, the remote is not GitHub, or the number
+# does not exist.
+
+title=$(head -n 1 "$1")
+
+for n in $(printf '%s\n' "$title" | grep -oE '#[0-9]+' | tr -d '#'); do
+  kind=$(gh api "repos/{owner}/{repo}/issues/$n" \
+    --jq 'if .pull_request then "pr" else "issue" end' 2>/dev/null) || kind=""
+  if [ "$kind" = "issue" ]; then
+    echo "commit-msg hook: #$n is an issue. Issue numbers are forbidden in the commit title." >&2
+    exit 1
+  fi
+done
+
+# Delegate to the repository-local hook hidden by core.hooksPath.
+# Use --git-dir, not --git-path: "--git-path hooks" honors core.hooksPath and
+# would return this hook itself, causing an infinite exec loop.
+local_hook="$(git rev-parse --git-dir)/hooks/commit-msg"
+if [ -x "$local_hook" ]; then
+  exec "$local_hook" "$@"
+fi
+exit 0
