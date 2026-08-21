@@ -1,3 +1,7 @@
+gui:
+  theme:
+    selectedLineBgColor:
+      - "#073B36"
 keybinding:
   universal:
     copyToClipboard: y
