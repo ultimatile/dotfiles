@@ -144,7 +144,8 @@ if status is-interactive
 
     abbr -a rmv fd -HI .venv -td -X rm -r
 
-    abbr -a gg ghq get git@github.com:ultimatile/
+    abbr -a gg ghq get
+    abbr -a ggg ghq get git@github.com:ultimatile/
     abbr -a ggl ghq get --partial blobless --shallow --no-recursive -b main
     abbr -a cggu cd ~/ghq/github.com/ultimatile
 
@@ -155,13 +156,14 @@ if status is-interactive
     abbr -a crc "codex review --uncommitted"
 
     abbr -a cl claude
+    abbr -a clhi "claude -p --model \"haiku\" \"hi\""
     abbr -a fncl CLAUDE_CONFIG_DIR=~/.claude_fn claude
     abbr -a clpg "claude -p --model \"haiku\" \"/generate-conventional-commit-messages-skill\""
 
     abbr -a ssmb ssh mbpr
 
-    abbr -a nfu "cd $(realpath ~/.config/home-manager) && nix flake update --option access-tokens \"github.com=\$(gh auth token)\" && ./bin/hm-switch"
-    abbr -a んふ "cd $(realpath ~/.config/home-manager) && nix flake update --option access-tokens \"github.com=\$(gh auth token)\" && ./bin/hm-switch"
+    abbr -a nfu "cd $(realpath ~/.config/home-manager) && nix flake update --option access-tokens \"github.com=\$(gh auth token)\" && ./bin/hm-switch && nh clean user"
+    abbr -a んふ "cd $(realpath ~/.config/home-manager) && nix flake update --option access-tokens \"github.com=\$(gh auth token)\" && ./bin/hm-switch && nh clean user"
     abbr -a yz yazi
 
     #bind ctrl-\] forward-jump
