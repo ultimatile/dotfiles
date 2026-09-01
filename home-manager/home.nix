@@ -85,7 +85,6 @@
     pandoc
     parallel
     pdfgrep
-    pre-commit
     prettier
     pwgen
     pyenv
