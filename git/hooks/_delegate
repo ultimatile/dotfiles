@@ -1,0 +1,27 @@
+#!/bin/sh
+# Delegate to the repository-local hook hidden by core.hooksPath.
+#
+# core.hooksPath makes git read this directory *instead of* .git/hooks, for
+# every hook type at once. Hooks installed per repository (by `pre-commit
+# install`, husky, ad-hoc scripts) therefore never run. This script restores
+# them: it is symlinked here under each hook name we want to keep working, and
+# recovers which hook it was invoked as from its own name.
+#
+# Use --git-common-dir, not --git-dir: in a linked worktree --git-dir is
+# .git/worktrees/<name>, which holds no hooks/ directory, so the lookup would
+# silently find nothing and every hook would go dead there. Hooks live in the
+# common directory, which is what `pre-commit install` writes to as well.
+# Not --git-path either: "--git-path hooks" honors core.hooksPath and would
+# return this directory, making the exec below re-enter this script in an
+# infinite loop.
+#
+# Exiting 0 when no local hook exists is what makes a symlink harmless for a
+# repository that has not installed that hook type.
+
+hook=$(basename "$0")
+local_hook="$(git rev-parse --git-common-dir)/hooks/$hook"
+
+if [ -x "$local_hook" ]; then
+  exec "$local_hook" "$@"
+fi
+exit 0
