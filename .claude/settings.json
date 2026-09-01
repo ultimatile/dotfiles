@@ -153,5 +153,6 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "agentPushNotifEnabled": true,
+  "advisorModel": "fable",
   "skipAutoPermissionPrompt": true
 }
