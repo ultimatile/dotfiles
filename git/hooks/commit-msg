@@ -16,9 +16,12 @@ for n in $(printf '%s\n' "$title" | grep -oE '#[0-9]+' | tr -d '#'); do
 done
 
 # Delegate to the repository-local hook hidden by core.hooksPath.
-# Use --git-dir, not --git-path: "--git-path hooks" honors core.hooksPath and
-# would return this hook itself, causing an infinite exec loop.
-local_hook="$(git rev-parse --git-dir)/hooks/commit-msg"
+# Use --git-common-dir, not --git-dir: in a linked worktree --git-dir is
+# .git/worktrees/<name>, which holds no hooks/ directory, so the local hook
+# would never be found. Not --git-path either: "--git-path hooks" honors
+# core.hooksPath and would return this hook itself, causing an infinite exec
+# loop.
+local_hook="$(git rev-parse --git-common-dir)/hooks/commit-msg"
 if [ -x "$local_hook" ]; then
   exec "$local_hook" "$@"
 fi
