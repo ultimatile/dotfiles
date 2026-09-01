@@ -62,13 +62,13 @@
     ],
     "defaultMode": "auto"
   },
+  "model": "opus[1m]",
   "skillOverrides": {
     "quaere-audit": "name-only",
     "quaere-execution": "name-only",
     "quaere-grounding": "name-only",
     "quaere-semantic": "name-only"
   },
-  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -152,7 +152,8 @@
   "language": "Japanese",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
-  "agentPushNotifEnabled": true,
   "advisorModel": "fable",
+  "autoCompactEnabled": false,
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true
 }
