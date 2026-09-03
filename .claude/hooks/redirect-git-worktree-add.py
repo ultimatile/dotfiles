@@ -20,6 +20,14 @@
 # worktrees under `.claude/worktree/` (harness-managed) or a tmp directory
 # have the opposite lifecycle — created to be discarded — so forcing them
 # through gwq would pollute the durable basedir with throwaway branches.
+#
+# The tmp exemption is limited to subagents. A tmp path alone does not say
+# whether the worktree is disposable: the main thread once created a durable
+# worktree in its scratchpad and lost the untracked files with the directory.
+# The harness adds `agent_id` to the hook input only when the hook fires
+# inside a subagent, so that field is the discriminator: subagents may use
+# tmp, the main thread is redirected to gwq even there. `.claude/worktree/`
+# stays exempt for every caller.
 
 import json
 import re
@@ -35,7 +43,8 @@ PATTERN = re.compile(r"\bgit\b[^|&;\n]*\bworktree\s+add\b")
 # Checked against the RAW command (paths are often quoted, and strip_quoted
 # would erase them). Heuristic: a durable worktree add that merely *mentions*
 # one of these strings slips through, which is acceptable.
-EPHEMERAL = re.compile(r"\.claude/worktree/|/tmp/|\$TMPDIR")
+HARNESS = re.compile(r"\.claude/worktree/")
+SCRATCH = re.compile(r"/tmp/|\$TMPDIR")
 
 REASON = (
     "Use `gwq` instead of `git worktree add`:\n"
@@ -45,8 +54,9 @@ REASON = (
     "- list:    gwq list --json / gwq status --json\n"
     "- remove:  gwq remove <branch>\n"
     "Non-interactive flags only. If raw `git worktree` is required, ask the user.\n"
-    "Exempt: ephemeral/scratch worktrees are allowed as-is when the target path\n"
-    "is under `.claude/worktree/` or a tmp directory (`/tmp/`, `$TMPDIR`)."
+    "Exempt: a target path under `.claude/worktree/` is allowed as-is.\n"
+    "A tmp directory (`/tmp/`, `$TMPDIR`) is allowed only inside a subagent;\n"
+    "the main thread goes through gwq even for its scratchpad."
 )
 
 
@@ -71,7 +81,10 @@ def main() -> None:
     if not PATTERN.search(strip_quoted(command)):
         return
 
-    if EPHEMERAL.search(command):
+    if HARNESS.search(command):
+        return
+
+    if SCRATCH.search(command) and "agent_id" in data:
         return
 
     print(
