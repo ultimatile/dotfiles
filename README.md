@@ -61,6 +61,7 @@ ln -s $HOME/{dotfiles/find-orphan,.local/bin}/find-orphan
 ln -s $HOME/{dotfiles,.config}/fish/config.fish
 ln -s $HOME/{dotfiles,.config}/fish/functions
 ln -s $HOME/{dotfiles,.config}/fish/completions
+ln -s $HOME/{dotfiles,.config}/fish/conf.d/nix.fish
 ```
 
 ## DASH
