@@ -49,8 +49,10 @@ if status is-interactive
     abbr -a g git
     abbr -a ga git add
     abbr -a gac git add .
+    abbr -a gamm git commit --amend -m
     abbr -a gb git branch
     abbr -a gcl git clone
+    abbr -a gcrt git config pull.rebase true
     abbr -a gclr git clone --recursive
     abbr -a gclnt git clone ultimatile:ultimatile/LaTeXNoteTemplate.git
     abbr -a gcltt git clone ultimatile:ultimatile/LaTeXTikZTemplate.git
@@ -58,10 +60,10 @@ if status is-interactive
     abbr -a gcltst git clone ultimatile:ultimatile/TypstSlideTemplateJa.git
     abbr -a gcm git commit -m
     abbr -a gcam git commit -am
-    abbr -a gamm git commit --amend -m
     abbr -a gd git diff
     abbr -a gdc git diff --cached
     abbr -a gdp git diff HEAD^ HEAD
+    abbr -a gfrum "git fetch upstream && git rebase upstream/main"
     abbr -a gl git log --oneline --graph --all -n 15
     abbr -a gla git log --oneline --graph --all
     abbr -a gpl git pull
@@ -74,7 +76,6 @@ if status is-interactive
     abbr -a gsts git status -s
     abbr -a gsw git switch
     abbr -a gswc git switch -c
-    abbr -a gfrum "git fetch upstream && git rebase upstream/main"
 
     abbr -a ghrs gh repo search
     abbr -a ghrcp -- 'gh repo create "$(basename $(pwd))" --private --source=. --remote=origin'
