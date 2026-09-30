@@ -63,7 +63,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "skillOverrides": {
     "quaere-audit": "name-only",
     "quaere-execution": "name-only",
