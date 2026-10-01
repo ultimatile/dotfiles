@@ -1,3 +1,10 @@
+# Nix
+# the Nix build of fish reads neither /opt/homebrew/etc/fish nor /etc/fish/conf.d,
+# so the installer's hook that puts the Nix profiles on PATH has to be sourced here
+if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+end
+
 # should be before Homebrew initialization
 # this overrides aarch64 brew with x86_64 brew because fish_add_path prepends fish_user_paths to PATH
 # Local Rust binaries
@@ -15,6 +22,12 @@ fish_add_path /Applications/Obsidian.app/Contents/MacOS
 
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
+# completions of Homebrew-installed tools; only a Homebrew-built fish finds these on its own
+# inserted ahead of the last entry (generated_completions), which fish keeps as the fallback
+set -l brew_completions /opt/homebrew/share/fish/vendor_completions.d
+if not contains $brew_completions $fish_complete_path
+    set fish_complete_path $fish_complete_path[1..-2] $brew_completions $fish_complete_path[-1]
+end
 
 # modulefiles
 source /opt/homebrew/opt/modules/init/fish
