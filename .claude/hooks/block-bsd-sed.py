@@ -142,18 +142,15 @@ def offending(command: str) -> bool:
     return any(runs_sed(s) for s in segs)
 
 
+# Listed by purpose, not inferred from the command: the agent knows its purpose,
+# and the options shown here are the ones it picks from.
 REASON = (
-    "Blocked: local `sed` is BSD sed on this Mac (/usr/bin/sed). GNU-style calls "
-    "misbehave here, some silently: `sed -i 's/a/b/' f` takes the script as a "
-    "backup suffix, `sed -i -e ...` leaves `f-e` files, and `\\s`, `\\+`, `\\|` "
-    "or the `I` flag simply stop matching without an error.\n"
-    "Use a tool whose dialect does not depend on the platform:\n"
-    "- Plain substitution: `sd 'pat' 'rep' file` (Rust regex, captures as `$1`; "
-    "`sd -F 'lit' 'rep' file` for fixed strings). sd edits in place when given files.\n"
-    "- Need sed-specific features (addresses, `-n ...p`, multiple commands): "
-    "`gsed` (GNU sed, same syntax as on Linux hosts).\n"
-    "Remote commands via `ssh` or `crewster exec` are not blocked; plain `sed` "
-    "there is GNU sed."
+    "Blocked: local `sed` is BSD sed. Pick by purpose:\n"
+    "- Read lines of a file: Read (offset/limit)\n"
+    "- Edit one file: Edit\n"
+    "- Substitute across files: `sd 'pat' 'rep' files...`\n"
+    "- In a pipeline: `sd`, or `head`/`tail` for line ranges\n"
+    "- sed-only features: `gsed`"
 )
 
 
