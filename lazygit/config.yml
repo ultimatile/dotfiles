@@ -2,6 +2,7 @@ gui:
   theme:
     selectedLineBgColor:
       - "#073B36"
+  language: ja
 keybinding:
   universal:
     copyToClipboard: y
