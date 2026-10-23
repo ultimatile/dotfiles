@@ -1,0 +1,7 @@
+{
+  "jetls": {
+    "command": "jetls",
+    "args": ["serve"],
+    "extensionToLanguage": { ".jl": "julia" }
+  }
+}
