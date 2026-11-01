@@ -64,12 +64,6 @@
     "defaultMode": "auto"
   },
   "model": "opus",
-  "skillOverrides": {
-    "quaere-audit": "name-only",
-    "quaere-execution": "name-only",
-    "quaere-grounding": "name-only",
-    "quaere-semantic": "name-only"
-  },
   "hooks": {
     "PreToolUse": [
       {
