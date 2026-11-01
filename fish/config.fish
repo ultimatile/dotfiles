@@ -36,6 +36,9 @@ module use /Users/$USER/modulefiles
 # Rust
 source $HOME/.cargo/env.fish
 
+# Claude Code: fish is not accepted as the Bash tool's shell, and auto-detection would pick zsh
+set -gx CLAUDE_CODE_SHELL $HOME/.nix-profile/bin/bash
+
 # atuin init fish | source
 # mcfly init fish | source
 #fzf --fish | source

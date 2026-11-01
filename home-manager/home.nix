@@ -38,6 +38,7 @@
     # pkgs.atuin # old
     actionlint
     arpack
+    bash
     cargo-make
     choose # brew: choose-rust
     clang-tools # brew: clang-format
