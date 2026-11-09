@@ -175,6 +175,7 @@ if status is-interactive
     abbr -a cl claude
     abbr -a clhi "claude -p --model \"haiku\" \"hi\""
     abbr -a fncl CLAUDE_CONFIG_DIR=~/.claude_fn claude
+    abbr -a acl CLAUDE_CONFIG_DIR=~/.claude_api claude
     abbr -a clpg "claude -p --model \"haiku\" \"/generate-conventional-commit-messages-skill\""
 
     abbr -a ssmb ssh mbpr
