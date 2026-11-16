@@ -160,6 +160,7 @@
     }
   },
   "autoCompactEnabled": false,
+  "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true
 }
