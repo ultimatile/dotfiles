@@ -6,3 +6,6 @@ shell-integration-features = no-cursor
 cursor-style-blink = false
 config-file = "~/Library/Application Support/com.mitchellh.ghostty/machine-specific"
 window-inherit-working-directory = false
+
+# Pass cmd+enter through to the app (default: toggle_fullscreen) so Claude Code can bind it
+keybind = super+enter=unbind

@@ -23,6 +23,7 @@ ln -s $HOME/{dotfiles/,}.claude/rules
 ln -s $HOME/{dotfiles/,}.claude/hooks
 ln -s $HOME/{dotfiles/,}.claude/CLAUDE.md
 ln -s $HOME/{dotfiles/,}.claude/settings.json
+ln -s $HOME/{dotfiles/,}.claude/keybindings.json
 ln -s $HOME/ghq/github.com/ultimatile/hpc/.claude/skills/hpc $HOME/dotfiles/.claude/skills/hpc
 ln -s $HOME/{dotfiles/,}.claude/skills/japanese-writing
 ln -s $HOME/{dotfiles/,}.claude/skills/logseq-paper-notes
