@@ -94,6 +94,11 @@
     rsync
     ruff
     rustup
+    # rustup ships a bin/rust-analyzer proxy that picks the binary per project
+    # toolchain; the standalone server must win so editors get a toolchain-independent LSP.
+    # Unwrapped: the wrapped package pins RUST_SRC_PATH to nixpkgs' std, which then
+    # stands in for a project toolchain lacking rust-src instead of rustup installing it.
+    (lib.hiPrio rust-analyzer-unwrapped)
     sd
     shfmt
     starship
