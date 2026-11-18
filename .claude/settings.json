@@ -114,6 +114,15 @@
             "command": "FILE=$(jq -r '.tool_input.file_path'); [[ \"$FILE\" == *.typ ]] || exit 0; typst-cjk-latin-space-remover -i \"$FILE\""
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/preview-draft.sh"
+          }
+        ]
       }
     ],
     "Stop": [
