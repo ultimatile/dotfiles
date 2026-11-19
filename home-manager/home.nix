@@ -42,6 +42,7 @@
     cargo-make
     choose # brew: choose-rust
     clang-tools # brew: clang-format
+    claude-powerline
     cloc
     colima
     direnv
