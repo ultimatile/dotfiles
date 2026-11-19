@@ -108,6 +108,7 @@
     tlrc
     tmux
     tombi
+    tokei
     trash-cli
     tree
     tree-sitter # brew: tree-sitter-cli
