@@ -1,0 +1,44 @@
+{
+  "display": {
+    "lines": [
+      {
+        "segments": {
+          "directory": {
+            "enabled": true,
+            "style": "basename"
+          },
+          "git": {
+            "enabled": true
+          },
+          "model": {
+            "enabled": true
+          },
+          "thinking": {
+            "enabled": true,
+            "showEnabled": false,
+            "showEffort": true
+          },
+          "block": {
+            "enabled": true,
+            "displayStyle": "bar"
+          },
+          "weekly": {
+            "enabled": true,
+            "displayStyle": "bar"
+          },
+          "context": {
+            "enabled": true,
+            "showPercentageOnly": true
+          },
+          "version": {
+            "enabled": true
+          },
+          "agent": {
+            "enabled": true,
+            "showLabel": false
+          }
+        }
+      }
+    ]
+  }
+}
