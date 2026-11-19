@@ -3,3 +3,4 @@
 /.claude/hooks-test/__pycache__
 /.claude/.ruff_cache
 /.pytest_cache
+/.claude/hooks/leaked-toolcall-triggers.log
