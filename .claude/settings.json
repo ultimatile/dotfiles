@@ -45,6 +45,7 @@
       "Bash(uv sync:*)",
       "Bash(uv build:*)"
     ],
+    "ask": ["Bash(gh pr merge:*)"],
     "deny": [
       "Bash(pip:*)",
       "Bash(pip3:*)",
