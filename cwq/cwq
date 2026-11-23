@@ -1,0 +1,176 @@
+#!/usr/bin/env bash
+# cwq: list the linked git worktrees of every ghq repository and jump to one.
+#
+# Each worktree is tagged by the tool that created it, inferred from where it
+# lives: Claude Code puts its worktrees under <repo>/.claude/worktrees/, gwq
+# under its basedir. Main worktrees are omitted; `gcd` already reaches them.
+
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: cwq [-a] [list]           show linked worktrees as a table (default)
+       cwq [-a] tsv              same rows, tab-separated, no header
+       cwq [-a] select [query]   pick one with fzf and print its path
+
+Inside a git repository, only that repository is scanned.
+Outside one, or with -a/--all: `ghq list -p`, plus the colon-separated
+$CWQ_EXTRA_REPOS (default: ~/dotfiles).
+gwq worktrees are recognized under $CWQ_GWQ_BASEDIR (default: ~/gwq).
+EOF
+}
+
+gwq_basedir=${CWQ_GWQ_BASEDIR:-$HOME/gwq}
+ghq_root=$(ghq root)
+
+repos() {
+  local extra r
+  if [[ $all == 0 ]] && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    git rev-parse --show-toplevel
+    return
+  fi
+  ghq list -p
+  IFS=: read -ra extra <<<"${CWQ_EXTRA_REPOS-$HOME/dotfiles}"
+  for r in "${extra[@]}"; do
+    if [[ -n $r ]]; then
+      printf '%s\n' "$r"
+    fi
+  done
+}
+
+# State of a worktree: upstream divergence ("=", "+A/-B", "no-upstream"),
+# followed by "dirty" and/or "untracked" when present.
+worktree_state() {
+  git -C "$1" status --porcelain=v2 --branch | awk '
+    /^# branch\.ab / { a = substr($3, 2); b = substr($4, 2); up = 1; next }
+    /^#/ { next }
+    /^\?/ { untracked = 1; next }
+    { dirty = 1 }
+    END {
+      s = up ? ((a + 0 || b + 0) ? "+" a "/-" b : "=") : "no-upstream"
+      if (dirty) s = s " dirty"
+      if (untracked) s = s " untracked"
+      print s
+    }'
+}
+
+emit_row() {
+  local main=$1 wt=$2 branch=$3 prunable=$4 kind repo state age
+
+  case $wt in
+    "$main"/.claude/worktrees/*) kind=claude ;;
+    "$gwq_basedir"/*) kind=gwq ;;
+    *) kind=other ;;
+  esac
+
+  repo=${main#"$ghq_root"/}
+  repo=${repo/#"$HOME"/\~}
+
+  if [[ $prunable == 1 || ! -d $wt ]]; then
+    state=missing
+    age=-
+  else
+    state=$(worktree_state "$wt")
+    age=$(git -C "$wt" log -1 --format=%cr 2>/dev/null || echo -)
+  fi
+
+  printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$kind" "$repo" "$branch" "$state" "$age" "$wt"
+}
+
+# One TSV row per linked worktree: kind, repo, branch, state, age, path.
+rows() {
+  local repo line main wt branch prunable
+  while IFS= read -r repo; do
+    # Spawning git costs ~15ms per repository; a repository with no
+    # .git/worktrees directory has no linked worktree to list.
+    if [[ -d $repo/.git && ! -d $repo/.git/worktrees ]]; then
+      continue
+    fi
+    main=
+    wt=
+    # The porcelain format ends every entry with a blank line; the main
+    # worktree always comes first.
+    while IFS= read -r line; do
+      case $line in
+        "worktree "*)
+          wt=${line#worktree }
+          branch="(detached)"
+          prunable=0
+          if [[ -z $main ]]; then
+            main=$wt
+          fi
+          ;;
+        "branch refs/heads/"*) branch=${line#branch refs/heads/} ;;
+        prunable*) prunable=1 ;;
+        "")
+          if [[ -n $wt && $wt != "$main" ]]; then
+            emit_row "$main" "$wt" "$branch" "$prunable"
+          fi
+          wt=
+          ;;
+      esac
+    done < <(git -C "$repo" worktree list --porcelain 2>/dev/null)
+  done < <(repos)
+}
+
+# Header plus rows, with $HOME shown as ~ in the path column.
+table() {
+  {
+    printf 'KIND\tREPO\tBRANCH\tSTATE\tLAST COMMIT\tPATH\n'
+    printf '%s\n' "$1"
+  } | awk -F'\t' -v OFS='\t' -v home="$HOME" '
+    index($NF, home "/") == 1 { $NF = "~" substr($NF, length(home) + 1) }
+    { print }' | column -t -s $'\t'
+}
+
+no_worktrees() {
+  if [[ $all == 0 ]] && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "cwq: no linked worktrees in this repository (-a: all repositories)" >&2
+  else
+    echo "cwq: no linked worktrees" >&2
+  fi
+  exit 1
+}
+
+all=0
+args=()
+for arg in "$@"; do
+  case $arg in
+    -a | --all) all=1 ;;
+    *) args+=("$arg") ;;
+  esac
+done
+# The +-expansion keeps an empty array legal under set -u on bash < 4.4.
+set -- ${args[@]+"${args[@]}"}
+
+cmd=${1:-list}
+case $cmd in
+  list)
+    tsv=$(rows)
+    [[ -n $tsv ]] || no_worktrees
+    table "$tsv"
+    ;;
+  tsv)
+    rows
+    ;;
+  select)
+    tsv=$(rows)
+    [[ -n $tsv ]] || no_worktrees
+    # fzf shows the aligned table and hands back the hidden absolute path.
+    selection=$(
+      paste -d $'\t' \
+        <(printf 'PATH\n%s\n' "$tsv" | cut -f6) \
+        <(table "$tsv") \
+        | fzf --delimiter=$'\t' --with-nth=2 --header-lines=1 \
+          --query="${2-}" --select-1 --exit-0
+    ) || exit 1
+    printf '%s\n' "${selection%%$'\t'*}"
+    ;;
+  -h | --help | help)
+    usage
+    ;;
+  *)
+    usage >&2
+    exit 2
+    ;;
+esac

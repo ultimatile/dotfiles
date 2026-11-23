@@ -40,6 +40,16 @@ reason to carry them. Run them from the repository root.
 uvx pytest .claude/hooks-test
 ```
 
+## Cwq
+
+Lists linked worktrees, tagged by the tool that created them (Claude Code, gwq, other).
+Inside a git repository it lists that repository's; outside one, or with `-a`, those of every ghq repository.
+`cwq cd [query]` (fish function) picks one with fzf and moves there.
+
+```sh:
+ln -s $HOME/{dotfiles/cwq,.local/bin}/cwq
+```
+
 ## Direnv
 
 ```sh:
