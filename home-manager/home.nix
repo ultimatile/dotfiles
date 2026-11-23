@@ -101,6 +101,7 @@
     # stands in for a project toolchain lacking rust-src instead of rustup installing it.
     (lib.hiPrio rust-analyzer-unwrapped)
     sd
+    shellcheck
     shfmt
     starship
     stylua
