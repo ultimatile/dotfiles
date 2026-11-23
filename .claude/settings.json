@@ -81,10 +81,6 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/block-bsd-sed.py"
-          },
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/redirect-git-worktree-add.py"
           }
         ]
       },
