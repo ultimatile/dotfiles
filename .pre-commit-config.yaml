@@ -27,6 +27,12 @@ repos:
         entry: shfmt -w -i 2 -ci -bn
         language: system
         types: [shell]
+      - id: shellcheck
+        name: shellcheck
+        entry: shellcheck
+        language: system
+        types: [shell]
+        exclude_types: [zsh]
       - id: fish_indent
         name: fish_indent
         entry: fish_indent -w

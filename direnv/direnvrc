@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 source_env /opt/homebrew/opt/modules/init/bash
 layout_uv() {
   if [[ -d ".venv" ]]; then
