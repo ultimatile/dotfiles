@@ -8,7 +8,7 @@ This document outlines the coding standards and practices.
 - Use fd for finding files
 - Use fzf for fuzzy finder
 - Use hyperfine for benchmarking
-- Use sd for text substitution locally (local `sed` is BSD sed); use gsed only when sed-specific features are needed. Over ssh / `crewster exec`, plain `sed` (GNU) is fine
+- Edit files with Edit. Use `sd` only for the same substitution across multiple local files (cross-line patterns need `-A`). Over ssh / `crewster exec`, plain `sed` is fine.
 
 ## Working style
 
