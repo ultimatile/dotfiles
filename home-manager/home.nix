@@ -49,6 +49,7 @@
     docker
     dust
     doxygen
+    elan
     eza
     # fancy-cat # broken
     fastfetch
